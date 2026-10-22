@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" role="img" aria-label="Product image unavailable">
+  <rect width="600" height="600" fill="#f4f4f5"/>
+  <g fill="none" stroke="#a1a1aa" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="170" y="190" width="260" height="170" rx="18"/>
+    <line x1="235" y1="415" x2="365" y2="415"/>
+    <line x1="300" y1="360" x2="300" y2="415"/>
+  </g>
+  <text x="300" y="480" font-family="system-ui, sans-serif" font-size="26" font-weight="600" fill="#a1a1aa" text-anchor="middle">CamboTech</text>
+</svg>

@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Back to school sale — save up to 30%",
+    "imageUrl": "/images/banners/BS-1699c911.jpeg",
+    "linkUrl": "/products?sort=best_selling",
+    "type": "promotion",
+    "order": 0,
+    "active": true,
+    "id": "banner-promo-cc"
+  },
+  {
+    "title": "CamboTech",
+    "imageUrl": "/images/banners/2f0235eb65c968a3ca915f0f59ea3893-d7a4591d.jpg",
+    "linkUrl": "https://i.pinimg.com/736x/2f/02/35/2f0235eb65c968a3ca915f0f59ea3893.jpg",
+    "type": "homepage",
+    "order": 3,
+    "active": true,
+    "id": "banner-1783438925014"
+  },
+  {
+    "title": "Discoun",
+    "imageUrl": "/images/banners/caa00ea44d12c6f5c31e1e0b3db1546f-df92ad6d.jpg",
+    "linkUrl": "https://i.pinimg.com/1200x/ca/a0/0e/caa00ea44d12c6f5c31e1e0b3db1546f.jpg",
+    "type": "homepage",
+    "order": 3,
+    "active": true,
+    "id": "banner-1783439180841"
+  },
+  {
+    "title": "Discoun new year",
+    "imageUrl": "/images/banners/724c9f1aa6561cf19c5c63126f398b12-0a8f72b6.jpg",
+    "linkUrl": "https://i.pinimg.com/1200x/72/4c/9f/724c9f1aa6561cf19c5c63126f398b12.jpg",
+    "type": "homepage",
+    "order": 1,
+    "active": true,
+    "id": "banner-1785646977433"
+  }
+]

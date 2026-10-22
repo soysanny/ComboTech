@@ -1,0 +1,30 @@
+[
+  {
+    "id": "log-1",
+    "type": "login",
+    "actor": "admin@svcstore.com",
+    "description": "Logged in from Phnom Penh",
+    "createdAt": "2026-07-01T08:30:00.000Z"
+  },
+  {
+    "id": "log-2",
+    "type": "product_change",
+    "actor": "admin@svcstore.com",
+    "description": "Updated stock for CamboTech Titan X Gaming Desktop",
+    "createdAt": "2026-07-02T10:15:00.000Z"
+  },
+  {
+    "id": "log-3",
+    "type": "order_change",
+    "actor": "admin@svcstore.com",
+    "description": "Confirmed order #order-5002",
+    "createdAt": "2026-07-03T14:20:00.000Z"
+  },
+  {
+    "id": "log-4",
+    "type": "logout",
+    "actor": "admin@svcstore.com",
+    "description": "Logged out",
+    "createdAt": "2026-07-03T18:00:00.000Z"
+  }
+]

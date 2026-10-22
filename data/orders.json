@@ -1,0 +1,68 @@
+[
+  {
+    "id": "order-5001",
+    "userId": "user-shopper-1",
+    "status": "shipping",
+    "items": [
+      {
+        "productId": "prod-1001",
+        "name": "CamboTech Titan X Gaming Desktop",
+        "price": 2199,
+        "quantity": 1
+      },
+      {
+        "productId": "prod-1005",
+        "name": "CamboTech Strike Mechanical Keyboard",
+        "price": 129,
+        "quantity": 1
+      }
+    ],
+    "subtotal": 2328,
+    "discount": 100,
+    "tax": 222.8,
+    "shipping": 15,
+    "grandTotal": 2465.8,
+    "paymentMethod": "bakong_khqr",
+    "paymentStatus": "paid",
+    "couponCode": "WELCOME100",
+    "shippingAddress": {
+      "fullName": "Dara Chan",
+      "phone": "+855 96 222 333",
+      "line1": "St. 105, House 42",
+      "city": "Siem Reap",
+      "country": "Cambodia"
+    },
+    "createdAt": "2026-06-20T09:00:00.000Z",
+    "updatedAt": "2026-07-01T09:00:00.000Z"
+  },
+  {
+    "id": "order-5002",
+    "userId": "user-shopper-1",
+    "status": "delivered",
+    "items": [
+      {
+        "productId": "prod-1007",
+        "name": "CamboTech Nova 27\" 165Hz Gaming Monitor",
+        "price": 329,
+        "quantity": 2
+      }
+    ],
+    "subtotal": 658,
+    "discount": 0,
+    "tax": 65.8,
+    "shipping": 10,
+    "grandTotal": 733.8,
+    "paymentMethod": "cod",
+    "paymentStatus": "pending",
+    "couponCode": null,
+    "shippingAddress": {
+      "fullName": "Dara Chan",
+      "phone": "+855 96 222 333",
+      "line1": "St. 105, House 42",
+      "city": "Siem Reap",
+      "country": "Cambodia"
+    },
+    "createdAt": "2026-07-03T09:00:00.000Z",
+    "updatedAt": "2026-07-03T09:00:00.000Z"
+  }
+]

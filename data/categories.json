@@ -1,0 +1,82 @@
+[
+  {
+    "id": "cat-laptops",
+    "name": "Laptops",
+    "slug": "laptops",
+    "description": "Portable notebooks and ultrabooks for every lifestyle.",
+    "imageUrl": "/assets/images/categories/laptops.png",
+    "productCount": 147
+  },
+  {
+    "id": "cat-desktops",
+    "name": "Desktops",
+    "slug": "desktops",
+    "description": "Powerful desktop computers for gaming, work, and creative production.",
+    "imageUrl": "/assets/images/categories/desktops.png",
+    "productCount": 24
+  },
+  {
+    "id": "cat-pc-components",
+    "name": "PC Parts",
+    "slug": "pc-components",
+    "description": "CPUs, GPUs, memory, storage, and motherboards for builders.",
+    "imageUrl": "/assets/images/categories/pc-components.png",
+    "productCount": 91
+  },
+  {
+    "id": "cat-used",
+    "name": "Used Computers",
+    "slug": "used",
+    "description": "Certified pre-owned laptops and desktops at great value.",
+    "imageUrl": "/assets/images/categories/used.png",
+    "productCount": 40
+  },
+  {
+    "id": "cat-peripherals",
+    "name": "Peripherals",
+    "slug": "peripherals",
+    "description": "Keyboards, mice, headsets, and everyday computing essentials.",
+    "imageUrl": "/assets/images/categories/peripherals.png",
+    "productCount": 92
+  },
+  {
+    "id": "cat-storage",
+    "name": "Storage",
+    "slug": "storage",
+    "description": "SSDs, HDDs, USB drives, and memory cards.",
+    "imageUrl": "/assets/images/categories/storage.png",
+    "productCount": 36
+  },
+  {
+    "id": "cat-network",
+    "name": "Network",
+    "slug": "network",
+    "description": "Routers, switches, access points, and networking gear.",
+    "imageUrl": "/assets/images/categories/network.png",
+    "productCount": 50
+  },
+  {
+    "id": "cat-speakers",
+    "name": "Speakers",
+    "slug": "speakers",
+    "description": "Desktop speakers, soundbars, and audio accessories.",
+    "imageUrl": "/assets/images/categories/speakers.png",
+    "productCount": 9
+  },
+  {
+    "id": "cat-printers",
+    "name": "Printers",
+    "slug": "printers",
+    "description": "Inkjet, laser printers, and consumables.",
+    "imageUrl": "/assets/images/categories/printers.png",
+    "productCount": 35
+  },
+  {
+    "id": "cat-accessories",
+    "name": "Accessories",
+    "slug": "accessories",
+    "description": "Cables, docks, webcams, and computer accessories.",
+    "imageUrl": "/assets/images/categories/accessories.png",
+    "productCount": 81
+  }
+]

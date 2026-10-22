@@ -1,0 +1,38 @@
+[
+  {
+    "id": "coupon-1",
+    "code": "WELCOME100",
+    "description": "$100 off your first order over $1000",
+    "discountType": "amount",
+    "discountValue": 100,
+    "minSpend": 1000,
+    "expiryDate": "2026-12-31T23:59:59.000Z",
+    "usageLimit": 500,
+    "usedCount": 213,
+    "active": true
+  },
+  {
+    "id": "coupon-2",
+    "code": "GAMER10",
+    "description": "10% off gaming accessories",
+    "discountType": "percentage",
+    "discountValue": 10,
+    "minSpend": 50,
+    "expiryDate": "2026-09-30T23:59:59.000Z",
+    "usageLimit": 1000,
+    "usedCount": 640,
+    "active": true
+  },
+  {
+    "id": "coupon-3",
+    "code": "EXPIRED5",
+    "description": "Expired promo",
+    "discountType": "percentage",
+    "discountValue": 5,
+    "minSpend": 0,
+    "expiryDate": "2026-01-01T23:59:59.000Z",
+    "usageLimit": 100,
+    "usedCount": 100,
+    "active": false
+  }
+]

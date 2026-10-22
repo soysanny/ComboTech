@@ -1,0 +1,202 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import { Pencil, Plus, Trash2 } from "lucide-react";
+import { AdminPageShell } from "@/components/layout/AdminPageShell";
+import { DataTable } from "@/components/tables/DataTable";
+import { DataTablePagination } from "@/components/tables/DataTablePagination";
+import { DataTableToolbar } from "@/components/tables/DataTableToolbar";
+import { ConfirmDialog } from "@/components/shared/ConfirmDialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/shared/Skeleton";
+import { EmptyState } from "@/components/shared/EmptyState";
+import {
+  useAdminProducts,
+  useCreateProduct,
+  useUpdateProduct,
+  useDeleteProduct,
+} from "../hooks/useAdmin";
+import { ProductForm } from "./ProductForm";
+import type { Product, CreateProductInput } from "@/features/products/types";
+import { formatCurrency } from "@/utils/formatCurrency";
+import type { DataTableColumn } from "@/components/tables/DataTable";
+
+export function AdminProductsContent() {
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+  const [search, setSearch] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editing, setEditing] = useState<Product | undefined>(undefined);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const { data, isLoading, isError, error } = useAdminProducts(page, pageSize);
+  const create = useCreateProduct();
+  const update = useUpdateProduct();
+  const remove = useDeleteProduct();
+
+  const filtered = useMemo(() => {
+    const list = data?.data ?? [];
+    if (!search) return list;
+    const term = search.toLowerCase();
+    return list.filter(
+      (product) =>
+        product.name.toLowerCase().includes(term) ||
+        product.brand.toLowerCase().includes(term) ||
+        product.category.toLowerCase().includes(term),
+    );
+  }, [data, search]);
+
+  const total = data?.total ?? 0;
+
+  const columns: DataTableColumn<Product>[] = [
+    { key: "name", header: "Product", render: (row) => row.name },
+    { key: "category", header: "Category", render: (row) => row.category },
+    { key: "price", header: "Price", render: (row) => formatCurrency(row.price, "USD") },
+    {
+      key: "stock",
+      header: "Stock",
+      render: (row) => (
+        <Badge variant={row.stock === 0 ? "destructive" : row.stock < 10 ? "secondary" : "default"}>
+          {row.stock}
+        </Badge>
+      ),
+    },
+    {
+      key: "flags",
+      header: "Flags",
+      render: (row) => (
+        <div className="flex flex-wrap gap-1">
+          {row.isFeatured && <Badge variant="outline">Featured</Badge>}
+          {row.isNewArrival && <Badge variant="outline">New</Badge>}
+          {row.isBestSeller && <Badge variant="outline">Best</Badge>}
+        </div>
+      ),
+    },
+    {
+      key: "actions",
+      header: "Actions",
+      className: "text-right",
+      render: (row) => (
+        <div className="flex justify-end gap-2">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => {
+              setEditing(row);
+              setDialogOpen(true);
+            }}
+            aria-label="Edit"
+          >
+            <Pencil className="size-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => setDeleteId(row.id)}
+            aria-label="Delete"
+          >
+            <Trash2 className="text-destructive size-4" />
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
+  const handleSubmit = (formData: CreateProductInput) => {
+    if (editing) {
+      update.mutate(
+        { id: editing.id, input: formData },
+        { onSuccess: () => setDialogOpen(false) },
+      );
+    } else {
+      create.mutate(formData, { onSuccess: () => setDialogOpen(false) });
+    }
+  };
+
+  const handleDelete = () => {
+    if (deleteId) {
+      remove.mutate(deleteId, { onSuccess: () => setDeleteId(null) });
+    }
+  };
+
+  return (
+    <AdminPageShell
+      title="Product Management"
+      description="Create, update, and organize your store catalog."
+    >
+      <DataTableToolbar
+        searchValue={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search products..."
+        actions={
+          <Button
+            onClick={() => {
+              setEditing(undefined);
+              setDialogOpen(true);
+            }}
+          >
+            <Plus className="mr-1.5 size-4" />
+            Add product
+          </Button>
+        }
+      />
+
+      {isLoading ? (
+        <Skeleton className="h-80 w-full" />
+      ) : isError ? (
+        <EmptyState
+          title="Failed to load products"
+          description={error?.message ?? "Something went wrong."}
+          action={<Button onClick={() => window.location.reload()}>Try again</Button>}
+        />
+      ) : (
+        <>
+          <DataTable
+            columns={columns}
+            data={filtered}
+            getRowId={(row) => row.id}
+            emptyMessage="No products found."
+          />
+          <DataTablePagination
+            page={page}
+            pageSize={pageSize}
+            total={total}
+            onPageChange={setPage}
+            className="mt-4"
+          />
+        </>
+      )}
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{editing ? "Edit product" : "Add product"}</DialogTitle>
+          </DialogHeader>
+          <ProductForm
+            initialValue={editing}
+            onSubmit={handleSubmit}
+            loading={create.isPending || update.isPending}
+          />
+        </DialogContent>
+      </Dialog>
+
+      <ConfirmDialog
+        open={!!deleteId}
+        onOpenChange={(open) => !open && setDeleteId(null)}
+        title="Delete product?"
+        description="This product will be permanently removed. This action cannot be undone."
+        confirmLabel="Delete"
+        destructive
+        loading={remove.isPending}
+        onConfirm={handleDelete}
+      />
+    </AdminPageShell>
+  );
+}

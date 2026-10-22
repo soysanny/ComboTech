@@ -1,0 +1,115 @@
+[
+  {
+    "id": "user-admin-1",
+    "name": "Cambotech Admin",
+    "email": "admin@cambotech.com",
+    "phone": "+855 12 000 111",
+    "address": "St. 271, Phnom Penh, Cambodia",
+    "role": "admin",
+    "avatarUrl": "/assets/images/avatars/admin.png",
+    "blocked": false,
+    "createdAt": "2025-11-01T09:00:00.000Z",
+    "passwordHash": "scrypt$8859b80fea0965a2583b140103ba11d6$10d3252040db8fff0a516ae286637d9dc7170207e227c1251344688ad1ced574e7aae87c13283998cd4d18c14b27d1afcdabd16988934bdd96a5107485c15055"
+  },
+  {
+    "id": "user-shopper-1",
+    "name": "Dara Chan",
+    "email": "dara@example.com",
+    "phone": "+855 96 222 333",
+    "address": "St. 105, Siem Reap, Cambodia",
+    "role": "user",
+    "avatarUrl": "/assets/images/avatars/dara.png",
+    "blocked": false,
+    "createdAt": "2026-01-15T09:00:00.000Z",
+    "passwordHash": "scrypt$0913c53d50465a33aa2ff20f16895bc4$2727e31a621a7f9ac7fa562f11e41cc972b6ae78d2e490fa236be02fd1aa803c4088455e5187d68b2972b1db20fba9e01ceff9c124051d16692afa2ef4a2bc56"
+  },
+  {
+    "id": "user-shopper-2",
+    "name": "Bopha Ny",
+    "email": "bopha@example.com",
+    "phone": "+855 70 444 555",
+    "address": "St. 200, Battambang, Cambodia",
+    "role": "user",
+    "avatarUrl": "/assets/images/avatars/bopha.png",
+    "blocked": false,
+    "createdAt": "2026-02-20T09:00:00.000Z",
+    "passwordHash": "scrypt$0606995fee299ad429767abe91a93460$12343b288ef6e91119825ff5abbbd340351651d85ecde352e19c0a446d14da117dd878ad5a0d58d10c69ced1999c172bf90bbc8cebf352de8dce13848af0157f"
+  },
+  {
+    "id": "user-1783445587362",
+    "name": "Sor sovanchhay",
+    "email": "sovanchhaysor@gmail.com",
+    "phone": "+855-10-508-262",
+    "role": "user",
+    "avatarUrl": "/assets/images/avatars/default.png",
+    "blocked": false,
+    "createdAt": "2026-07-07T17:33:07.362Z",
+    "passwordHash": "scrypt$0504e27e6bfd95c9c344e60c42852b4b$15b73e754a18d281e365c004c1552db74e8f45541dba2b730a4722c12f0fe39cfafd40eb48264a2fc3db1b9b80a17cfdd96a938084e449779897a146f61b3731"
+  },
+  {
+    "id": "user-1783445725476",
+    "name": "Sor sovanchhay",
+    "email": "sovannchhaysor@gmail.com",
+    "phone": "+855-10-508-262",
+    "role": "user",
+    "avatarUrl": "/assets/images/avatars/default.png",
+    "blocked": false,
+    "createdAt": "2026-07-07T17:35:25.476Z",
+    "passwordHash": "scrypt$7a15228fd42c7bfc8ddb81475be5dee8$7796c3baee3990dd74ccb89f2ae5dc2f70213d5bdb085b998b0c77b4ba30e7dcad95bba11f2d2cfe5b902ba5119682fe24a06257dd5ca5ced9f9e080a2b55be8"
+  },
+  {
+    "id": "user-1785558675469",
+    "name": "Test User",
+    "email": "testuser@example.com",
+    "phone": "+85512345678",
+    "role": "user",
+    "avatarUrl": "/assets/images/avatars/default.png",
+    "blocked": false,
+    "createdAt": "2026-08-01T04:31:15.469Z",
+    "passwordHash": "scrypt$2b9967790dec001285f373f28d4f6566$54be9519401bb092f777437ae9f516e6738cc7d5a3a73b3b1cb00a09048bf3714e10ff80274eef89cc797bd8ca9d2a2166bccc5b00faa1b924420669d8eaf78d"
+  },
+  {
+    "id": "user-1785579560685",
+    "name": "Kong borey",
+    "email": "borey@gmail.com",
+    "phone": "+855-10-508-262",
+    "role": "user",
+    "avatarUrl": "/assets/images/avatars/default.png",
+    "blocked": true,
+    "createdAt": "2026-08-01T10:19:20.685Z",
+    "passwordHash": "scrypt$f573ee39b083a9f49d41a71cd4468b2c$8bccb3ddc68cfb9479cf8f89aad6f87f3b54b72115673bc5358c743d8669fd62b083f9bb145e2e577d2e3cb3552ef2181ed872622301059960cbc86cfc5d88bf"
+  },
+  {
+    "id": "user-1785902637468",
+    "name": "Chhay zinto",
+    "email": "chhaytbkzinto@gmail.com",
+    "phone": "+85510508262",
+    "role": "user",
+    "avatarUrl": "/assets/images/avatars/default.png",
+    "blocked": false,
+    "createdAt": "2026-08-05T04:03:57.468Z",
+    "passwordHash": "scrypt$7157709bc9689021068962b862057993$4de43cca48b4176caa49e7b38894087496080d91949733ba0cbc111d29dd1e93c04555679f5ac06794a400075861e3fc815e71ce4f18f3f3e500c5701ffc9a18"
+  },
+  {
+    "id": "user-1786066037908",
+    "name": "Checkout Tester",
+    "email": "checkout.tester@example.com",
+    "phone": "+85512345678",
+    "role": "user",
+    "avatarUrl": "/assets/images/avatars/default.png",
+    "blocked": false,
+    "createdAt": "2026-08-07T01:27:17.908Z",
+    "passwordHash": "scrypt$590c1424b171a2a7e4e4eab5c8707aa2$c8236f0a4320c9ff4cba89a1ff4aea10f86d897dbf3af014b0eb2cde9937ea7d36bef869e2e4bbc7a337b5f72ed6bb59419b5fe3b7931dda36b955db3b78e9f4"
+  },
+  {
+    "id": "user-1792568470172",
+    "name": "Touch Panha",
+    "email": "panhatouch029@gmail.com",
+    "phone": "+85503589456",
+    "role": "user",
+    "avatarUrl": "/assets/images/avatars/default.png",
+    "blocked": false,
+    "createdAt": "2026-10-21T07:41:10.172Z",
+    "passwordHash": "scrypt$c787c93f340faea9f82f18bb899dff9a$8b0ca839426a3fef1fd6fea1abbb6de365bf39eb2e5c3110f79ac683a63198c19e272bded3a5b40420d123242c62c57801933b8cc06b36a9b5045b693e6155dd"
+  }
+]
