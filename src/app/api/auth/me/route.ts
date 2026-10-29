@@ -13,7 +13,7 @@ export async function GET(request: Request) {
   const auth = await getAuth(request);
   if (!auth) return unauthorized();
 
-  const users = getCollection<UserRecord>("users");
+  const users = await getCollection<UserRecord>("users");
   const user = users.find((u) => u.id === auth.userId);
   if (!user) return unauthorized();
 

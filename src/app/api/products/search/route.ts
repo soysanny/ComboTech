@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? "12");
 
-  let products = getCollection<Product>("products");
+  let products = await getCollection<Product>("products");
 
   if (search) {
     products = products.filter(

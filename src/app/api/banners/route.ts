@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type") as Banner["type"] | null;
 
-  const banners = getCollection<Banner>("banners")
+  const banners = (await getCollection<Banner>("banners"))
     .filter((b) => b.active)
     .sort((a, b) => a.order - b.order);
 

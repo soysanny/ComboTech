@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? "10");
 
-  const categories = getCollection<Category>("categories");
+  const categories = await getCollection<Category>("categories");
   return NextResponse.json(paginate(categories, page, pageSize));
 }
 
@@ -26,9 +26,9 @@ export async function POST(request: Request) {
     productCount: 0,
   };
 
-  const categories = getCollection<Category>("categories");
+  const categories = await getCollection<Category>("categories");
   categories.push(newCategory);
-  saveCollection("categories", categories);
+  await saveCollection("categories", categories);
 
   return NextResponse.json({ data: newCategory }, { status: 201 });
 }

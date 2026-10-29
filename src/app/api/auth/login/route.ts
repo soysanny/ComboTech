@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Email and password are required", status: 400 }, { status: 400 });
     }
 
-    const users = getCollection<UserRecord>("users");
+    const users = await getCollection<UserRecord>("users");
     const user = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
 
     if (!user) {

@@ -23,6 +23,7 @@ export const ROUTES = {
   adminCoupons: "/admin/coupons",
   adminBanners: "/admin/banners",
   adminLogs: "/admin/logs",
+  adminMessages: "/admin/messages",
 
   // Error / status
   forbidden: "/403",

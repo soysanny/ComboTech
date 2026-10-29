@@ -14,7 +14,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
   const { id } = await params;
   const body = (await request.json()) as Partial<Product>;
 
-  const products = getCollection<Product>("products");
+  const products = await getCollection<Product>("products");
   const index = products.findIndex((p) => p.id === id);
   if (index === -1) {
     return NextResponse.json({ message: "Product not found", status: 404 }, { status: 404 });
@@ -28,7 +28,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     updatedAt: new Date().toISOString(),
   };
 
-  saveCollection("products", products);
+  await saveCollection("products", products);
   return NextResponse.json({ data: products[index] });
 }
 
@@ -37,13 +37,13 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
   if (!auth || auth.role !== "admin") return unauthorized();
 
   const { id } = await params;
-  const products = getCollection<Product>("products");
+  const products = await getCollection<Product>("products");
   const index = products.findIndex((p) => p.id === id);
   if (index === -1) {
     return NextResponse.json({ message: "Product not found", status: 404 }, { status: 404 });
   }
 
   products.splice(index, 1);
-  saveCollection("products", products);
+  await saveCollection("products", products);
   return NextResponse.json({ success: true });
 }

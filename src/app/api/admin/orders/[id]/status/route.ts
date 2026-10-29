@@ -11,7 +11,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   const { id } = await params;
   const body = (await request.json()) as { status?: string };
 
-  const orders = getCollection<Order>("orders");
+  const orders = await getCollection<Order>("orders");
   const order = orders.find((o) => o.id === id);
   if (!order) {
     return NextResponse.json({ message: "Order not found", status: 404 }, { status: 404 });
@@ -20,7 +20,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   if (body?.status && Object.values(ORDER_STATUS).includes(body.status as never)) {
     order.status = body.status as Order["status"];
     order.updatedAt = new Date().toISOString();
-    saveCollection("orders", orders);
+    await saveCollection("orders", orders);
   }
 
   return NextResponse.json({ data: order });

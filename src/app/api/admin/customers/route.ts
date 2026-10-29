@@ -21,7 +21,7 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? "10");
 
-  const users = getCollection<UserRecord>("users");
+  const users = await getCollection<UserRecord>("users");
   const customers = users.filter((u) => u.role === "user");
   return NextResponse.json(paginate(customers, page, pageSize));
 }

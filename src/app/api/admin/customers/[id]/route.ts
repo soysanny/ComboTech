@@ -20,7 +20,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   const { id } = await params;
   const body = (await request.json()) as { blocked?: boolean };
 
-  const users = getCollection<UserRecord>("users");
+  const users = await getCollection<UserRecord>("users");
   const user = users.find((u) => u.id === id);
   if (!user) {
     return NextResponse.json({ message: "Customer not found", status: 404 }, { status: 404 });
@@ -28,7 +28,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
   if (body.blocked !== undefined) {
     user.blocked = body.blocked;
-    saveCollection("users", users);
+    await saveCollection("users", users);
   }
 
   return NextResponse.json({ data: user });

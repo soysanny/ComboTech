@@ -10,14 +10,14 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
   const { id } = await params;
   const body = (await request.json()) as Partial<Banner>;
 
-  const banners = getCollection<Banner>("banners");
+  const banners = await getCollection<Banner>("banners");
   const index = banners.findIndex((b) => b.id === id);
   if (index === -1) {
     return NextResponse.json({ message: "Banner not found", status: 404 }, { status: 404 });
   }
 
   banners[index] = { ...banners[index], ...body, id };
-  saveCollection("banners", banners);
+  await saveCollection("banners", banners);
 
   return NextResponse.json({ data: banners[index] });
 }
@@ -27,13 +27,13 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
   if (!auth || auth.role !== "admin") return unauthorized();
 
   const { id } = await params;
-  const banners = getCollection<Banner>("banners");
+  const banners = await getCollection<Banner>("banners");
   const index = banners.findIndex((b) => b.id === id);
   if (index === -1) {
     return NextResponse.json({ message: "Banner not found", status: 404 }, { status: 404 });
   }
 
   banners.splice(index, 1);
-  saveCollection("banners", banners);
+  await saveCollection("banners", banners);
   return NextResponse.json({ success: true });
 }

@@ -4,7 +4,7 @@ import type { Product } from "@/features/products/types";
 
 export async function GET(_request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const products = getCollection<Product>("products");
+  const products = await getCollection<Product>("products");
   const product = products.find((p) => p.id === id);
 
   if (!product) {

@@ -1,87 +1,92 @@
-import fs from "node:fs";
-import path from "node:path";
-import { hashPassword } from "./password";
+import type { Prisma } from "@prisma/client";
+import { prisma } from "./prisma";
 
-const DATA_DIR = path.join(process.cwd(), "data");
+/**
+ * Repository helpers backed by Postgres (one `CollectionItem` row per
+ * document). The public API intentionally mirrors the previous JSON layer so
+ * API routes keep their logic; callers must now `await` these functions.
+ */
 
-function ensureDir(): void {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
-  }
+function asJson(value: unknown): Prisma.InputJsonValue {
+  return value as Prisma.InputJsonValue;
 }
 
-function seedCollection(name: string): void {
-  const seedPath = path.join(process.cwd(), "src", "mock", `${name}.json`);
-  const filePath = path.join(DATA_DIR, `${name}.json`);
+/** Read every document in a collection, preserving insertion order. */
+export async function getCollection<T>(name: string): Promise<T[]> {
+  const rows = await prisma.collectionItem.findMany({
+    where: { collection: name },
+    orderBy: [{ position: "asc" }, { createdAt: "asc" }],
+    select: { data: true },
+  });
+  return rows.map((row) => row.data as unknown as T);
+}
 
-  if (!fs.existsSync(seedPath)) {
-    fs.writeFileSync(filePath, "[]", "utf-8");
-    return;
-  }
-
-  const raw = fs.readFileSync(seedPath, "utf-8");
-  let data = JSON.parse(raw);
-
-  // Never persist plaintext passwords: hash any seed `password` field.
-  if (name === "users") {
-    data = (data as Array<Record<string, unknown>>).map((user) => {
-      const { password, ...rest } = user as { password?: unknown };
-      return typeof password === "string"
-        ? { ...rest, passwordHash: hashPassword(password) }
-        : user;
+/** Replace an entire collection atomically. */
+export async function saveCollection<T>(name: string, data: T[]): Promise<void> {
+  await prisma.$transaction(async (tx) => {
+    await tx.collectionItem.deleteMany({ where: { collection: name } });
+    if (data.length === 0) return;
+    await tx.collectionItem.createMany({
+      data: data.map((item, index) => {
+        const rawId = (item as { id?: unknown }).id;
+        return {
+          collection: name,
+          id: typeof rawId === "string" ? rawId : `${name}-${index}`,
+          position: index,
+          data: asJson(item),
+        };
+      }),
     });
-  }
-
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
+  });
 }
 
-export function getCollection<T>(name: string): T[] {
-  ensureDir();
-  const filePath = path.join(DATA_DIR, `${name}.json`);
-  if (!fs.existsSync(filePath)) {
-    seedCollection(name);
-  }
-  if (!fs.existsSync(filePath)) {
-    return [] as T[];
-  }
-  const raw = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(raw) as T[];
+export async function getOne<T extends { id: string }>(
+  name: string,
+  id: string,
+): Promise<T | undefined> {
+  const row = await prisma.collectionItem.findUnique({
+    where: { collection_id: { collection: name, id } },
+    select: { data: true },
+  });
+  return row ? (row.data as unknown as T) : undefined;
 }
 
-export function saveCollection<T>(name: string, data: T[]): void {
-  ensureDir();
-  const filePath = path.join(DATA_DIR, `${name}.json`);
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
-}
-
-export function getOne<T extends { id: string }>(name: string, id: string): T | undefined {
-  const collection = getCollection<T>(name);
-  return collection.find((item) => item.id === id);
-}
-
-export function createOne<T extends { id: string }>(name: string, item: T): T {
-  const collection = getCollection<T>(name);
-  collection.push(item);
-  saveCollection(name, collection);
+export async function createOne<T extends { id: string }>(
+  name: string,
+  item: T,
+): Promise<T> {
+  const count = await prisma.collectionItem.count({ where: { collection: name } });
+  await prisma.collectionItem.create({
+    data: {
+      collection: name,
+      id: item.id,
+      position: count,
+      data: asJson(item),
+    },
+  });
   return item;
 }
 
-export function updateOne<T extends { id: string }>(name: string, id: string, updates: Partial<T>): T | null {
-  const collection = getCollection<T>(name);
-  const index = collection.findIndex((item) => item.id === id);
-  if (index === -1) return null;
-  collection[index] = { ...collection[index], ...updates };
-  saveCollection(name, collection);
-  return collection[index];
+export async function updateOne<T extends { id: string }>(
+  name: string,
+  id: string,
+  updates: Partial<T>,
+): Promise<T | null> {
+  const existing = await getOne<T>(name, id);
+  if (!existing) return null;
+  const updated = { ...existing, ...updates } as T;
+  await prisma.collectionItem.update({
+    where: { collection_id: { collection: name, id } },
+    data: { data: asJson(updated) },
+  });
+  return updated;
 }
 
-export function deleteOne<T extends { id: string }>(name: string, id: string): boolean {
-  const collection = getCollection<T>(name);
-  const index = collection.findIndex((item) => item.id === id);
-  if (index === -1) return false;
-  collection.splice(index, 1);
-  saveCollection(name, collection);
-  return true;
+export async function deleteOne(name: string, id: string): Promise<boolean> {
+  const result = await prisma.collectionItem.deleteMany({
+    where: { collection: name, id },
+  });
+  return result.count > 0;
 }
 
 export function paginate<T>(list: T[], page: number, pageSize: number) {

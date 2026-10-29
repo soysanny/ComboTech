@@ -13,8 +13,8 @@ export async function GET(request: Request) {
   const auth = await getAuth(request);
   if (!auth || auth.role !== "admin") return unauthorized();
 
-  const products = getCollection<Product>("products");
-  const orders = getCollection<Order>("orders");
+  const products = await getCollection<Product>("products");
+  const orders = await getCollection<Order>("orders");
   const totalRevenue = orders
     .filter((o) => o.status !== "cancelled")
     .reduce((sum, o) => sum + (o.grandTotal ?? 0), 0);
@@ -48,7 +48,7 @@ export async function GET(request: Request) {
   const stats: AdminStats = {
     totalRevenue,
     totalOrders: orders.length,
-    totalCustomers: getCollection<UserRecord>("users").filter((u) => u.role === "user").length,
+    totalCustomers: (await getCollection<UserRecord>("users")).filter((u) => u.role === "user").length,
     totalProducts: products.length,
     monthlySales,
     bestSellers,

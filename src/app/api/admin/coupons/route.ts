@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? "10");
 
-  const coupons = getCollection<Coupon>("coupons");
+  const coupons = await getCollection<Coupon>("coupons");
   return NextResponse.json(paginate(coupons, page, pageSize));
 }
 
@@ -26,9 +26,9 @@ export async function POST(request: Request) {
     usedCount: 0,
   };
 
-  const coupons = getCollection<Coupon>("coupons");
+  const coupons = await getCollection<Coupon>("coupons");
   coupons.unshift(newCoupon);
-  saveCollection("coupons", coupons);
+  await saveCollection("coupons", coupons);
 
   return NextResponse.json({ data: newCoupon }, { status: 201 });
 }

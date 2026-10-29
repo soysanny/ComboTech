@@ -68,7 +68,7 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? "12");
 
-  const products = getCollection<Product>("products");
+  const products = await getCollection<Product>("products");
   const filtered = applyFilters(products, searchParams);
 
   return NextResponse.json(paginate(filtered, page, pageSize));

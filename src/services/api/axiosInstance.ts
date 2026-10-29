@@ -5,12 +5,10 @@ import axios, {
 } from "axios";
 import type { ApiError } from "@/types/common";
 import { API_BASE_URL } from "./endpoints";
-import { USE_MOCK, createMockAdapter } from "./mockAdapter";
 
 /**
  * Shared Axios instance. All API access flows through this — UI components must
- * never import axios directly. When USE_MOCK is enabled the mock adapter is
- * installed so no network calls are made.
+ * never import axios directly.
  */
 
 let authTokenAccessor: () => string | null = () => null;
@@ -28,7 +26,6 @@ export const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   timeout: 15000,
   headers: { "Content-Type": "application/json" },
-  ...(USE_MOCK ? { adapter: createMockAdapter() } : {}),
 });
 
 axiosInstance.interceptors.request.use(

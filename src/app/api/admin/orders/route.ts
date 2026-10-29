@@ -13,7 +13,7 @@ export async function GET(request: Request) {
   const status = searchParams.get("status");
   const search = searchParams.get("search")?.toLowerCase();
 
-  let orders = getCollection<Order>("orders");
+  let orders = await getCollection<Order>("orders");
 
   if (status) {
     orders = orders.filter((o) => o.status === status);

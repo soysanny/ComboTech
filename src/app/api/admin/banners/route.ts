@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? "10");
 
-  const banners = getCollection<Banner>("banners");
+  const banners = await getCollection<Banner>("banners");
   return NextResponse.json(paginate(banners, page, pageSize));
 }
 
@@ -25,9 +25,9 @@ export async function POST(request: Request) {
     id: `banner-${Date.now()}`,
   };
 
-  const banners = getCollection<Banner>("banners");
+  const banners = await getCollection<Banner>("banners");
   banners.push(newBanner);
-  saveCollection("banners", banners);
+  await saveCollection("banners", banners);
 
   return NextResponse.json({ data: newBanner }, { status: 201 });
 }

@@ -17,6 +17,7 @@ export const adminKeys = {
   coupons: () => [...adminKeys.all, "coupons"] as const,
   banners: () => [...adminKeys.all, "banners"] as const,
   logs: () => [...adminKeys.all, "logs"] as const,
+  messages: () => [...adminKeys.all, "messages"] as const,
 };
 
 // --- Stats ---
@@ -276,5 +277,14 @@ export function useAdminLogs(page = 1, pageSize = 10) {
   return useQuery({
     queryKey: [...adminKeys.logs(), page, pageSize],
     queryFn: () => adminService.getLogs(page, pageSize),
+  });
+}
+
+// --- Contact messages ---
+
+export function useAdminMessages() {
+  return useQuery({
+    queryKey: adminKeys.messages(),
+    queryFn: () => adminService.getMessages(),
   });
 }

@@ -15,7 +15,7 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? "10");
 
-  const products = getCollection<Product>("products");
+  const products = await getCollection<Product>("products");
   return NextResponse.json(paginate(products, page, pageSize));
 }
 
@@ -36,9 +36,9 @@ export async function POST(request: Request) {
     updatedAt: now,
   };
 
-  const products = getCollection<Product>("products");
+  const products = await getCollection<Product>("products");
   products.unshift(newProduct);
-  saveCollection("products", products);
+  await saveCollection("products", products);
 
   return NextResponse.json({ data: newProduct }, { status: 201 });
 }

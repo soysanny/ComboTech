@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? "10");
 
-  const orders = getCollection<Order>("orders");
+  const orders = await getCollection<Order>("orders");
   const payments = orders.map((order) => ({
     id: `pay-${order.id.replace("order-", "")}`,
     orderId: order.id,

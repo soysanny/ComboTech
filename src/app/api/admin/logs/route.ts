@@ -11,6 +11,6 @@ export async function GET(request: Request) {
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? "10");
 
-  const logs = getCollection<ActivityLog>("logs");
+  const logs = await getCollection<ActivityLog>("logs");
   return NextResponse.json(paginate(logs, page, pageSize));
 }
