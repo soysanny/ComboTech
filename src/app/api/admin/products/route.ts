@@ -14,8 +14,19 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const page = Number(searchParams.get("page") ?? "1");
   const pageSize = Number(searchParams.get("pageSize") ?? "10");
+  const search = searchParams.get("search")?.trim().toLowerCase();
 
-  const products = await getCollection<Product>("products");
+  let products = await getCollection<Product>("products");
+  if (search) {
+    products = products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(search) ||
+        product.brand.toLowerCase().includes(search) ||
+        product.category.toLowerCase().includes(search) ||
+        (product.productCode?.toLowerCase().includes(search) ?? false),
+    );
+  }
+
   return NextResponse.json(paginate(products, page, pageSize));
 }
 

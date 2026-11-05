@@ -90,8 +90,7 @@ function SidebarContent({ items }: { items: SidebarItem[] }) {
           variant="ghost"
           className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground"
           onClick={() => {
-            logout();
-            router.push(ROUTES.home);
+            void logout().finally(() => router.push(ROUTES.home));
           }}
         >
           <LogOut className="size-4" />

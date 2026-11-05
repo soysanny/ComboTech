@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { productKeys } from "@/features/products/hooks/useProducts";
 import { reviewService } from "../services/reviewService";
 import type { CreateReviewInput, UpdateReviewInput } from "../types";
 
@@ -21,10 +22,13 @@ export function useReviews(productId: string) {
 /** Create/edit/delete review mutations, invalidating the product's list. */
 export function useReviewMutations(productId: string) {
   const queryClient = useQueryClient();
-  const invalidate = () =>
+  const invalidate = () => {
     void queryClient.invalidateQueries({
       queryKey: reviewKeys.list(productId),
     });
+    // Review submission updates the product's aggregate rating/review count.
+    void queryClient.invalidateQueries({ queryKey: productKeys.all });
+  };
 
   const create = useMutation({
     mutationFn: (input: CreateReviewInput) => reviewService.createReview(input),

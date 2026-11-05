@@ -24,20 +24,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ROUTES } from "@/constants/routes";
+import { SITE } from "@/constants/site";
 import { ContactForm } from "@/features/contact";
 
 const contactChannels = [
   {
     icon: Mail,
     label: "Email",
-    value: "support@cambotech.com",
-    href: "mailto:support@cambotech.com",
+    value: SITE.email,
+    href: `mailto:${SITE.email}`,
   },
   {
     icon: Phone,
     label: "Phone",
-    value: "+855 12 345 678",
-    href: "tel:+85512345678",
+    value: SITE.phoneDisplay,
+    href: SITE.phoneHref,
   },
   {
     icon: MessageSquare,
@@ -47,7 +48,7 @@ const contactChannels = [
   {
     icon: MapPin,
     label: "Address",
-    value: "Phnom Penh, Cambodia",
+    value: SITE.address,
   },
 ];
 

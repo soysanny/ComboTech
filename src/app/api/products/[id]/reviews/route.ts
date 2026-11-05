@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { createOne, getCollection } from "@/lib/db";
+import { createOne, getCollection, updateOne } from "@/lib/db";
 import type { CreateReviewInput, Review } from "@/features/review/types";
+import type { Product } from "@/features/products/types";
 
 /** List reviews for a product. */
 export async function GET(
@@ -29,26 +30,60 @@ export async function POST(
     );
   }
 
-  if (!body || typeof body.rating !== "number") {
+  if (
+    !body ||
+    typeof body.rating !== "number" ||
+    !Number.isFinite(body.rating) ||
+    body.rating < 1 ||
+    body.rating > 5
+  ) {
     return NextResponse.json(
-      { message: "Rating is required", status: 400 },
+      { message: "Rating must be a number between 1 and 5", status: 400 },
+      { status: 400 },
+    );
+  }
+
+  const title = typeof body.title === "string" ? body.title.trim() : "";
+  const comment =
+    typeof body.comment === "string" ? body.comment.trim() : "";
+
+  if (title.length < 3 || comment.length < 10) {
+    return NextResponse.json(
+      {
+        message: "Title must be at least 3 characters and review at least 10",
+        status: 400,
+      },
       { status: 400 },
     );
   }
 
   const now = new Date().toISOString();
   const review: Review = {
-    id: `review-${Date.now()}`,
+    id: `review-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
     productId: id,
     userId: "guest",
     userName: "Guest",
-    rating: body.rating,
-    title: body.title ?? "",
-    comment: body.comment ?? "",
+    rating: Math.round(body.rating),
+    title,
+    comment,
     createdAt: now,
     updatedAt: now,
   };
 
   await createOne("reviews", review);
+
+  const productReviews = (await getCollection<Review>("reviews")).filter(
+    (item) => item.productId === id,
+  );
+  if (productReviews.length > 0) {
+    const average =
+      productReviews.reduce((sum, item) => sum + item.rating, 0) /
+      productReviews.length;
+    await updateOne<Product>("products", id, {
+      rating: Math.round(average * 10) / 10,
+      reviewCount: productReviews.length,
+    });
+  }
+
   return NextResponse.json({ data: review }, { status: 201 });
 }

@@ -34,9 +34,9 @@ export const adminService = {
   getStats: () => apiClient.get<AdminStats>(ENDPOINTS.admin.stats),
 
   // Products
-  getProducts: (page = 1, pageSize = 10) =>
+  getProducts: (page = 1, pageSize = 10, search?: string) =>
     apiClient.get<PaginatedResponse<Product>>(ENDPOINTS.admin.products, {
-      params: { page, pageSize },
+      params: { page, pageSize, search },
     }),
   createProduct: (input: CreateProductInput) =>
     apiClient.post<{ data: Product }>(ENDPOINTS.admin.products, input),

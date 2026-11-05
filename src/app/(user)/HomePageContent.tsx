@@ -233,6 +233,11 @@ function BannerCarousel({ banners }: { banners: Banner[] }) {
   const banner = banners[current];
   if (!banner) return null;
 
+  const bannerHref =
+    banner.linkUrl && banner.linkUrl.startsWith("/")
+      ? banner.linkUrl
+      : ROUTES.products;
+
   return (
     <section className="relative overflow-hidden rounded-3xl shadow-2xl">
       <div className="relative min-h-[320px] sm:min-h-[400px] lg:min-h-[460px]">
@@ -240,7 +245,7 @@ function BannerCarousel({ banners }: { banners: Banner[] }) {
           <div
             key={item.id}
             className={cn(
-              "absolute inset-0 transition-opacity duration-700",
+              "absolute inset-0 z-0 transition-opacity duration-700",
               index === current ? "opacity-100" : "opacity-0",
             )}
             aria-hidden={index !== current}
@@ -256,8 +261,14 @@ function BannerCarousel({ banners }: { banners: Banner[] }) {
           </div>
         ))}
 
-        <div className="relative z-10 flex min-h-[320px] items-center px-6 py-16 text-white sm:min-h-[400px] sm:px-12 sm:py-20 lg:min-h-[460px] lg:py-24">
-          <div className="max-w-2xl">
+        <ParticlesBg
+          theme="dark"
+          background={false}
+          className="pointer-events-none z-[1] opacity-60"
+        />
+
+        <div className="pointer-events-none relative z-10 flex min-h-[320px] items-center px-6 py-16 text-white sm:min-h-[400px] sm:px-12 sm:py-20 lg:min-h-[460px] lg:py-24">
+          <div className="pointer-events-auto max-w-2xl">
             <Badge className="mb-5 border-white/20 bg-white/10 text-white backdrop-blur-sm">
               {banner.type === "promotion"
                 ? "Special offer"
@@ -276,7 +287,7 @@ function BannerCarousel({ banners }: { banners: Banner[] }) {
                 size="lg"
                 className="bg-white text-slate-900 hover:bg-white/90"
               >
-                <Link href={banner.linkUrl ?? ROUTES.products}>Shop now</Link>
+                <Link href={bannerHref}>Shop now</Link>
               </Button>
               <Button
                 asChild
@@ -440,8 +451,7 @@ export function HomePageContent() {
       <ProductSection
         title="Featured products"
         action={{ label: "View all", href: ROUTES.products }}
-        params={{ pageSize: 8, sort: "best_selling" }}
-        filter={(product) => product.isFeatured === true}
+        params={{ pageSize: 8, sort: "best_selling", isFeatured: true }}
       />
       <ProductSection
         title="Best sellers"
@@ -450,9 +460,8 @@ export function HomePageContent() {
       />
       <ProductSection
         title="New arrivals"
-        action={{ label: "See what&apos;s new", href: `${ROUTES.products}?sort=newest` }}
-        params={{ pageSize: 4, sort: "newest" }}
-        filter={(product) => product.isNewArrival === true}
+        action={{ label: "See what's new", href: `${ROUTES.products}?sort=newest` }}
+        params={{ pageSize: 4, sort: "newest", isNewArrival: true }}
       />
 
       <section className="relative overflow-hidden rounded-3xl bg-[linear-gradient(135deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] px-6 py-12 text-white shadow-xl sm:px-12 sm:py-16">

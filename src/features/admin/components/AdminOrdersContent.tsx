@@ -23,7 +23,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAdminOrders, useUpdateOrderStatus } from "../hooks/useAdmin";
-import { ORDER_STATUS_LIST } from "@/constants/orderStatus";
+import {
+  ORDER_STATUS_LABELS,
+  ORDER_STATUS_LIST,
+} from "@/constants/orderStatus";
 import type { Order } from "@/features/orders/types";
 import type { DataTableColumn } from "@/components/tables/DataTable";
 import { formatCurrency } from "@/utils/formatCurrency";
@@ -33,13 +36,13 @@ export function AdminOrdersContent() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState<string>("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const { data, isLoading, isError, error } = useAdminOrders(
     page,
     pageSize,
-    statusFilter || undefined,
+    statusFilter === "all" ? undefined : statusFilter,
     search || undefined,
   );
   const updateStatus = useUpdateOrderStatus();
@@ -75,7 +78,11 @@ export function AdminOrdersContent() {
     {
       key: "status",
       header: "Status",
-      render: (row) => <Badge variant={statusBadgeVariant(row.status)}>{row.status}</Badge>,
+      render: (row) => (
+        <Badge variant={statusBadgeVariant(row.status)}>
+          {ORDER_STATUS_LABELS[row.status] ?? row.status}
+        </Badge>
+      ),
     },
     {
       key: "createdAt",
@@ -110,15 +117,21 @@ export function AdminOrdersContent() {
         onSearchChange={setSearch}
         searchPlaceholder="Search order ID or product..."
         actions={
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-40">
+          <Select
+            value={statusFilter}
+            onValueChange={(value) => {
+              setStatusFilter(value);
+              setPage(1);
+            }}
+          >
+            <SelectTrigger className="w-44">
               <SelectValue placeholder="All statuses" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All statuses</SelectItem>
+              <SelectItem value="all">All statuses</SelectItem>
               {ORDER_STATUS_LIST.map((status) => (
                 <SelectItem key={status} value={status}>
-                  {status}
+                  {ORDER_STATUS_LABELS[status]}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -176,7 +189,7 @@ export function AdminOrdersContent() {
               <SelectContent>
                 {ORDER_STATUS_LIST.map((status) => (
                   <SelectItem key={status} value={status}>
-                    {status}
+                    {ORDER_STATUS_LABELS[status]}
                   </SelectItem>
                 ))}
               </SelectContent>

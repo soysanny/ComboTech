@@ -9,13 +9,15 @@ import { authService } from "../services/authService";
 export function useLogout() {
   const dispatch = useAppDispatch();
 
-  const logout = () => {
+  const logout = async () => {
     // Clear local state first so the UI reacts immediately.
     dispatch(logoutAction());
-    // The httpOnly cookies can only be cleared server-side.
-    void authService.logout().catch(() => {
+    try {
+      // The httpOnly cookies can only be cleared server-side.
+      await authService.logout();
+    } catch {
       // Best-effort; local state is already cleared.
-    });
+    }
     toast.success("Signed out successfully");
   };
 

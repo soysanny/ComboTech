@@ -25,7 +25,6 @@ async function requestJson<T>(
         : "Request failed";
     throw new Error(message);
   }
-
   return data as T;
 }
 
@@ -44,3 +43,6 @@ export const authService = {
       method: "POST",
     }),
 };
+
+
+

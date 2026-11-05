@@ -15,6 +15,7 @@ import { Skeleton } from "@/components/shared/Skeleton";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { ROUTES } from "@/constants/routes";
 import { SITE } from "@/constants/site";
+import { toast } from "@/lib/toast";
 import type { Product } from "../types";
 
 function SpecRow({
@@ -97,6 +98,25 @@ function ProductDetailContent({ product }: { product: Product }) {
     : 0;
 
   const isOutOfStock = product.stock <= 0;
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: product.name, url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      toast.success("Link copied", {
+        description: "Product link copied to your clipboard.",
+      });
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") return;
+      toast.error("Could not share this product", {
+        description: "Please copy the address from your browser instead.",
+      });
+    }
+  };
 
   return (
     <div className="space-y-10">
@@ -206,6 +226,7 @@ function ProductDetailContent({ product }: { product: Product }) {
               variant="outline"
               size="icon-lg"
               aria-label="Share product"
+              onClick={handleShare}
             >
               <Share2 className="size-5" />
             </Button>

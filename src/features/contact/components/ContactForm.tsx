@@ -48,8 +48,12 @@ export function ContactForm() {
   });
 
   const onSubmit = async (values: ContactSchema) => {
-    await submit.mutateAsync(values);
-    reset();
+    try {
+      await submit.mutateAsync(values);
+      reset();
+    } catch {
+      // The mutation's onError handler shows the failure toast.
+    }
   };
 
   return (

@@ -96,6 +96,9 @@ export interface ProductFilters {
   hdd?: boolean;
   screenSize?: number[];
   inStockOnly?: boolean;
+  isFeatured?: boolean;
+  isNewArrival?: boolean;
+  isBestSeller?: boolean;
   sort?: ProductSortOption;
 }
 

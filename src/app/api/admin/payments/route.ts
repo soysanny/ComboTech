@@ -15,10 +15,10 @@ export async function GET(request: Request) {
   const payments = orders.map((order) => ({
     id: `pay-${order.id.replace("order-", "")}`,
     orderId: order.id,
-    method: "Bakong KHQR",
+    method: order.paymentMethod === "cod" ? "Cash on delivery" : "Bakong KHQR",
     amount: order.grandTotal,
     currency: "USD",
-    status: order.status === "cancelled" ? "failed" as const : "paid" as const,
+    status: order.paymentStatus,
     createdAt: order.createdAt,
   }));
 

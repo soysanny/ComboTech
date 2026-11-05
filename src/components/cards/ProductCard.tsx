@@ -2,13 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Star, Eye, Phone, Heart, Scale, Gift } from "lucide-react";
+import { Star, Eye, Phone, Scale, Gift } from "lucide-react";
 import type { Product } from "@/features/products/types";
 import { ROUTES } from "@/constants/routes";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 
 export interface ProductCardProps {
   product: Product;
@@ -140,17 +139,8 @@ export function ProductCard({
               variant="secondary"
               size="icon-sm"
               className="shadow-lg"
-              aria-label="Add to wishlist"
-              onClick={(event) => event.preventDefault()}
-            >
-              <Heart className="size-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              size="icon-sm"
-              className="shadow-lg"
               aria-label="Quick view"
+              aria-pressed={isQuickViewOpen}
               onClick={(event) => {
                 event.preventDefault();
                 setIsQuickViewOpen((open) => !open);
@@ -159,19 +149,24 @@ export function ProductCard({
               <Eye className="size-4" />
             </Button>
             {onToggleCompare && (
-              <label
-                className="bg-secondary text-secondary-foreground shadow-lg flex size-8 cursor-pointer items-center justify-center rounded-lg"
-                onClick={(event) => event.preventDefault()}
-                title="Compare"
+              <Button
+                type="button"
+                variant={isComparing ? "default" : "secondary"}
+                size="icon-sm"
+                className="shadow-lg"
+                aria-label={
+                  isComparing
+                    ? "Remove from comparison"
+                    : "Add to comparison"
+                }
+                aria-pressed={isComparing}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onToggleCompare(product.id);
+                }}
               >
-                <Scale className="text-muted-foreground absolute size-4" />
-                <Checkbox
-                  checked={isComparing}
-                  onCheckedChange={() => onToggleCompare(product.id)}
-                  className="size-4 opacity-0"
-                  aria-label="Compare product"
-                />
-              </label>
+                <Scale className="size-4" />
+              </Button>
             )}
           </div>
         </div>

@@ -15,17 +15,19 @@ export async function GET(request: Request) {
 
   const products = await getCollection<Product>("products");
   const orders = await getCollection<Order>("orders");
-  const totalRevenue = orders
-    .filter((o) => o.status !== "cancelled")
+  const activeOrders = orders.filter((o) => o.status !== "cancelled");
+  const totalRevenue = activeOrders
+    .filter((o) => o.paymentStatus === "paid")
     .reduce((sum, o) => sum + (o.grandTotal ?? 0), 0);
 
   const monthlyMap = new Map<string, { revenue: number; orders: number }>();
-  for (const order of orders) {
-    if (order.status === "cancelled") continue;
+  for (const order of activeOrders) {
     const date = new Date(order.createdAt);
     const key = date.toLocaleString("en-US", { month: "short" });
     const entry = monthlyMap.get(key) ?? { revenue: 0, orders: 0 };
-    entry.revenue += order.grandTotal ?? 0;
+    if (order.paymentStatus === "paid") {
+      entry.revenue += order.grandTotal ?? 0;
+    }
     entry.orders += 1;
     monthlyMap.set(key, entry);
   }

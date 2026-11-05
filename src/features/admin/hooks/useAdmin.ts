@@ -3,6 +3,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/lib/toast";
 import type { Category, CreateProductInput } from "@/features/products/types";
+import { productKeys } from "@/features/products/hooks/useProducts";
+import { bannerKeys } from "@/features/banners/hooks/useBanners";
 import { adminService } from "../services/adminService";
 import type { Banner, Coupon, CreateCouponInput } from "../types";
 
@@ -31,10 +33,10 @@ export function useAdminStats() {
 
 // --- Products ---
 
-export function useAdminProducts(page = 1, pageSize = 10) {
+export function useAdminProducts(page = 1, pageSize = 10, search?: string) {
   return useQuery({
-    queryKey: [...adminKeys.products(), page, pageSize],
-    queryFn: () => adminService.getProducts(page, pageSize),
+    queryKey: [...adminKeys.products(), page, pageSize, search],
+    queryFn: () => adminService.getProducts(page, pageSize, search),
   });
 }
 
@@ -44,6 +46,8 @@ export function useCreateProduct() {
     mutationFn: (input: CreateProductInput) => adminService.createProduct(input),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: adminKeys.products() });
+      void queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
+      void queryClient.invalidateQueries({ queryKey: productKeys.all });
       toast.success("Product created");
     },
     onError: (error: Error) => toast.error(error.message ?? "Failed to create product"),
@@ -57,6 +61,8 @@ export function useUpdateProduct() {
       adminService.updateProduct(id, input),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: adminKeys.products() });
+      void queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
+      void queryClient.invalidateQueries({ queryKey: productKeys.all });
       toast.success("Product updated");
     },
     onError: (error: Error) => toast.error(error.message ?? "Failed to update product"),
@@ -69,6 +75,8 @@ export function useDeleteProduct() {
     mutationFn: (id: string) => adminService.deleteProduct(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: adminKeys.products() });
+      void queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
+      void queryClient.invalidateQueries({ queryKey: productKeys.all });
       toast.success("Product deleted");
     },
     onError: (error: Error) => toast.error(error.message ?? "Failed to delete product"),
@@ -164,6 +172,8 @@ export function useUpdateOrderStatus() {
       adminService.updateOrderStatus(id, status),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: adminKeys.orders() });
+      void queryClient.invalidateQueries({ queryKey: adminKeys.payments() });
+      void queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
       toast.success("Order status updated");
     },
     onError: (error: Error) => toast.error(error.message ?? "Failed to update order"),
@@ -240,6 +250,7 @@ export function useCreateBanner() {
     mutationFn: (input: Omit<Banner, "id">) => adminService.createBanner(input),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: adminKeys.banners() });
+      void queryClient.invalidateQueries({ queryKey: bannerKeys.all });
       toast.success("Banner created");
     },
     onError: (error: Error) => toast.error(error.message ?? "Failed to create banner"),
@@ -253,6 +264,7 @@ export function useUpdateBanner() {
       adminService.updateBanner(id, input),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: adminKeys.banners() });
+      void queryClient.invalidateQueries({ queryKey: bannerKeys.all });
       toast.success("Banner updated");
     },
     onError: (error: Error) => toast.error(error.message ?? "Failed to update banner"),
@@ -265,6 +277,7 @@ export function useDeleteBanner() {
     mutationFn: (id: string) => adminService.deleteBanner(id),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: adminKeys.banners() });
+      void queryClient.invalidateQueries({ queryKey: bannerKeys.all });
       toast.success("Banner deleted");
     },
     onError: (error: Error) => toast.error(error.message ?? "Failed to delete banner"),

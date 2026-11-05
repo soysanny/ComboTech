@@ -2,11 +2,10 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { Provider as ReduxProvider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { store, persistor, type RootState } from "@/redux/store";
+import { store, type RootState } from "@/redux/store";
 import { useAppSelector } from "@/redux/hooks";
 
 function createQueryClient(): QueryClient {
@@ -54,14 +53,12 @@ export function Providers({ children }: { children: ReactNode }) {
 
   return (
     <ReduxProvider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <QueryClientProvider client={queryClient}>
-          <ThemeSync>
-            <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
-          </ThemeSync>
-          <Toaster richColors closeButton position="top-right" />
-        </QueryClientProvider>
-      </PersistGate>
+      <QueryClientProvider client={queryClient}>
+        <ThemeSync>
+          <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
+        </ThemeSync>
+        <Toaster richColors closeButton position="top-right" />
+      </QueryClientProvider>
     </ReduxProvider>
   );
 }

@@ -40,6 +40,10 @@ export function PromoPopup() {
   };
 
   const banner = data?.[0];
+  const bannerHref =
+    banner?.linkUrl && banner.linkUrl.startsWith("/")
+      ? banner.linkUrl
+      : ROUTES.products;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -78,7 +82,7 @@ export function PromoPopup() {
         <div className="flex flex-col gap-2 px-6 pb-6 sm:flex-row">
           <Button asChild className="flex-1">
             <Link
-              href={banner?.linkUrl ?? ROUTES.products}
+              href={bannerHref}
               onClick={() => handleOpenChange(false)}
             >
               Shop the deals

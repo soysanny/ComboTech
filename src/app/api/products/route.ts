@@ -41,6 +41,15 @@ function applyFilters(products: Product[], params: URLSearchParams): Product[] {
   if (minPrice) result = result.filter((p) => p.price >= Number(minPrice));
   if (maxPrice) result = result.filter((p) => p.price <= Number(maxPrice));
   if (inStockOnly === "true") result = result.filter((p) => p.stock > 0);
+  if (params.get("isFeatured") === "true") {
+    result = result.filter((p) => p.isFeatured);
+  }
+  if (params.get("isNewArrival") === "true") {
+    result = result.filter((p) => p.isNewArrival);
+  }
+  if (params.get("isBestSeller") === "true") {
+    result = result.filter((p) => p.isBestSeller);
+  }
 
   switch (sort) {
     case "price_asc":

@@ -23,7 +23,7 @@ export function ProductGallery({ images, alt }: ProductGalleryProps) {
           <img
             src={safeImages[selected]}
             alt={alt}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain p-6"
             onError={() =>
               setFailed((prev) => new Set(prev).add(selected))
             }

@@ -81,25 +81,21 @@ export function AdminDashboardContent() {
           label="Total revenue"
           value={formatCurrency(data.totalRevenue, "USD")}
           icon={DollarSign}
-          trend={{ value: 12.5, positive: true }}
         />
         <StatCard
           label="Total orders"
           value={data.totalOrders.toLocaleString()}
           icon={ShoppingBag}
-          trend={{ value: 8.2, positive: true }}
         />
         <StatCard
           label="Customers"
           value={data.totalCustomers.toLocaleString()}
           icon={Users}
-          trend={{ value: 2.1, positive: true }}
         />
         <StatCard
           label="Products"
           value={data.totalProducts.toLocaleString()}
           icon={Package}
-          trend={{ value: 1.4, positive: false }}
         />
       </div>
 

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCollection, saveCollection, paginate } from "@/lib/db";
 import { getAuth, unauthorized } from "@/lib/auth";
-import type { Category } from "@/features/products/types";
+import type { Category, Product } from "@/features/products/types";
 
 export async function GET(request: Request) {
   const auth = await getAuth(request);
@@ -12,7 +12,17 @@ export async function GET(request: Request) {
   const pageSize = Number(searchParams.get("pageSize") ?? "10");
 
   const categories = await getCollection<Category>("categories");
-  return NextResponse.json(paginate(categories, page, pageSize));
+  const products = await getCollection<Product>("products");
+  const counts = new Map<string, number>();
+  for (const product of products) {
+    counts.set(product.category, (counts.get(product.category) ?? 0) + 1);
+  }
+  const withCounts = categories.map((category) => ({
+    ...category,
+    productCount: counts.get(category.slug) ?? 0,
+  }));
+
+  return NextResponse.json(paginate(withCounts, page, pageSize));
 }
 
 export async function POST(request: Request) {

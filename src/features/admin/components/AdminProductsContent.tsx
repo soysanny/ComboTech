@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Pencil, Plus, Trash2 } from "lucide-react";
+import { useDebounce } from "@/hooks/useDebounce";
 import { AdminPageShell } from "@/components/layout/AdminPageShell";
 import { DataTable } from "@/components/tables/DataTable";
 import { DataTablePagination } from "@/components/tables/DataTablePagination";
@@ -32,28 +33,27 @@ export function AdminProductsContent() {
   const [page, setPage] = useState(1);
   const pageSize = 10;
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Product | undefined>(undefined);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  const { data, isLoading, isError, error } = useAdminProducts(page, pageSize);
+  const { data, isLoading, isError, error } = useAdminProducts(
+    page,
+    pageSize,
+    debouncedSearch || undefined,
+  );
   const create = useCreateProduct();
   const update = useUpdateProduct();
   const remove = useDeleteProduct();
 
-  const filtered = useMemo(() => {
-    const list = data?.data ?? [];
-    if (!search) return list;
-    const term = search.toLowerCase();
-    return list.filter(
-      (product) =>
-        product.name.toLowerCase().includes(term) ||
-        product.brand.toLowerCase().includes(term) ||
-        product.category.toLowerCase().includes(term),
-    );
-  }, [data, search]);
-
+  const products = data?.data ?? [];
   const total = data?.total ?? 0;
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(1);
+  };
 
   const columns: DataTableColumn<Product>[] = [
     { key: "name", header: "Product", render: (row) => row.name },
@@ -133,7 +133,7 @@ export function AdminProductsContent() {
     >
       <DataTableToolbar
         searchValue={search}
-        onSearchChange={setSearch}
+        onSearchChange={handleSearchChange}
         searchPlaceholder="Search products..."
         actions={
           <Button
@@ -160,7 +160,7 @@ export function AdminProductsContent() {
         <>
           <DataTable
             columns={columns}
-            data={filtered}
+            data={products}
             getRowId={(row) => row.id}
             emptyMessage="No products found."
           />
