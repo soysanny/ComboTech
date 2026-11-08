@@ -4,26 +4,11 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
-  Monitor,
-  Laptop,
-  MousePointer2,
-  Cpu,
-  ShieldCheck,
-  Truck,
-  HeadphonesIcon,
   RefreshCw,
-  HardDrive,
-  Wifi,
-  Speaker,
-  Printer,
-  Keyboard,
-  Recycle,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 import { PageWrapper } from "@/components/layout/PageWrapper";
-import { BrandBar } from "@/components/layout/BrandBar";
-import { ProductGrid, ProductGridSkeleton, useProducts } from "@/features/products";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ParticlesBg } from "@/components/ui/particles-bg";
@@ -31,100 +16,8 @@ import { AnimatedText } from "@/components/ui/animated-text";
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 import { useBanners } from "@/features/banners";
-import type { ProductCategorySlug } from "@/features/products/types";
+import { HomepageBrandSections } from "@/features/homepage";
 import type { Banner } from "@/features/admin/types";
-
-const categories: {
-  slug: ProductCategorySlug;
-  label: string;
-  icon: React.ComponentType<{ className?: string }>;
-  gradient: string;
-}[] = [
-  {
-    slug: "laptops",
-    label: "Laptops",
-    icon: Laptop,
-    gradient: "from-emerald-500/20 to-teal-500/10",
-  },
-  {
-    slug: "desktops",
-    label: "Desktops",
-    icon: Monitor,
-    gradient: "from-blue-500/20 to-indigo-500/10",
-  },
-  {
-    slug: "pc-components",
-    label: "PC Parts",
-    icon: Cpu,
-    gradient: "from-violet-500/20 to-purple-500/10",
-  },
-  {
-    slug: "used",
-    label: "Used Computers",
-    icon: Recycle,
-    gradient: "from-lime-500/20 to-green-500/10",
-  },
-  {
-    slug: "peripherals",
-    label: "Peripherals",
-    icon: MousePointer2,
-    gradient: "from-rose-500/20 to-orange-500/10",
-  },
-  {
-    slug: "storage",
-    label: "Storage",
-    icon: HardDrive,
-    gradient: "from-amber-500/20 to-yellow-500/10",
-  },
-  {
-    slug: "network",
-    label: "Network",
-    icon: Wifi,
-    gradient: "from-cyan-500/20 to-sky-500/10",
-  },
-  {
-    slug: "speakers",
-    label: "Speakers",
-    icon: Speaker,
-    gradient: "from-fuchsia-500/20 to-pink-500/10",
-  },
-  {
-    slug: "printers",
-    label: "Printers",
-    icon: Printer,
-    gradient: "from-slate-500/20 to-gray-500/10",
-  },
-  {
-    slug: "accessories",
-    label: "Accessories",
-    icon: Keyboard,
-    gradient: "from-teal-500/20 to-cyan-500/10",
-  },
-];
-
-function SectionHeader({
-  title,
-  action,
-}: {
-  title: string;
-  action?: { label: string; href: string };
-}) {
-  return (
-    <div className="mb-6 flex items-end justify-between gap-4">
-      <div>
-        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-      </div>
-      {action && (
-        <Button asChild variant="ghost" size="sm" className="gap-1">
-          <Link href={action.href}>
-            {action.label}
-            <ArrowRight className="size-4" />
-          </Link>
-        </Button>
-      )}
-    </div>
-  );
-}
 
 function DefaultHero() {
   return (
@@ -352,117 +245,11 @@ function Hero() {
   return <BannerCarousel banners={banners} />;
 }
 
-function CategoryCards() {
-  return (
-    <section className="animate-fade-in">
-      <SectionHeader title="Shop by category" />
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        {categories.map((category) => {
-          const Icon = category.icon;
-          return (
-            <Link
-              key={category.slug}
-              href={`${ROUTES.products}?category=${category.slug}`}
-              className="group relative flex flex-col items-center justify-center gap-3 rounded-2xl border border-transparent bg-white/60 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-md dark:bg-white/5 dark:hover:bg-white/10"
-            >
-              <div
-                className={`inline-flex size-12 items-center justify-center rounded-xl bg-gradient-to-br ${category.gradient} text-foreground transition-transform duration-300 group-hover:scale-110`}
-              >
-                <Icon className="size-6" />
-              </div>
-              <span className="text-sm font-semibold">{category.label}</span>
-            </Link>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
-function ValueProps() {
-  const items = [
-    { icon: Truck, label: "Fast shipping", desc: "Nationwide coverage" },
-    { icon: ShieldCheck, label: "Warranty", desc: "12–36 month coverage" },
-    { icon: HeadphonesIcon, label: "Support", desc: "Expert local help" },
-  ];
-
-  return (
-    <section className="grid gap-4 sm:grid-cols-3">
-      {items.map((item) => {
-        const Icon = item.icon;
-        return (
-          <div
-            key={item.label}
-            className="flex items-center gap-4 rounded-2xl border border-transparent bg-white/50 p-5 shadow-sm dark:bg-white/5"
-          >
-            <div className="bg-primary/10 text-primary inline-flex size-11 items-center justify-center rounded-xl">
-              <Icon className="size-5" />
-            </div>
-            <div>
-              <p className="font-semibold">{item.label}</p>
-              <p className="text-muted-foreground text-sm">{item.desc}</p>
-            </div>
-          </div>
-        );
-      })}
-    </section>
-  );
-}
-
-function ProductSection({
-  title,
-  action,
-  params,
-  filter,
-}: {
-  title: string;
-  action?: { label: string; href: string };
-  params?: Parameters<typeof useProducts>[0];
-  filter?: (product: { isFeatured?: boolean; isNewArrival?: boolean; isBestSeller?: boolean }) => boolean;
-}) {
-  const { data, isLoading, isError, error } = useProducts(params);
-  const products = filter ? data?.data.filter(filter) : data?.data;
-
-  return (
-    <section className="animate-fade-in">
-      <SectionHeader title={title} action={action} />
-      {isLoading ? (
-        <ProductGridSkeleton count={4} />
-      ) : isError ? (
-        <p className="text-destructive text-sm">
-          {error?.message ?? "Failed to load products."}
-        </p>
-      ) : products && products.length > 0 ? (
-        <ProductGrid products={products} />
-      ) : (
-        <p className="text-muted-foreground text-sm">No products found.</p>
-      )}
-    </section>
-  );
-}
-
 export function HomePageContent() {
   return (
     <PageWrapper className="space-y-14 py-8">
       <Hero />
-      <BrandBar />
-      <ValueProps />
-      <CategoryCards />
-      <ProductSection
-        title="Featured products"
-        action={{ label: "View all", href: ROUTES.products }}
-        params={{ pageSize: 8, sort: "best_selling", isFeatured: true }}
-      />
-      <ProductSection
-        title="Best sellers"
-        action={{ label: "Shop best sellers", href: `${ROUTES.products}?sort=best_selling` }}
-        params={{ pageSize: 4, sort: "best_selling" }}
-      />
-      <ProductSection
-        title="New arrivals"
-        action={{ label: "See what's new", href: `${ROUTES.products}?sort=newest` }}
-        params={{ pageSize: 4, sort: "newest", isNewArrival: true }}
-      />
+      <HomepageBrandSections />
 
       <section className="relative overflow-hidden rounded-3xl bg-[linear-gradient(135deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] px-6 py-12 text-white shadow-xl sm:px-12 sm:py-16">
         <div className="relative z-10 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">

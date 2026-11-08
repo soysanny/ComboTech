@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Pencil, Plus, Trash2, Upload } from "lucide-react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { AdminPageShell } from "@/components/layout/AdminPageShell";
 import { DataTable } from "@/components/tables/DataTable";
@@ -25,6 +25,7 @@ import {
   useDeleteProduct,
 } from "../hooks/useAdmin";
 import { ProductForm } from "./ProductForm";
+import { BulkProductImportForm } from "./BulkProductImportForm";
 import type { Product, CreateProductInput } from "@/features/products/types";
 import { formatCurrency } from "@/utils/formatCurrency";
 import type { DataTableColumn } from "@/components/tables/DataTable";
@@ -35,6 +36,7 @@ export function AdminProductsContent() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const [editing, setEditing] = useState<Product | undefined>(undefined);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
@@ -136,15 +138,21 @@ export function AdminProductsContent() {
         onSearchChange={handleSearchChange}
         searchPlaceholder="Search products..."
         actions={
-          <Button
-            onClick={() => {
-              setEditing(undefined);
-              setDialogOpen(true);
-            }}
-          >
-            <Plus className="mr-1.5 size-4" />
-            Add product
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={() => setImportOpen(true)}>
+              <Upload className="mr-1.5 size-4" />
+              Import
+            </Button>
+            <Button
+              onClick={() => {
+                setEditing(undefined);
+                setDialogOpen(true);
+              }}
+            >
+              <Plus className="mr-1.5 size-4" />
+              Add product
+            </Button>
+          </div>
         }
       />
 
@@ -184,6 +192,15 @@ export function AdminProductsContent() {
             onSubmit={handleSubmit}
             loading={create.isPending || update.isPending}
           />
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={importOpen} onOpenChange={setImportOpen}>
+        <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Import products</DialogTitle>
+          </DialogHeader>
+          <BulkProductImportForm onImported={() => setImportOpen(false)} />
         </DialogContent>
       </Dialog>
 

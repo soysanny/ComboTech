@@ -7,14 +7,12 @@ import { useState } from "react";
 import { ROUTES } from "@/constants/routes";
 import {
   SITE,
-  SOCIAL_LINKS,
   CATEGORY_NAV,
   BRAND_NAV,
   brandNavHref,
 } from "@/constants/site";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { SocialIcon } from "@/components/icons/social-icons";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { toggleTheme } from "@/redux/slices/themeSlice";
 import { SearchBox } from "./SearchBox";
@@ -46,26 +44,6 @@ function Logo() {
         </span>
       </span>
     </Link>
-  );
-}
-
-function SocialLinks({ className }: { className?: string }) {
-  return (
-    <div className={cn("items-center gap-0.5", className)}>
-      {SOCIAL_LINKS.map((social) => (
-        <a
-          key={social.key}
-          href={social.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={social.label}
-          title={social.label}
-          className="text-muted-foreground hover:bg-muted hover:text-foreground inline-flex size-8 items-center justify-center rounded-lg transition-colors"
-        >
-          <SocialIcon name={social.key} className="size-4" />
-        </a>
-      ))}
-    </div>
   );
 }
 
@@ -149,7 +127,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1">
-          <SocialLinks className="hidden lg:flex" />
           <a
             href={SITE.phoneHref}
             className="text-muted-foreground hover:text-foreground hidden items-center gap-1.5 rounded-lg px-2 text-sm font-semibold transition-colors lg:flex"
@@ -254,7 +231,6 @@ export function Header() {
               {SITE.phoneDisplay}
             </a>
           </div>
-          <SocialLinks className="mt-2 flex" />
         </nav>
       </div>
     </header>

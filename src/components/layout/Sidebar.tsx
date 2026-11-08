@@ -12,6 +12,7 @@ import {
   MessageSquare,
   Ticket,
   ImageIcon,
+  LayoutGrid,
   ScrollText,
   LogOut,
   Menu,
@@ -39,6 +40,7 @@ const adminItems: SidebarItem[] = [
   { label: "Payments", href: ROUTES.adminPayments, icon: CreditCard },
   { label: "Coupons", href: ROUTES.adminCoupons, icon: Ticket },
   { label: "Banners", href: ROUTES.adminBanners, icon: ImageIcon },
+  { label: "Homepage", href: ROUTES.adminHomepage, icon: LayoutGrid },
   { label: "Logs", href: ROUTES.adminLogs, icon: ScrollText },
 ];
 

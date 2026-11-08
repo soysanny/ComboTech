@@ -5,6 +5,8 @@ import { toast } from "@/lib/toast";
 import type { Category, CreateProductInput } from "@/features/products/types";
 import { productKeys } from "@/features/products/hooks/useProducts";
 import { bannerKeys } from "@/features/banners/hooks/useBanners";
+import { homepageKeys } from "@/features/homepage/hooks/useHomepageBrandSections";
+import type { HomepageBrandSection } from "@/features/homepage/types";
 import { adminService } from "../services/adminService";
 import type { Banner, Coupon, CreateCouponInput } from "../types";
 
@@ -18,6 +20,8 @@ export const adminKeys = {
   payments: () => [...adminKeys.all, "payments"] as const,
   coupons: () => [...adminKeys.all, "coupons"] as const,
   banners: () => [...adminKeys.all, "banners"] as const,
+  homepageBrandSections: () =>
+    [...adminKeys.all, "homepage-brand-sections"] as const,
   logs: () => [...adminKeys.all, "logs"] as const,
   messages: () => [...adminKeys.all, "messages"] as const,
 };
@@ -66,6 +70,25 @@ export function useUpdateProduct() {
       toast.success("Product updated");
     },
     onError: (error: Error) => toast.error(error.message ?? "Failed to update product"),
+  });
+}
+
+export function useBulkCreateProducts() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (products: CreateProductInput[]) =>
+      adminService.bulkCreateProducts(products),
+    onSuccess: (result) => {
+      void queryClient.invalidateQueries({ queryKey: adminKeys.products() });
+      void queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
+      void queryClient.invalidateQueries({ queryKey: productKeys.all });
+      void queryClient.invalidateQueries({ queryKey: homepageKeys.all });
+      toast.success(
+        `Imported ${result.created} product${result.created === 1 ? "" : "s"}`,
+      );
+    },
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to import products"),
   });
 }
 
@@ -281,6 +304,32 @@ export function useDeleteBanner() {
       toast.success("Banner deleted");
     },
     onError: (error: Error) => toast.error(error.message ?? "Failed to delete banner"),
+  });
+}
+
+// --- Homepage brand sections ---
+
+export function useAdminHomepageBrandSections() {
+  return useQuery({
+    queryKey: adminKeys.homepageBrandSections(),
+    queryFn: () => adminService.getHomepageBrandSections(),
+  });
+}
+
+export function useSaveHomepageBrandSections() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (sections: HomepageBrandSection[]) =>
+      adminService.saveHomepageBrandSections(sections),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: adminKeys.homepageBrandSections(),
+      });
+      void queryClient.invalidateQueries({ queryKey: homepageKeys.all });
+      toast.success("Homepage sections saved");
+    },
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to save homepage sections"),
   });
 }
 

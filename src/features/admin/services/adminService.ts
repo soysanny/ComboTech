@@ -16,6 +16,10 @@ import type {
   Customer,
 } from "../types";
 import type { ContactMessage } from "@/features/contact/types";
+import type {
+  HomepageBrandSection,
+  HomepageBrandSectionsAdminData,
+} from "@/features/homepage/types";
 
 interface PaymentRow {
   id: string;
@@ -40,6 +44,11 @@ export const adminService = {
     }),
   createProduct: (input: CreateProductInput) =>
     apiClient.post<{ data: Product }>(ENDPOINTS.admin.products, input),
+  bulkCreateProducts: (products: CreateProductInput[]) =>
+    apiClient.post<{ created: number; skipped: number }>(
+      ENDPOINTS.admin.productsBulk,
+      { products },
+    ),
   updateProduct: (id: string, input: Partial<CreateProductInput>) =>
     apiClient.put<{ data: Product }>(ENDPOINTS.admin.product(id), input),
   deleteProduct: (id: string) =>
@@ -106,6 +115,19 @@ export const adminService = {
     apiClient.put<{ data: Banner }>(`${ENDPOINTS.admin.banners}/${id}`, input),
   deleteBanner: (id: string) =>
     apiClient.delete<{ success: boolean }>(`${ENDPOINTS.admin.banners}/${id}`),
+
+  // Homepage brand sections
+  getHomepageBrandSections: () =>
+    apiClient.get<HomepageBrandSectionsAdminData>(
+      ENDPOINTS.admin.homepageBrandSections,
+    ),
+  saveHomepageBrandSections: (sections: HomepageBrandSection[]) =>
+    apiClient
+      .put<{ data: HomepageBrandSection[] }>(
+        ENDPOINTS.admin.homepageBrandSections,
+        { sections },
+      )
+      .then((res) => res.data),
 
   // Logs
   getLogs: (page = 1, pageSize = 10) =>
