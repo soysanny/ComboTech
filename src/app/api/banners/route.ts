@@ -2,6 +2,13 @@ import { NextResponse } from "next/server";
 import { getCollection } from "@/lib/db";
 import type { Banner } from "@/features/admin/types";
 
+function toPublicBanner(banner: Banner): Banner {
+  const published = { ...banner };
+  delete published.draftTitle;
+  delete published.draftTitleStyle;
+  return published;
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type") as Banner["type"] | null;
@@ -12,5 +19,5 @@ export async function GET(request: Request) {
 
   const filtered = type ? banners.filter((b) => b.type === type) : banners;
 
-  return NextResponse.json({ data: filtered });
+  return NextResponse.json({ data: filtered.map(toPublicBanner) });
 }

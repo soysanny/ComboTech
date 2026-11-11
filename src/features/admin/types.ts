@@ -52,6 +52,35 @@ export type CreateCouponInput = Omit<Coupon, "id" | "usedCount">;
 
 export type BannerType = "homepage" | "promotion";
 
+export type BannerTitleFont = "sans" | "brand" | "mono";
+export type BannerTextAlign = "left" | "center" | "right";
+export type BannerHorizontalPosition = "left" | "center" | "right";
+export type BannerVerticalPosition = "top" | "middle" | "bottom";
+
+/** Per-banner title presentation, persisted with the banner document. */
+export interface BannerTitleStyle {
+  fontFamily: BannerTitleFont;
+  fontSize: number;
+  mobileFontSize: number;
+  fontWeight: number;
+  color: string;
+  lineHeight: number;
+  letterSpacing: number;
+  textAlign: BannerTextAlign;
+  maxWidth: number;
+  mobileMaxWidth: number;
+  horizontalPosition: BannerHorizontalPosition;
+  verticalPosition: BannerVerticalPosition;
+  paddingX: number;
+  paddingY: number;
+  mobilePaddingX: number;
+  mobilePaddingY: number;
+  buttonGap: number;
+  mobileButtonGap: number;
+  maxLinesEnabled: boolean;
+  maxLines: number;
+}
+
 export interface Banner {
   id: string;
   title: string;
@@ -60,6 +89,12 @@ export interface Banner {
   type: BannerType;
   active: boolean;
   order: number;
+  /** Published title styling. Missing on legacy banners. */
+  titleStyle?: BannerTitleStyle;
+  /** Draft title that is only visible in the admin editor. */
+  draftTitle?: string | null;
+  /** Draft title styling that is only visible in the admin editor. */
+  draftTitleStyle?: BannerTitleStyle | null;
 }
 
 export type ActivityLogType =

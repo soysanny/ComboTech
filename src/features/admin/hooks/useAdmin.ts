@@ -309,6 +309,21 @@ export function useUpdateBanner() {
   });
 }
 
+/** Persists title draft fields without invalidating the public homepage. */
+export function useSaveBannerDraft() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, input }: { id: string; input: Partial<Banner> }) =>
+      adminService.updateBanner(id, input),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: adminKeys.banners() });
+      toast.success("Draft saved");
+    },
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to save banner draft"),
+  });
+}
+
 export function useDeleteBanner() {
   const queryClient = useQueryClient();
   return useMutation({

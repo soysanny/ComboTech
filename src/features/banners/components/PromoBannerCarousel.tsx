@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,39 @@ function bannerHref(banner: Banner) {
 
 function isExternal(href: string) {
   return /^https?:\/\//i.test(href);
+}
+
+const DEPTH_SCALE = 0.06;
+const DEPTH_ROTATE = 4;
+const DEPTH_SETTLE_MS = 160;
+
+/**
+ * Applies a subtle scale/rotateY depth effect to each card's inner visual
+ * wrapper based on its distance from the viewport centre. The wrapper is
+ * separate from the card that defines the track layout, so positions and
+ * sizes never change. Passing `false` clears the effect back to scale 1.
+ */
+function applyCardDepth(track: HTMLDivElement, enabled: boolean) {
+  const cards = Array.from(track.children) as HTMLElement[];
+  const trackRect = track.getBoundingClientRect();
+  const centreX = trackRect.left + trackRect.width / 2;
+  const halfWidth = trackRect.width / 2 || 1;
+
+  for (const card of cards) {
+    const visual = card.querySelector<HTMLElement>("[data-promo-visual]");
+    if (!visual) continue;
+
+    if (!enabled) {
+      if (visual.style.transform) visual.style.transform = "";
+      continue;
+    }
+
+    const rect = card.getBoundingClientRect();
+    const offset = (rect.left + rect.width / 2 - centreX) / halfWidth;
+    const depth = Math.min(1, Math.abs(offset));
+
+    visual.style.transform = `perspective(1200px) translateZ(${(-depth * 18).toFixed(2)}px) rotateY(${(offset * DEPTH_ROTATE).toFixed(2)}deg) scale(${(1 - depth * DEPTH_SCALE).toFixed(3)})`;
+  }
 }
 
 function PromoCard({ banner }: { banner: Banner }) {
@@ -42,26 +76,31 @@ function PromoCard({ banner }: { banner: Banner }) {
   );
 
   return (
-    <div className="group/promo hover:border-primary/30 surface-glass relative aspect-[16/9] w-[82%] shrink-0 overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_30px_80px_-40px_rgba(37,99,235,0.35)] sm:aspect-[16/7] sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)] xl:w-[calc(25%-0.75rem)]">
-      {isExternal(href) ? (
-        <a
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          className="block h-full w-full"
-          aria-label={banner.title}
-        >
-          {content}
-        </a>
-      ) : (
-        <Link
-          href={href}
-          className="block h-full w-full"
-          aria-label={banner.title}
-        >
-          {content}
-        </Link>
-      )}
+    <div className="group/promo hover:border-primary/30 surface-glass relative aspect-[16/9] w-[82%] shrink-0 overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_30px_80px_-40px_rgba(37,99,235,0.35)] sm:aspect-[16/7] sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]">
+      <div
+        data-promo-visual
+        className="relative h-full w-full origin-center transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] will-change-transform motion-reduce:transition-none"
+      >
+        {isExternal(href) ? (
+          <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            className="block h-full w-full"
+            aria-label={banner.title}
+          >
+            {content}
+          </a>
+        ) : (
+          <Link
+            href={href}
+            className="block h-full w-full"
+            aria-label={banner.title}
+          >
+            {content}
+          </Link>
+        )}
+      </div>
     </div>
   );
 }
@@ -73,7 +112,7 @@ function PromoCarouselSkeleton() {
         <div
           key={index}
           className={cn(
-            "aspect-[16/9] w-[82%] shrink-0 overflow-hidden rounded-2xl sm:aspect-[16/7] sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)] xl:w-[calc(25%-0.75rem)]",
+            "aspect-[16/9] w-[82%] shrink-0 overflow-hidden rounded-2xl sm:aspect-[16/7] sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]",
             index > 1 && "hidden lg:block",
           )}
         >
@@ -94,6 +133,9 @@ export function PromoBannerCarousel() {
   } = useBanners("promotion");
   const trackRef = useRef<HTMLDivElement>(null);
   const [canScroll, setCanScroll] = useState({ left: false, right: false });
+  const prefersReducedMotion = useMediaQuery(
+    "(prefers-reduced-motion: reduce)",
+  );
 
   const updateScrollState = useCallback(() => {
     const track = trackRef.current;
@@ -109,17 +151,38 @@ export function PromoBannerCarousel() {
     const track = trackRef.current;
     if (!track) return;
 
-    updateScrollState();
-    track.addEventListener("scroll", updateScrollState, { passive: true });
+    let settleTimer = 0;
 
-    const observer = new ResizeObserver(updateScrollState);
+    const handleScroll = () => {
+      updateScrollState();
+
+      if (prefersReducedMotion) return;
+
+      applyCardDepth(track, true);
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(
+        () => applyCardDepth(track, false),
+        DEPTH_SETTLE_MS,
+      );
+    };
+
+    const handleResize = () => {
+      updateScrollState();
+      applyCardDepth(track, false);
+    };
+
+    handleResize();
+    track.addEventListener("scroll", handleScroll, { passive: true });
+
+    const observer = new ResizeObserver(handleResize);
     observer.observe(track);
 
     return () => {
-      track.removeEventListener("scroll", updateScrollState);
+      track.removeEventListener("scroll", handleScroll);
       observer.disconnect();
+      window.clearTimeout(settleTimer);
     };
-  }, [updateScrollState, banners]);
+  }, [updateScrollState, prefersReducedMotion, banners]);
 
   const scrollByCards = (direction: -1 | 1) => {
     const track = trackRef.current;

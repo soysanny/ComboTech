@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCollection, saveCollection, paginate } from "@/lib/db";
 import { getAuth, unauthorized } from "@/lib/auth";
+import { bannerCreateSchema } from "@/features/banners/validation";
 import type { Banner } from "@/features/admin/types";
 
 export async function GET(request: Request) {
@@ -19,9 +20,16 @@ export async function POST(request: Request) {
   const auth = await getAuth(request);
   if (!auth || auth.role !== "admin") return unauthorized();
 
-  const body = (await request.json()) as Omit<Banner, "id">;
+  const parsed = bannerCreateSchema.safeParse(await request.json());
+  if (!parsed.success) {
+    return NextResponse.json(
+      { message: "Invalid banner data", issues: parsed.error.issues },
+      { status: 400 },
+    );
+  }
+
   const newBanner: Banner = {
-    ...body,
+    ...parsed.data,
     id: `banner-${Date.now()}`,
   };
 

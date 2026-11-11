@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Menu, X, Sun, Moon, Computer, Phone } from "lucide-react";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { ROUTES } from "@/constants/routes";
 import { SITE, CATEGORY_NAV, BRAND_NAV, brandNavHref } from "@/constants/site";
 import { cn } from "@/lib/utils";
@@ -24,17 +24,17 @@ function Logo() {
   return (
     <Link
       href={ROUTES.home}
-      className="group inline-flex shrink-0 items-center gap-2.5"
+      className="group inline-flex shrink-0 items-center gap-3 rounded-xl"
       aria-label="Go to homepage"
     >
-      <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[linear-gradient(140deg,oklch(0.72_0.15_245),oklch(0.62_0.14_285))] text-sm font-bold text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
-        <Computer className="size-5" strokeWidth={2.5} />
+      <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[linear-gradient(140deg,oklch(0.72_0.15_245),oklch(0.62_0.14_285))] text-white shadow-[0_10px_24px_-14px_rgba(56,189,248,0.75)] ring-1 ring-white/15 transition-shadow duration-200 group-hover:shadow-[0_14px_30px_-14px_rgba(56,189,248,0.9)]">
+        <Computer className="size-[22px]" strokeWidth={2.5} />
       </span>
-      <span className="hidden flex-col leading-none sm:flex">
-        <span className="font-brand text-base font-semibold tracking-tight">
+      <span className="hidden flex-col gap-1 leading-none whitespace-nowrap sm:flex">
+        <span className="font-brand text-lg font-semibold tracking-tight">
           CamboTech
         </span>
-        <span className="text-muted-foreground text-[10px] font-medium tracking-wide">
+        <span className="text-[11px] font-medium tracking-wide text-[var(--app-muted)]">
           {SITE.tagline}
         </span>
       </span>
@@ -50,34 +50,48 @@ function ThemeToggle() {
     <Button
       type="button"
       variant="ghost"
-      size="icon-sm"
+      size="icon"
       onClick={() => dispatch(toggleTheme())}
       aria-label={`Switch theme, currently ${mode}`}
       title="Toggle theme"
+      className="text-foreground/70 hover:text-foreground hover:bg-[var(--hover-bg)]"
     >
-      <Sun className="size-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-      <Moon className="absolute size-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+      <Sun className="size-[18px] scale-100 rotate-0 transition-all duration-200 dark:scale-0 dark:-rotate-90" />
+      <Moon className="absolute size-[18px] scale-0 rotate-90 transition-all duration-200 dark:scale-100 dark:rotate-0" />
     </Button>
   );
 }
 
-/** Category navigation row — mirrors CC Computer's storefront menu. */
-function CategoryNav() {
+function CategoryNavItems({
+  activeCategory,
+}: {
+  activeCategory?: string | null;
+}) {
   return (
     <div className="border-t border-[var(--surface-border)] bg-[var(--subtle-bg)]">
-      <div className="mx-auto flex w-full max-w-7xl items-center gap-1 overflow-x-auto px-4 py-1.5 sm:px-6 lg:px-8">
-        {CATEGORY_NAV.map((category) => (
-          <Link
-            key={category.slug}
-            href={`${ROUTES.products}?category=${category.slug}`}
-            className="text-muted-foreground hover:text-foreground shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-wide whitespace-nowrap uppercase transition-colors hover:bg-[var(--hover-bg)]"
-          >
-            {category.label}
-          </Link>
-        ))}
+      <div className="mx-auto flex w-full max-w-7xl [scrollbar-width:none] items-center gap-1 overflow-x-auto overscroll-x-contain px-4 py-2 sm:px-6 lg:px-8 [&::-webkit-scrollbar]:hidden">
+        {CATEGORY_NAV.map((category) => {
+          const isActive = activeCategory === category.slug;
+
+          return (
+            <Link
+              key={category.slug}
+              href={`${ROUTES.products}?category=${category.slug}`}
+              aria-current={isActive ? "page" : undefined}
+              className={cn(
+                "shrink-0 rounded-lg border px-3.5 py-2 text-[13px] font-medium tracking-normal whitespace-nowrap transition-colors duration-200",
+                isActive
+                  ? "text-foreground border-[var(--surface-border)] bg-[var(--hover-bg)]"
+                  : "text-foreground/70 hover:text-foreground border-transparent hover:bg-[var(--hover-bg)]",
+              )}
+            >
+              {category.label}
+            </Link>
+          );
+        })}
         <Link
           href={ROUTES.contact}
-          className="text-primary shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-wide whitespace-nowrap uppercase transition-colors hover:bg-[var(--hover-bg)]"
+          className="text-primary hover:text-primary/90 shrink-0 rounded-lg border border-transparent px-3.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-colors duration-200 hover:bg-[var(--hover-bg)]"
         >
           Contact Us
         </Link>
@@ -86,16 +100,27 @@ function CategoryNav() {
   );
 }
 
+/** Category navigation row — mirrors CC Computer's storefront menu. */
+function CategoryNav() {
+  const searchParams = useSearchParams();
+
+  return <CategoryNavItems activeCategory={searchParams.get("category")} />;
+}
+
+function CategoryNavFallback() {
+  return <CategoryNavItems />;
+}
+
 export function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--surface-border)] bg-[var(--nav-bg)] shadow-[0_10px_40px_-30px_rgba(15,23,42,0.25)] supports-[backdrop-filter]:backdrop-blur-2xl">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 border-b border-[var(--surface-border)] bg-[var(--nav-bg)] shadow-[0_18px_50px_-38px_rgba(0,0,0,0.8)] supports-[backdrop-filter]:backdrop-blur-2xl">
+      <div className="mx-auto flex h-[4.5rem] w-full max-w-7xl items-center justify-between gap-4 px-4 sm:gap-5 sm:px-6 lg:gap-6 lg:px-8">
         <Logo />
 
-        <SearchBox className="hidden max-w-md flex-1 md:block" />
+        <SearchBox className="hidden max-w-lg flex-1 md:block" />
 
         <nav className="hidden items-center gap-1 xl:flex" aria-label="Primary">
           {navItems.map((item) => {
@@ -108,11 +133,12 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "relative rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200",
+                  "relative rounded-lg border px-3.5 py-2.5 text-[15px] font-medium transition-colors duration-200",
                   isActive
-                    ? "active-pill border border-[var(--surface-border)] text-white shadow-[0_8px_24px_-18px_rgba(96,165,250,0.8)]"
-                    : "text-muted-foreground hover:text-foreground hover:bg-[var(--hover-bg)]",
+                    ? "border-primary/25 bg-primary/10 text-foreground after:via-primary/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] after:absolute after:inset-x-3.5 after:bottom-1 after:h-px after:rounded-full after:bg-gradient-to-r after:from-transparent after:to-transparent after:content-['']"
+                    : "text-foreground/70 hover:text-foreground border-transparent hover:bg-[var(--hover-bg)]",
                 )}
               >
                 {item.label}
@@ -121,20 +147,24 @@ export function Header() {
           })}
         </nav>
 
-        <div className="flex items-center gap-1">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <a
             href={SITE.phoneHref}
-            className="text-muted-foreground hover:text-foreground hidden items-center gap-1.5 rounded-lg px-2 text-sm font-semibold transition-colors lg:flex"
+            className="text-foreground/70 hover:text-foreground hidden items-center gap-2 rounded-lg px-2.5 py-2 text-[15px] font-medium tabular-nums transition-colors duration-200 hover:bg-[var(--hover-bg)] lg:flex"
           >
-            <Phone className="size-3.5" />
+            <Phone className="text-primary size-[18px]" />
             {SITE.phoneDisplay}
           </a>
+          <span
+            className="hidden h-5 w-px bg-[var(--surface-border)] lg:block"
+            aria-hidden
+          />
           <ThemeToggle />
 
           <Button
             type="button"
             variant="ghost"
-            size="icon-sm"
+            size="icon"
             className="xl:hidden"
             onClick={() => setIsMenuOpen((open) => !open)}
             aria-expanded={isMenuOpen}
@@ -150,17 +180,21 @@ export function Header() {
         </div>
       </div>
 
-      <CategoryNav />
+      <Suspense fallback={<CategoryNavFallback />}>
+        <CategoryNav />
+      </Suspense>
 
       <div
         id="mobile-nav"
         className={cn(
-          "overflow-hidden border-t border-[var(--surface-border)] bg-[var(--surface-strong-bg)] backdrop-blur-2xl transition-all duration-300 ease-in-out xl:hidden",
-          isMenuOpen ? "max-h-[36rem] opacity-100" : "max-h-0 opacity-0",
+          "border-t border-[var(--surface-border)] bg-[var(--surface-strong-bg)] backdrop-blur-2xl transition-all duration-300 ease-in-out xl:hidden",
+          isMenuOpen
+            ? "max-h-[calc(100dvh-7rem)] overflow-y-auto opacity-100"
+            : "max-h-0 overflow-hidden opacity-0",
         )}
       >
         <nav
-          className="mx-auto grid max-w-7xl gap-1 px-4 py-3 sm:px-6"
+          className="mx-auto grid max-w-7xl gap-1.5 px-4 py-4 sm:px-6"
           aria-label="Mobile primary"
         >
           <SearchBox mobile className="mb-2 md:hidden" />
@@ -171,10 +205,10 @@ export function Header() {
               href={item.href}
               onClick={() => setIsMenuOpen(false)}
               className={cn(
-                "rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                "rounded-lg border px-3.5 py-3 text-[15px] font-medium transition-colors duration-200",
                 pathname === item.href
-                  ? "active-pill border border-[var(--surface-border)] text-white"
-                  : "text-muted-foreground hover:text-foreground hover:bg-[var(--hover-bg)]",
+                  ? "border-primary/25 bg-primary/10 text-foreground"
+                  : "text-foreground/70 hover:text-foreground border-transparent hover:bg-[var(--hover-bg)]",
               )}
             >
               {item.label}
@@ -182,16 +216,16 @@ export function Header() {
           ))}
 
           <div className="border-border/60 mt-2 border-t pt-3">
-            <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wide uppercase">
+            <p className="text-foreground/60 mb-2 text-[11px] font-semibold tracking-wider uppercase">
               Shop by category
             </p>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {CATEGORY_NAV.map((category) => (
                 <Link
                   key={category.slug}
                   href={`${ROUTES.products}?category=${category.slug}`}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-muted-foreground hover:text-foreground rounded-full border border-[var(--surface-border)] bg-[var(--subtle-bg)] px-3 py-1 text-xs font-medium transition-colors"
+                  className="text-foreground/70 hover:text-foreground rounded-full border border-[var(--surface-border)] bg-[var(--subtle-bg)] px-3.5 py-1.5 text-[13px] font-medium transition-colors duration-200 hover:border-[var(--surface-border-hover)]"
                 >
                   {category.label}
                 </Link>
@@ -200,16 +234,16 @@ export function Header() {
           </div>
 
           <div className="border-border/60 mt-3 border-t pt-3">
-            <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wide uppercase">
+            <p className="text-foreground/60 mb-2 text-[11px] font-semibold tracking-wider uppercase">
               Brands
             </p>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {BRAND_NAV.map((brand) => (
                 <Link
                   key={brand.label}
                   href={brandNavHref(brand)}
                   onClick={() => setIsMenuOpen(false)}
-                  className="text-muted-foreground hover:text-foreground rounded-full border border-[var(--surface-border)] bg-[var(--subtle-bg)] px-3 py-1 text-xs font-semibold uppercase transition-colors"
+                  className="text-foreground/70 hover:text-foreground rounded-full border border-[var(--surface-border)] bg-[var(--subtle-bg)] px-3.5 py-1.5 text-[11px] font-semibold tracking-wide uppercase transition-colors duration-200 hover:border-[var(--surface-border-hover)]"
                 >
                   {brand.label}
                 </Link>
@@ -220,9 +254,9 @@ export function Header() {
           <div className="mt-3 flex items-center gap-2">
             <a
               href={SITE.phoneHref}
-              className="text-muted-foreground flex items-center gap-1.5 text-sm font-semibold"
+              className="text-foreground/70 hover:text-foreground flex items-center gap-2 text-[15px] font-medium transition-colors duration-200"
             >
-              <Phone className="size-4" />
+              <Phone className="text-primary size-[18px]" />
               {SITE.phoneDisplay}
             </a>
           </div>

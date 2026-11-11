@@ -9,6 +9,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 import { useBanners } from "../hooks/useBanners";
+import { BannerSlideContent } from "./BannerSlideContent";
 import type { Banner } from "@/features/admin/types";
 
 const AUTOPLAY_MS = 8000;
@@ -265,28 +266,12 @@ function BannerCarousel({ banners }: { banners: Banner[] }) {
               (physicalIndex === 0 || physicalIndex === total + 1);
             const href = bannerHref(banner);
             const slide = (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={banner.imageUrl}
-                  alt={banner.title}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  loading={index === 0 ? "eager" : "lazy"}
-                  fetchPriority={index === 0 ? "high" : "auto"}
-                  decoding="async"
-                  draggable={false}
-                />
-                <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
-                <span className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-start gap-3 p-5 text-white sm:p-8 lg:p-10">
-                  <span className="line-clamp-2 max-w-xl text-lg font-bold tracking-tight drop-shadow-sm sm:text-2xl lg:text-3xl">
-                    {banner.title}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-semibold text-slate-900 shadow-sm sm:text-sm">
-                    Shop now
-                    <ArrowRight className="size-3.5" />
-                  </span>
-                </span>
-              </>
+              <BannerSlideContent
+                title={banner.title}
+                imageUrl={banner.imageUrl}
+                titleStyle={banner.titleStyle}
+                priority={index === 0}
+              />
             );
 
             return (

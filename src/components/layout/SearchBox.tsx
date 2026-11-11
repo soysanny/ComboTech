@@ -74,14 +74,14 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
     <form
       ref={containerRef}
       onSubmit={handleSubmit}
-      className={`relative ${className ?? ""}`}
+      className={`group relative ${className ?? ""}`}
     >
-      <Search className="text-muted-foreground/70 absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+      <Search className="text-foreground/50 group-focus-within:text-primary pointer-events-none absolute top-1/2 left-4 size-[18px] -translate-y-1/2 transition-colors duration-200" />
       <Input
         type="search"
         placeholder="Search products, brands, categories..."
-        className={`input-glass pl-10 transition-all ${
-          mobile ? "h-10" : "h-9"
+        className={`input-glass focus-visible:border-primary/50 focus-visible:ring-primary/20 caret-primary h-11 pl-11 text-[15px] transition-all placeholder:text-[var(--app-muted)] hover:border-[var(--surface-border-hover)] focus-visible:ring-[3px] ${
+          mobile ? "pr-4" : "pr-24"
         }`}
         value={query}
         onChange={(event) => {
@@ -96,7 +96,7 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
         <Button
           type="submit"
           size="sm"
-          className="absolute top-1/2 right-1.5 -translate-y-1/2"
+          className="absolute top-1/2 right-1.5 h-9 -translate-y-1/2 rounded-lg px-4 text-[13px] font-semibold"
         >
           Search
         </Button>

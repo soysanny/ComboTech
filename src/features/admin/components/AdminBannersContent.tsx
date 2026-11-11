@@ -21,8 +21,10 @@ import {
   useAdminBanners,
   useCreateBanner,
   useUpdateBanner,
+  useSaveBannerDraft,
   useDeleteBanner,
 } from "../hooks/useAdmin";
+import { hasBannerDraft } from "@/features/banners/titleStyle";
 import { BannerForm, type BannerFormData } from "./BannerForm";
 import type { Banner } from "../types";
 import type { DataTableColumn } from "@/components/tables/DataTable";
@@ -38,26 +40,50 @@ export function AdminBannersContent() {
   const { data, isLoading, isError, error } = useAdminBanners(page, pageSize);
   const create = useCreateBanner();
   const update = useUpdateBanner();
+  const saveDraft = useSaveBannerDraft();
   const remove = useDeleteBanner();
 
   const filtered = useMemo(() => {
     const list = data?.data ?? [];
     if (!search) return list;
     const term = search.toLowerCase();
-    return list.filter((banner) => banner.title.toLowerCase().includes(term));
+    return list.filter((banner) =>
+      (banner.draftTitle ?? banner.title).toLowerCase().includes(term),
+    );
   }, [data, search]);
 
   const total = data?.total ?? 0;
 
   const columns: DataTableColumn<Banner>[] = [
-    { key: "title", header: "Title", render: (row) => row.title },
-    { key: "type", header: "Type", render: (row) => <Badge variant="outline">{row.type}</Badge> },
+    {
+      key: "title",
+      header: "Title",
+      render: (row) => (
+        <div className="flex items-center gap-2">
+          <span className="min-w-0 truncate">{row.title}</span>
+          {hasBannerDraft(row) && (
+            <Badge variant="secondary" className="shrink-0">
+              Draft
+            </Badge>
+          )}
+        </div>
+      ),
+    },
+    {
+      key: "type",
+      header: "Type",
+      render: (row) => <Badge variant="outline">{row.type}</Badge>,
+    },
     { key: "order", header: "Order", render: (row) => row.order },
     {
       key: "active",
       header: "Status",
       render: (row) =>
-        row.active ? <Badge variant="default">Active</Badge> : <Badge variant="secondary">Inactive</Badge>,
+        row.active ? (
+          <Badge variant="default">Active</Badge>
+        ) : (
+          <Badge variant="secondary">Inactive</Badge>
+        ),
     },
     {
       key: "actions",
@@ -89,12 +115,36 @@ export function AdminBannersContent() {
     },
   ];
 
-  const handleSubmit = (formData: BannerFormData) => {
+  const handlePublish = (formData: BannerFormData) => {
     if (editing) {
-      update.mutate({ id: editing.id, input: formData }, { onSuccess: () => setDialogOpen(false) });
+      update.mutate(
+        {
+          id: editing.id,
+          input: {
+            ...formData,
+            draftTitle: null,
+            draftTitleStyle: null,
+          },
+        },
+        { onSuccess: () => setDialogOpen(false) },
+      );
     } else {
       create.mutate(formData, { onSuccess: () => setDialogOpen(false) });
     }
+  };
+
+  const handleSaveDraft = (formData: BannerFormData) => {
+    if (!editing) return;
+    saveDraft.mutate(
+      {
+        id: editing.id,
+        input: {
+          draftTitle: formData.title,
+          draftTitleStyle: formData.titleStyle,
+        },
+      },
+      { onSuccess: (result) => setEditing(result.data) },
+    );
   };
 
   const handleDelete = () => {
@@ -131,7 +181,9 @@ export function AdminBannersContent() {
         <EmptyState
           title="Failed to load banners"
           description={error?.message ?? "Something went wrong."}
-          action={<Button onClick={() => window.location.reload()}>Try again</Button>}
+          action={
+            <Button onClick={() => window.location.reload()}>Try again</Button>
+          }
         />
       ) : (
         <>
@@ -152,14 +204,18 @@ export function AdminBannersContent() {
       )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-h-[92dvh] overflow-y-auto sm:max-w-5xl">
           <DialogHeader>
             <DialogTitle>{editing ? "Edit banner" : "Add banner"}</DialogTitle>
           </DialogHeader>
           <BannerForm
+            key={editing?.id ?? "new"}
             initialValue={editing}
-            onSubmit={handleSubmit}
-            loading={create.isPending || update.isPending}
+            onSubmit={handlePublish}
+            onSaveDraft={handleSaveDraft}
+            loading={
+              create.isPending || update.isPending || saveDraft.isPending
+            }
           />
         </DialogContent>
       </Dialog>
