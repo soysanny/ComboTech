@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { PromoPopup } from "@/components/layout/PromoPopup";
 import { TickerBar } from "@/components/layout/TickerBar";
 import { FloatingContactButtons } from "@/components/layout/FloatingContactButtons";
 import { BackToTop } from "@/components/layout/BackToTop";
@@ -16,7 +15,6 @@ export default function UserLayout({ children }: { children: ReactNode }) {
       <Footer />
       <FloatingContactButtons />
       <BackToTop />
-      <PromoPopup />
     </div>
   );
 }

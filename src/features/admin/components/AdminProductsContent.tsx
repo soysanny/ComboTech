@@ -5,7 +5,6 @@ import { Pencil, Plus, Trash2, Upload } from "lucide-react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { AdminPageShell } from "@/components/layout/AdminPageShell";
 import { DataTable } from "@/components/tables/DataTable";
-import { DataTablePagination } from "@/components/tables/DataTablePagination";
 import { DataTableToolbar } from "@/components/tables/DataTableToolbar";
 import { ConfirmDialog } from "@/components/shared/ConfirmDialog";
 import {
@@ -31,8 +30,6 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import type { DataTableColumn } from "@/components/tables/DataTable";
 
 export function AdminProductsContent() {
-  const [page, setPage] = useState(1);
-  const pageSize = 10;
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -41,8 +38,6 @@ export function AdminProductsContent() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const { data, isLoading, isError, error } = useAdminProducts(
-    page,
-    pageSize,
     debouncedSearch || undefined,
   );
   const create = useCreateProduct();
@@ -52,20 +47,27 @@ export function AdminProductsContent() {
   const products = data?.data ?? [];
   const total = data?.total ?? 0;
 
-  const handleSearchChange = (value: string) => {
-    setSearch(value);
-    setPage(1);
-  };
-
   const columns: DataTableColumn<Product>[] = [
     { key: "name", header: "Product", render: (row) => row.name },
     { key: "category", header: "Category", render: (row) => row.category },
-    { key: "price", header: "Price", render: (row) => formatCurrency(row.price, "USD") },
+    {
+      key: "price",
+      header: "Price",
+      render: (row) => formatCurrency(row.price, "USD"),
+    },
     {
       key: "stock",
       header: "Stock",
       render: (row) => (
-        <Badge variant={row.stock === 0 ? "destructive" : row.stock < 10 ? "secondary" : "default"}>
+        <Badge
+          variant={
+            row.stock === 0
+              ? "destructive"
+              : row.stock < 10
+                ? "secondary"
+                : "default"
+          }
+        >
           {row.stock}
         </Badge>
       ),
@@ -135,7 +137,7 @@ export function AdminProductsContent() {
     >
       <DataTableToolbar
         searchValue={search}
-        onSearchChange={handleSearchChange}
+        onSearchChange={setSearch}
         searchPlaceholder="Search products..."
         actions={
           <div className="flex items-center gap-2">
@@ -162,7 +164,9 @@ export function AdminProductsContent() {
         <EmptyState
           title="Failed to load products"
           description={error?.message ?? "Something went wrong."}
-          action={<Button onClick={() => window.location.reload()}>Try again</Button>}
+          action={
+            <Button onClick={() => window.location.reload()}>Try again</Button>
+          }
         />
       ) : (
         <>
@@ -171,21 +175,20 @@ export function AdminProductsContent() {
             data={products}
             getRowId={(row) => row.id}
             emptyMessage="No products found."
+            maxHeight="65vh"
           />
-          <DataTablePagination
-            page={page}
-            pageSize={pageSize}
-            total={total}
-            onPageChange={setPage}
-            className="mt-4"
-          />
+          <p className="text-muted-foreground mt-4 text-sm" aria-live="polite">
+            {total} {total === 1 ? "product" : "products"}
+          </p>
         </>
       )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{editing ? "Edit product" : "Add product"}</DialogTitle>
+            <DialogTitle>
+              {editing ? "Edit product" : "Add product"}
+            </DialogTitle>
           </DialogHeader>
           <ProductForm
             initialValue={editing}

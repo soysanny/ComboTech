@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Sora } from "next/font/google";
 import "./globals.css";
+import { GradientBackground } from "@/components/layout/GradientBackground";
 import { Providers } from "./providers";
 
 const geistSans = Geist({
@@ -37,10 +38,14 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} dark h-full antialiased`}
+      style={{ colorScheme: "dark" }}
     >
-      <body className="flex min-h-full flex-col">
-        <Providers>{children}</Providers>
+      <body className="flex min-h-full flex-col bg-transparent">
+        <GradientBackground />
+        <div className="relative z-10 flex min-h-full flex-col">
+          <Providers>{children}</Providers>
+        </div>
       </body>
     </html>
   );

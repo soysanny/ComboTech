@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense, useMemo } from "react";
+import { useState, useEffect, useRef, Suspense, useMemo } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Search, X, Scale } from "lucide-react";
 import {
@@ -9,7 +9,6 @@ import {
   useProducts,
   ComparisonTable,
 } from "@/features/products";
-import { ProductFilterPanel } from "./ProductFilterPanel";
 import { BrandNav } from "./BrandNav";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,10 @@ import { EmptyState } from "@/components/shared/EmptyState";
 import { Skeleton } from "@/components/shared/Skeleton";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import type { ProductFilters, ProductSortOption } from "../types";
+
+// Show the complete catalog by default; the API caps a single response at this
+// size, and "Load more" raises it further if the catalog ever exceeds it.
+const PAGE_SIZE = 2000;
 
 function ActiveFilterChip({
   label,
@@ -48,10 +51,9 @@ function parseFiltersFromSearchParams(
 ): ProductFilters {
   return {
     search: searchParams.get("search") ?? undefined,
-    category: (searchParams.get("category") as ProductFilters["category"]) ??
-      undefined,
+    category:
+      (searchParams.get("category") as ProductFilters["category"]) ?? undefined,
     brands: searchParams.get("brands")?.split(",") ?? undefined,
-    series: searchParams.get("series")?.split(",") ?? undefined,
     minPrice: searchParams.get("minPrice")
       ? Number(searchParams.get("minPrice"))
       : undefined,
@@ -62,10 +64,8 @@ function parseFiltersFromSearchParams(
     gpu: searchParams.get("gpu")?.split(",") ?? undefined,
     ram: searchParams.get("ram")?.split(",") ?? undefined,
     storage: searchParams.get("storage")?.split(",") ?? undefined,
-    screenSize: searchParams
-      .get("screenSize")
-      ?.split(",")
-      .map(Number) ?? undefined,
+    screenSize:
+      searchParams.get("screenSize")?.split(",").map(Number) ?? undefined,
     ssd: searchParams.get("ssd") === "true" ? true : undefined,
     hdd: searchParams.get("hdd") === "true" ? true : undefined,
     inStockOnly: searchParams.get("inStockOnly") === "true",
@@ -73,40 +73,19 @@ function parseFiltersFromSearchParams(
   };
 }
 
-function useFilterOptions() {
+function useBrandOptions() {
   const { data } = useProducts({ pageSize: 2000 });
-  return useMemo(() => {
-    const products = data?.data ?? [];
-    const unique = <T,>(list: (T | undefined)[]) =>
-      Array.from(new Set(list.filter((item): item is T => item !== undefined)));
-    const seriesByBrand: Record<string, string[]> = {};
-    products.forEach((p) => {
-      if (!p.series) return;
-      (seriesByBrand[p.brand] ??= []).push(p.series);
-    });
-    Object.keys(seriesByBrand).forEach((brand) => {
-      seriesByBrand[brand] = Array.from(new Set(seriesByBrand[brand])).sort();
-    });
-    return {
-      brands: unique(products.map((p) => p.brand)).sort(),
-      series: unique(products.map((p) => p.series)).sort(),
-      seriesByBrand,
-      cpus: unique(products.map((p) => p.specs.cpu)).sort(),
-      gpus: unique(products.map((p) => p.specs.gpu)).sort(),
-      rams: unique(products.map((p) => p.specs.ram)).sort(),
-      storages: unique(products.map((p) => p.specs.storage)).sort(),
-      screenSizes: unique(products.map((p) => p.specs.screenSize)).sort(
-        (a, b) => a - b,
-      ),
-    };
-  }, [data]);
+  return useMemo(
+    () => Array.from(new Set((data?.data ?? []).map((p) => p.brand))).sort(),
+    [data],
+  );
 }
 
 function CatalogContent() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const options = useFilterOptions();
+  const brands = useBrandOptions();
 
   const [filters, setFilters] = useState<ProductFilters>(() =>
     parseFiltersFromSearchParams(searchParams),
@@ -114,21 +93,35 @@ function CatalogContent() {
   const [searchInput, setSearchInput] = useState(
     searchParams.get("search") ?? "",
   );
-  const [compareIds, setCompareIds] = useState<string[]>(() =>
-    searchParams.get("compare")?.split(",").filter(Boolean) ?? [],
+  const [compareIds, setCompareIds] = useState<string[]>(
+    () => searchParams.get("compare")?.split(",").filter(Boolean) ?? [],
   );
+  const [pageSize, setPageSize] = useState(PAGE_SIZE);
+  const searchParamsString = searchParams.toString();
+  const lastQueryRef = useRef(searchParamsString);
 
-  const { data, isLoading, isError, error } = useProducts({
+  const { data, isLoading, isFetching, isError, error } = useProducts({
     ...filters,
-    pageSize: 12,
+    pageSize,
   });
+
+  // Keep the filter state in sync when the URL changes from header links,
+  // browser Back/Forward, or a manual navigation to another category.
+  useEffect(() => {
+    if (searchParamsString === lastQueryRef.current) return;
+
+    const nextParams = new URLSearchParams(searchParamsString);
+    setFilters(parseFiltersFromSearchParams(nextParams));
+    setSearchInput(nextParams.get("search") ?? "");
+    setCompareIds(nextParams.get("compare")?.split(",").filter(Boolean) ?? []);
+    lastQueryRef.current = searchParamsString;
+  }, [searchParamsString]);
 
   useEffect(() => {
     const params = new URLSearchParams();
     if (filters.search) params.set("search", filters.search);
     if (filters.category) params.set("category", filters.category);
     if (filters.brands?.length) params.set("brands", filters.brands.join(","));
-    if (filters.series?.length) params.set("series", filters.series.join(","));
     if (filters.cpu?.length) params.set("cpu", filters.cpu.join(","));
     if (filters.gpu?.length) params.set("gpu", filters.gpu.join(","));
     if (filters.ram?.length) params.set("ram", filters.ram.join(","));
@@ -145,10 +138,12 @@ function CatalogContent() {
     if (filters.inStockOnly) params.set("inStockOnly", "true");
     if (filters.sort && filters.sort !== "newest")
       params.set("sort", filters.sort);
-    if (compareIds.length > 0)
-      params.set("compare", compareIds.join(","));
+    if (compareIds.length > 0) params.set("compare", compareIds.join(","));
 
     const query = params.toString();
+    if (query === lastQueryRef.current) return;
+
+    lastQueryRef.current = query;
     router.replace(`${pathname}${query ? `?${query}` : ""}`, {
       scroll: false,
     });
@@ -188,17 +183,6 @@ function CatalogContent() {
         setFilters((prev) => ({
           ...prev,
           brands: prev.brands?.filter((b) => b !== brand),
-        })),
-    });
-  });
-  filters.series?.forEach((series) => {
-    activeChips.push({
-      key: `series-${series}`,
-      label: series,
-      remove: () =>
-        setFilters((prev) => ({
-          ...prev,
-          series: prev.series?.filter((s) => s !== series),
         })),
     });
   });
@@ -296,7 +280,9 @@ function CatalogContent() {
   return (
     <PageWrapper className="py-8">
       <div className="mb-6 space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Products</h1>
+        <h1 className="text-foreground text-3xl font-bold tracking-tight">
+          Products
+        </h1>
         <p className="text-muted-foreground">
           Browse our catalog of computers, components, and accessories.
         </p>
@@ -305,138 +291,130 @@ function CatalogContent() {
       <BrandNav
         filters={filters}
         onChange={setFilters}
-        brands={options.brands}
-        seriesByBrand={options.seriesByBrand}
+        brands={brands}
         className="mb-8"
       />
 
-      <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
-        <ProductFilterPanel
-          filters={filters}
-          onChange={setFilters}
-          options={options}
-          total={data?.total}
-          className="lg:w-64"
-        />
+      <div className="space-y-5">
+        <form onSubmit={handleSearch} className="relative">
+          <Search className="text-muted-foreground/70 absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+          <Input
+            type="search"
+            placeholder="Search products, brands, or categories..."
+            className="input-glass h-12 pr-24 pl-10 transition-all"
+            value={searchInput}
+            onChange={(event) => setSearchInput(event.target.value)}
+          />
+          <Button
+            type="submit"
+            size="sm"
+            className="absolute top-1/2 right-1.5 -translate-y-1/2"
+          >
+            Search
+          </Button>
+        </form>
 
-        <div className="flex-1 space-y-5">
-          <form onSubmit={handleSearch} className="relative">
-            <Search className="text-muted-foreground/70 absolute top-1/2 left-3 size-4 -translate-y-1/2" />
-            <Input
-              type="search"
-              placeholder="Search products, brands, or categories..."
-              className="h-11 border-transparent bg-muted/60 pl-10 pr-24 shadow-sm transition-all focus:bg-background focus:shadow-sm"
-              value={searchInput}
-              onChange={(event) => setSearchInput(event.target.value)}
-            />
-            <Button
-              type="submit"
-              size="sm"
-              className="absolute top-1/2 right-1.5 -translate-y-1/2"
-            >
-              Search
-            </Button>
-          </form>
-
-          {activeChips.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2">
-              {activeChips.map((chip) => (
-                <ActiveFilterChip
-                  key={chip.key}
-                  label={chip.label}
-                  onRemove={chip.remove}
-                />
-              ))}
-              <Button
-                variant="ghost"
-                size="xs"
-                onClick={() =>
-                  setFilters({ search: filters.search, sort: filters.sort })
-                }
-              >
-                Clear all
-              </Button>
-            </div>
-          )}
-
-          {compareIds.length > 0 && (
-            <div className="bg-card ring-foreground/5 flex items-center justify-between rounded-xl p-3 shadow-sm ring-1">
-              <div className="flex items-center gap-2 text-sm">
-                <Scale className="text-primary size-4" />
-                <span className="font-medium">
-                  {compareIds.length} product{compareIds.length > 1 ? "s" : ""}{" "}
-                  selected for comparison
-                </span>
-              </div>
-              <Button
-                variant="ghost"
-                size="xs"
-                onClick={() => setCompareIds([])}
-              >
-                Clear
-              </Button>
-            </div>
-          )}
-
-          {isLoading ? (
-            <ProductGridSkeleton count={8} />
-          ) : isError ? (
-            <EmptyState
-              title="Failed to load products"
-              description={
-                error?.message ?? "Something went wrong. Please try again."
-              }
-              action={
-                <Button onClick={() => window.location.reload()}>
-                  Try again
-                </Button>
-              }
-            />
-          ) : data?.data.length === 0 ? (
-            <EmptyState
-              title="No products found"
-              description="Try adjusting your filters or search query."
-              action={
-                <Button onClick={() => setFilters({ sort: "newest" })}>
-                  Clear filters
-                </Button>
-              }
-            />
-          ) : (
-            <>
-              <ProductGrid
-                products={data?.data ?? []}
-                compareIds={compareIds}
-                onToggleCompare={toggleCompare}
+        {activeChips.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2">
+            {activeChips.map((chip) => (
+              <ActiveFilterChip
+                key={chip.key}
+                label={chip.label}
+                onRemove={chip.remove}
               />
+            ))}
+            <Button
+              variant="ghost"
+              size="xs"
+              onClick={() =>
+                setFilters({ search: filters.search, sort: filters.sort })
+              }
+            >
+              Clear all
+            </Button>
+          </div>
+        )}
+
+        {compareIds.length > 0 && (
+          <div className="surface-glass flex items-center justify-between rounded-2xl p-3">
+            <div className="flex items-center gap-2 text-sm">
+              <Scale className="text-primary size-4" />
+              <span className="font-medium">
+                {compareIds.length} product{compareIds.length > 1 ? "s" : ""}{" "}
+                selected for comparison
+              </span>
+            </div>
+            <Button variant="ghost" size="xs" onClick={() => setCompareIds([])}>
+              Clear
+            </Button>
+          </div>
+        )}
+
+        {isLoading ? (
+          <ProductGridSkeleton count={8} />
+        ) : isError ? (
+          <EmptyState
+            title="Failed to load products"
+            description={
+              error?.message ?? "Something went wrong. Please try again."
+            }
+            action={
+              <Button onClick={() => window.location.reload()}>
+                Try again
+              </Button>
+            }
+          />
+        ) : data?.data.length === 0 ? (
+          <EmptyState
+            title="No products found"
+            description="Try adjusting your filters or search query."
+            action={
+              <Button onClick={() => setFilters({ sort: "newest" })}>
+                Clear filters
+              </Button>
+            }
+          />
+        ) : (
+          <>
+            <ProductGrid
+              products={data?.data ?? []}
+              compareIds={compareIds}
+              onToggleCompare={toggleCompare}
+            />
+            <div className="flex flex-col items-center gap-3 pt-2">
               <p className="text-muted-foreground text-sm">
                 Showing {data?.data.length} of {data?.total} products
               </p>
-            </>
-          )}
+              {data && data.data.length < data.total && (
+                <Button
+                  variant="outline"
+                  onClick={() => setPageSize((size) => size + PAGE_SIZE)}
+                  disabled={isFetching}
+                >
+                  {isFetching ? "Loading..." : "Load more products"}
+                </Button>
+              )}
+            </div>
+          </>
+        )}
 
-          {compareIds.length > 0 && (
-            <ComparisonTable productIds={compareIds} />
-          )}
-        </div>
+        {compareIds.length > 0 && <ComparisonTable productIds={compareIds} />}
       </div>
     </PageWrapper>
   );
 }
 
-/** Product catalog with filters, search, sorting, and comparison. */
+/** Product catalog with brand selection, search, and comparison. */
 export function ProductCatalog() {
   return (
     <Suspense
       fallback={
         <PageWrapper className="py-8">
           <Skeleton className="mb-8 h-10 w-48" />
-          <div className="flex flex-col gap-8 lg:flex-row">
-            <Skeleton className="hidden h-96 rounded-2xl lg:block lg:w-64" />
-            <div className="flex-1 space-y-5">
-              <Skeleton className="h-11 w-full" />
-              <ProductGridSkeleton count={8} />
-            </div>
+          <Skeleton className="mb-8 h-16 w-full rounded-2xl" />
+          <div className="space-y-5">
+            <Skeleton className="h-11 w-full" />
+            <ProductGridSkeleton count={8} />
           </div>
         </PageWrapper>
       }

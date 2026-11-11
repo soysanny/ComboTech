@@ -30,19 +30,10 @@ function ThemeSync({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const root = document.documentElement;
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const apply = () => {
-      const isDark = mode === "dark" || (mode === "system" && media.matches);
-      root.classList.toggle("dark", isDark);
-      root.style.colorScheme = isDark ? "dark" : "light";
-    };
-
-    apply();
-    if (mode === "system") {
-      media.addEventListener("change", apply);
-      return () => media.removeEventListener("change", apply);
-    }
+    // The animated backdrop is dark, so "system" also resolves to dark.
+    const isDark = mode !== "light";
+    root.classList.toggle("dark", isDark);
+    root.style.colorScheme = isDark ? "dark" : "light";
   }, [mode]);
 
   return <>{children}</>;

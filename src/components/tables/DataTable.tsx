@@ -36,6 +36,8 @@ export interface DataTableProps<T> {
   emptyMessage?: string;
   emptyAction?: React.ReactNode;
   className?: string;
+  /** When set, the table body scrolls vertically and the header stays visible. */
+  maxHeight?: string;
 }
 
 /** Generic responsive data table with sortable headers and empty state. */
@@ -48,6 +50,7 @@ export function DataTable<T>({
   emptyMessage = "No data available.",
   emptyAction,
   className,
+  maxHeight,
 }: DataTableProps<T>) {
   const handleSort = (key: string) => {
     if (!onSortChange) return;
@@ -68,54 +71,67 @@ export function DataTable<T>({
   }
 
   return (
-    <div className={cn("rounded-xl border", className)}>
-      <div className="w-full overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {columns.map((column) => {
-                const isSorted = sort?.key === column.key;
-                return (
-                  <TableHead
-                    key={column.key}
-                    className={cn("whitespace-nowrap", column.className)}
-                  >
-                    {column.sortable ? (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="-ml-2 h-auto gap-1 px-2 py-1 font-medium"
-                        onClick={() => handleSort(column.key)}
-                      >
-                        {column.header}
-                        <SortIcon isSorted={isSorted} direction={sort?.direction} />
-                      </Button>
-                    ) : (
-                      column.header
-                    )}
-                  </TableHead>
-                );
-              })}
+    <div className={cn("surface-glass overflow-hidden rounded-2xl", className)}>
+      <Table
+        containerClassName={cn(
+          maxHeight && "overflow-y-auto overscroll-contain",
+        )}
+        containerStyle={maxHeight ? { maxHeight } : undefined}
+      >
+        <TableHeader
+          className={cn(
+            maxHeight &&
+              "sticky top-0 z-10 bg-[var(--surface-strong-bg)] backdrop-blur-xl [&_th]:bg-[var(--surface-strong-bg)]",
+          )}
+        >
+          <TableRow>
+            {columns.map((column) => {
+              const isSorted = sort?.key === column.key;
+              return (
+                <TableHead
+                  key={column.key}
+                  className={cn("whitespace-nowrap", column.className)}
+                >
+                  {column.sortable ? (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="-ml-2 h-auto gap-1 px-2 py-1 font-medium"
+                      onClick={() => handleSort(column.key)}
+                    >
+                      {column.header}
+                      <SortIcon
+                        isSorted={isSorted}
+                        direction={sort?.direction}
+                      />
+                    </Button>
+                  ) : (
+                    column.header
+                  )}
+                </TableHead>
+              );
+            })}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.map((row) => (
+            <TableRow key={getRowId(row)}>
+              {columns.map((column) => (
+                <TableCell
+                  key={`${getRowId(row)}-${column.key}`}
+                  className={cn("whitespace-nowrap", column.className)}
+                >
+                  {column.render
+                    ? column.render(row)
+                    : ((row as Record<string, unknown>)[
+                        column.key
+                      ] as React.ReactNode)}
+                </TableCell>
+              ))}
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.map((row) => (
-              <TableRow key={getRowId(row)}>
-                {columns.map((column) => (
-                  <TableCell
-                    key={`${getRowId(row)}-${column.key}`}
-                    className={cn("whitespace-nowrap", column.className)}
-                  >
-                    {column.render
-                      ? column.render(row)
-                      : (row as Record<string, unknown>)[column.key] as React.ReactNode}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
@@ -127,7 +143,8 @@ function SortIcon({
   isSorted: boolean;
   direction?: SortDirection;
 }) {
-  if (!isSorted) return <ArrowUpDown className="size-3.5 text-muted-foreground" />;
+  if (!isSorted)
+    return <ArrowUpDown className="text-muted-foreground size-3.5" />;
   return direction === "asc" ? (
     <ArrowUp className="size-3.5" />
   ) : (

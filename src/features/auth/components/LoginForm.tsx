@@ -50,7 +50,7 @@ export function LoginForm() {
   };
 
   return (
-    <Card className="border-white/60 bg-white/80 shadow-[0_18px_55px_-30px_rgba(15,23,42,0.55)] backdrop-blur-sm dark:bg-card/80">
+    <Card className="surface-glass">
       <CardHeader className="space-y-1">
         <CardTitle>Staff sign in</CardTitle>
         <CardDescription>
@@ -99,7 +99,7 @@ export function LoginForm() {
                 type="button"
                 variant="ghost"
                 size="icon-xs"
-                className="absolute top-1/2 right-2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground absolute top-1/2 right-2 -translate-y-1/2"
                 onClick={() => setShowPassword((show) => !show)}
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
@@ -112,11 +112,7 @@ export function LoginForm() {
             </div>
           </FormField>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={login.isPending}
-          >
+          <Button type="submit" className="w-full" disabled={login.isPending}>
             {login.isPending ? (
               <>
                 <Loader2 className="mr-2 size-4 animate-spin" />

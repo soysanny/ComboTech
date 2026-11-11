@@ -22,7 +22,6 @@ export const ROUTES = {
   adminPayments: "/admin/payments",
   adminCoupons: "/admin/coupons",
   adminBanners: "/admin/banners",
-  adminHomepage: "/admin/homepage",
   adminLogs: "/admin/logs",
   adminMessages: "/admin/messages",
 

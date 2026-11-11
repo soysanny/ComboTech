@@ -28,20 +28,20 @@ import { ROUTES } from "@/constants/routes";
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-[linear-gradient(135deg,oklch(0.22_0.04_260),oklch(0.32_0.08_250))] px-6 py-16 text-white shadow-2xl sm:px-12 sm:py-20 lg:py-24">
+    <section className="banner-gradient relative overflow-hidden rounded-3xl border border-white/20 px-6 py-16 text-white shadow-[0_40px_120px_-60px_rgba(2,6,23,0.45)] backdrop-blur-xl sm:px-12 sm:py-20 lg:py-24">
       <ParticlesBg theme="dark" background={false} />
       <div className="relative z-10 max-w-3xl">
         <Badge className="mb-5 border-white/20 bg-white/10 text-white backdrop-blur-sm">
           <Sparkles className="mr-1.5 size-3.5" />
           Since 2020
         </Badge>
-        <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+        <h1 className="text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
           About CAMBOTECH
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/80">
           Your trusted online destination for premium computers, laptops, gaming
-          PCs, and accessories. We combine quality products with fair pricing and
-          exceptional service to power Cambodia&apos;s tech community.
+          PCs, and accessories. We combine quality products with fair pricing
+          and exceptional service to power Cambodia&apos;s tech community.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Button
@@ -66,8 +66,8 @@ function Hero() {
       </div>
 
       <div className="pointer-events-none absolute inset-0 opacity-40">
-        <div className="absolute top-0 right-0 h-96 w-96 translate-x-1/3 -translate-y-1/3 rounded-full bg-primary/30 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-80 w-80 -translate-x-1/3 translate-y-1/3 rounded-full bg-accent/30 blur-3xl" />
+        <div className="bg-primary/30 absolute top-0 right-0 h-96 w-96 translate-x-1/3 -translate-y-1/3 rounded-full blur-3xl" />
+        <div className="bg-accent/30 absolute bottom-0 left-0 h-80 w-80 -translate-x-1/3 translate-y-1/3 rounded-full blur-3xl" />
       </div>
 
       <div className="absolute right-8 bottom-8 hidden lg:block">
@@ -76,7 +76,7 @@ function Hero() {
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="size-10 rounded-full border-2 border-white/30 bg-gradient-to-br from-primary/60 to-accent/60"
+                className="from-primary/60 to-accent/60 size-10 rounded-full border-2 border-white/30 bg-gradient-to-br"
                 style={{ zIndex: 4 - i }}
               />
             ))}
@@ -106,7 +106,7 @@ function Stats() {
         return (
           <div
             key={stat.label}
-            className="group flex flex-col items-center gap-3 rounded-2xl border border-transparent bg-white/60 p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-md dark:bg-white/5 dark:hover:bg-white/10"
+            className="surface-glass surface-hover group flex flex-col items-center gap-3 rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
           >
             <div className="bg-primary/10 text-primary inline-flex size-12 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110">
               <Icon className="size-6" />
@@ -130,12 +130,12 @@ function OurStory() {
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Our Story
           </h2>
-          <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed">
+          <div className="text-muted-foreground mt-6 space-y-4 leading-relaxed">
             <p>
               CAMBOTECH was founded in 2020 with a simple mission: to make
-              premium technology accessible to everyone in Cambodia. What started
-              as a small operation run by a handful of tech enthusiasts has
-              grown into one of the country&apos;s most trusted e-commerce
+              premium technology accessible to everyone in Cambodia. What
+              started as a small operation run by a handful of tech enthusiasts
+              has grown into one of the country&apos;s most trusted e-commerce
               platforms for computers and accessories.
             </p>
             <p>
@@ -152,8 +152,8 @@ function OurStory() {
               support remains at the heart of everything we do.
             </p>
           </div>
-          <div className="mt-6 flex items-center gap-2 text-sm font-medium text-muted-foreground">
-            <Heart className="size-4 text-rose-500 fill-rose-500" />
+          <div className="text-muted-foreground mt-6 flex items-center gap-2 text-sm font-medium">
+            <Heart className="size-4 fill-rose-500 text-rose-500" />
             <span>Built with passion for technology</span>
           </div>
         </div>
@@ -171,8 +171,8 @@ function OurStory() {
               </div>
             </div>
 
-            <div className="absolute -right-4 -bottom-4 size-48 rounded-full bg-primary/20 blur-3xl" />
-            <div className="absolute -left-4 -top-4 size-32 rounded-full bg-accent/20 blur-3xl" />
+            <div className="bg-primary/20 absolute -right-4 -bottom-4 size-48 rounded-full blur-3xl" />
+            <div className="bg-accent/20 absolute -top-4 -left-4 size-32 rounded-full blur-3xl" />
 
             <div className="absolute bottom-3 left-3 rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
               Phnom Penh, Cambodia
@@ -186,7 +186,7 @@ function OurStory() {
 
 function Mission() {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-[linear-gradient(135deg,oklch(0.50_0.18_250),oklch(0.55_0.20_190))] px-6 py-14 text-white shadow-xl sm:px-12 sm:py-20">
+    <section className="banner-gradient relative overflow-hidden rounded-3xl border border-white/20 px-6 py-14 text-white shadow-[0_40px_120px_-60px_rgba(2,6,23,0.45)] backdrop-blur-xl sm:px-12 sm:py-20">
       <div className="relative z-10 mx-auto max-w-3xl text-center">
         <Target className="mx-auto mb-6 size-12 text-white/80" />
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -290,7 +290,7 @@ function WhyChooseUs() {
           return (
             <div
               key={item.title}
-              className="group rounded-2xl border border-transparent bg-white/60 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-md dark:bg-white/5 dark:hover:bg-white/10"
+              className="group surface-glass surface-hover rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
             >
               <div className="bg-primary/10 text-primary mb-4 inline-flex size-12 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110">
                 <Icon className="size-6" />
@@ -309,7 +309,7 @@ function WhyChooseUs() {
 
 function CTABanner() {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-[linear-gradient(135deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] px-6 py-12 text-white shadow-xl sm:px-12 sm:py-16">
+    <section className="banner-gradient relative overflow-hidden rounded-3xl border border-white/20 px-6 py-12 text-white shadow-[0_40px_120px_-60px_rgba(2,6,23,0.45)] backdrop-blur-xl sm:px-12 sm:py-16">
       <div className="relative z-10 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
         <div>
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
@@ -323,7 +323,7 @@ function CTABanner() {
         <Button
           asChild
           size="lg"
-          className="bg-white text-foreground hover:bg-white/90"
+          className="text-foreground bg-white hover:bg-white/90"
         >
           <Link href={ROUTES.products}>
             Shop now

@@ -23,7 +23,7 @@ export function AnimatedText({
       {words.map((word, index) => (
         <span
           key={`${word}-${index}`}
-          className="animate-slide-up motion-reduce:animate-none inline-block"
+          className="animate-slide-up inline-block motion-reduce:animate-none"
           style={{ animationDelay: `${index * stagger}ms` }}
         >
           {word}

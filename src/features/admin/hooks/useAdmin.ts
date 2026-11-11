@@ -5,8 +5,6 @@ import { toast } from "@/lib/toast";
 import type { Category, CreateProductInput } from "@/features/products/types";
 import { productKeys } from "@/features/products/hooks/useProducts";
 import { bannerKeys } from "@/features/banners/hooks/useBanners";
-import { homepageKeys } from "@/features/homepage/hooks/useHomepageBrandSections";
-import type { HomepageBrandSection } from "@/features/homepage/types";
 import { adminService } from "../services/adminService";
 import type { Banner, Coupon, CreateCouponInput } from "../types";
 
@@ -20,8 +18,6 @@ export const adminKeys = {
   payments: () => [...adminKeys.all, "payments"] as const,
   coupons: () => [...adminKeys.all, "coupons"] as const,
   banners: () => [...adminKeys.all, "banners"] as const,
-  homepageBrandSections: () =>
-    [...adminKeys.all, "homepage-brand-sections"] as const,
   logs: () => [...adminKeys.all, "logs"] as const,
   messages: () => [...adminKeys.all, "messages"] as const,
 };
@@ -37,39 +33,47 @@ export function useAdminStats() {
 
 // --- Products ---
 
-export function useAdminProducts(page = 1, pageSize = 10, search?: string) {
+export function useAdminProducts(search?: string) {
   return useQuery({
-    queryKey: [...adminKeys.products(), page, pageSize, search],
-    queryFn: () => adminService.getProducts(page, pageSize, search),
+    queryKey: [...adminKeys.products(), "all", search ?? ""],
+    queryFn: () => adminService.getAllProducts(search),
   });
 }
 
 export function useCreateProduct() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (input: CreateProductInput) => adminService.createProduct(input),
+    mutationFn: (input: CreateProductInput) =>
+      adminService.createProduct(input),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: adminKeys.products() });
       void queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
       void queryClient.invalidateQueries({ queryKey: productKeys.all });
       toast.success("Product created");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to create product"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to create product"),
   });
 }
 
 export function useUpdateProduct() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, input }: { id: string; input: Partial<CreateProductInput> }) =>
-      adminService.updateProduct(id, input),
+    mutationFn: ({
+      id,
+      input,
+    }: {
+      id: string;
+      input: Partial<CreateProductInput>;
+    }) => adminService.updateProduct(id, input),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: adminKeys.products() });
       void queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
       void queryClient.invalidateQueries({ queryKey: productKeys.all });
       toast.success("Product updated");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to update product"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to update product"),
   });
 }
 
@@ -82,7 +86,6 @@ export function useBulkCreateProducts() {
       void queryClient.invalidateQueries({ queryKey: adminKeys.products() });
       void queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
       void queryClient.invalidateQueries({ queryKey: productKeys.all });
-      void queryClient.invalidateQueries({ queryKey: homepageKeys.all });
       toast.success(
         `Imported ${result.created} product${result.created === 1 ? "" : "s"}`,
       );
@@ -102,7 +105,8 @@ export function useDeleteProduct() {
       void queryClient.invalidateQueries({ queryKey: productKeys.all });
       toast.success("Product deleted");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to delete product"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to delete product"),
   });
 }
 
@@ -118,12 +122,14 @@ export function useAdminCategories(page = 1, pageSize = 10) {
 export function useCreateCategory() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (input: Omit<Category, "id">) => adminService.createCategory(input),
+    mutationFn: (input: Omit<Category, "id">) =>
+      adminService.createCategory(input),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: adminKeys.categories() });
       toast.success("Category created");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to create category"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to create category"),
   });
 }
 
@@ -136,7 +142,8 @@ export function useUpdateCategory() {
       void queryClient.invalidateQueries({ queryKey: adminKeys.categories() });
       toast.success("Category updated");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to update category"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to update category"),
   });
 }
 
@@ -148,7 +155,8 @@ export function useDeleteCategory() {
       void queryClient.invalidateQueries({ queryKey: adminKeys.categories() });
       toast.success("Category deleted");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to delete category"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to delete category"),
   });
 }
 
@@ -170,7 +178,8 @@ export function useSetCustomerBlocked() {
       void queryClient.invalidateQueries({ queryKey: adminKeys.customers() });
       toast.success("Customer updated");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to update customer"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to update customer"),
   });
 }
 
@@ -199,7 +208,8 @@ export function useUpdateOrderStatus() {
       void queryClient.invalidateQueries({ queryKey: adminKeys.stats() });
       toast.success("Order status updated");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to update order"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to update order"),
   });
 }
 
@@ -229,7 +239,8 @@ export function useCreateCoupon() {
       void queryClient.invalidateQueries({ queryKey: adminKeys.coupons() });
       toast.success("Coupon created");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to create coupon"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to create coupon"),
   });
 }
 
@@ -242,7 +253,8 @@ export function useUpdateCoupon() {
       void queryClient.invalidateQueries({ queryKey: adminKeys.coupons() });
       toast.success("Coupon updated");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to update coupon"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to update coupon"),
   });
 }
 
@@ -254,7 +266,8 @@ export function useDeleteCoupon() {
       void queryClient.invalidateQueries({ queryKey: adminKeys.coupons() });
       toast.success("Coupon deleted");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to delete coupon"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to delete coupon"),
   });
 }
 
@@ -276,7 +289,8 @@ export function useCreateBanner() {
       void queryClient.invalidateQueries({ queryKey: bannerKeys.all });
       toast.success("Banner created");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to create banner"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to create banner"),
   });
 }
 
@@ -290,7 +304,8 @@ export function useUpdateBanner() {
       void queryClient.invalidateQueries({ queryKey: bannerKeys.all });
       toast.success("Banner updated");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to update banner"),
+    onError: (error: Error) =>
+      toast.error(error.message ?? "Failed to update banner"),
   });
 }
 
@@ -303,33 +318,8 @@ export function useDeleteBanner() {
       void queryClient.invalidateQueries({ queryKey: bannerKeys.all });
       toast.success("Banner deleted");
     },
-    onError: (error: Error) => toast.error(error.message ?? "Failed to delete banner"),
-  });
-}
-
-// --- Homepage brand sections ---
-
-export function useAdminHomepageBrandSections() {
-  return useQuery({
-    queryKey: adminKeys.homepageBrandSections(),
-    queryFn: () => adminService.getHomepageBrandSections(),
-  });
-}
-
-export function useSaveHomepageBrandSections() {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (sections: HomepageBrandSection[]) =>
-      adminService.saveHomepageBrandSections(sections),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({
-        queryKey: adminKeys.homepageBrandSections(),
-      });
-      void queryClient.invalidateQueries({ queryKey: homepageKeys.all });
-      toast.success("Homepage sections saved");
-    },
     onError: (error: Error) =>
-      toast.error(error.message ?? "Failed to save homepage sections"),
+      toast.error(error.message ?? "Failed to delete banner"),
   });
 }
 

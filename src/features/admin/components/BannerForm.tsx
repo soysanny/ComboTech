@@ -41,7 +41,11 @@ export interface BannerFormProps {
 }
 
 /** Admin banner create/edit form. */
-export function BannerForm({ initialValue, onSubmit, loading }: BannerFormProps) {
+export function BannerForm({
+  initialValue,
+  onSubmit,
+  loading,
+}: BannerFormProps) {
   const {
     register,
     handleSubmit,
@@ -77,25 +81,36 @@ export function BannerForm({ initialValue, onSubmit, loading }: BannerFormProps)
       <div className="space-y-2">
         <Label htmlFor="title">Title</Label>
         <Input id="title" {...register("title")} />
-        {errors.title && <p className="text-destructive text-xs">{errors.title.message}</p>}
+        {errors.title && (
+          <p className="text-destructive text-xs">{errors.title.message}</p>
+        )}
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="imageUrl">Image URL</Label>
-          <Input id="imageUrl" {...register("imageUrl")} />
-          {errors.imageUrl && <p className="text-destructive text-xs">{errors.imageUrl.message}</p>}
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="linkUrl">Link URL</Label>
-          <Input id="linkUrl" {...register("linkUrl")} />
-        </div>
+      <div className="space-y-2">
+        <Label htmlFor="imageUrl">Image URL</Label>
+        <Input id="imageUrl" {...register("imageUrl")} />
+        <p className="text-muted-foreground text-xs">
+          Used for both desktop and mobile.
+        </p>
+        {errors.imageUrl && (
+          <p className="text-destructive text-xs">{errors.imageUrl.message}</p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="linkUrl">Link URL</Label>
+        <Input id="linkUrl" {...register("linkUrl")} />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <Label>Type</Label>
-          <Select value={type} onValueChange={(value) => setValue("type", value as "homepage" | "promotion")}>
+          <Select
+            value={type}
+            onValueChange={(value) =>
+              setValue("type", value as "homepage" | "promotion")
+            }
+          >
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -108,7 +123,9 @@ export function BannerForm({ initialValue, onSubmit, loading }: BannerFormProps)
         <div className="space-y-2">
           <Label htmlFor="order">Display order</Label>
           <Input id="order" type="number" {...register("order")} />
-          {errors.order && <p className="text-destructive text-xs">{errors.order.message}</p>}
+          {errors.order && (
+            <p className="text-destructive text-xs">{errors.order.message}</p>
+          )}
         </div>
       </div>
 
@@ -118,12 +135,18 @@ export function BannerForm({ initialValue, onSubmit, loading }: BannerFormProps)
           checked={active}
           onCheckedChange={(checked) => setValue("active", checked)}
         />
-        <Label htmlFor="active" className="cursor-pointer">Active</Label>
+        <Label htmlFor="active" className="cursor-pointer">
+          Active
+        </Label>
       </div>
 
       <div className="flex justify-end pt-2">
         <Button type="submit" disabled={loading}>
-          {loading ? "Saving..." : initialValue ? "Update banner" : "Create banner"}
+          {loading
+            ? "Saving..."
+            : initialValue
+              ? "Update banner"
+              : "Create banner"}
         </Button>
       </div>
     </form>

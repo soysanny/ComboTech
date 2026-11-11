@@ -61,10 +61,10 @@ function Stepper({
             {!isLast && (
               <div
                 className={cn(
-                  "absolute bg-muted transition-colors",
+                  "bg-muted absolute transition-colors",
                   isHorizontal
-                    ? "left-[calc(50%+1rem)] top-3 h-0.5 w-[calc(100%-2rem)]"
-                    : "left-[0.875rem] top-8 h-[calc(100%-0.5rem)] w-0.5",
+                    ? "top-3 left-[calc(50%+1rem)] h-0.5 w-[calc(100%-2rem)]"
+                    : "top-8 left-[0.875rem] h-[calc(100%-0.5rem)] w-0.5",
                 )}
                 aria-hidden="true"
               />
@@ -78,8 +78,7 @@ function Stepper({
                   "border-success bg-success text-success-foreground",
                 isCurrent &&
                   "border-primary bg-primary text-primary-foreground",
-                isPending &&
-                  "border-muted bg-background text-muted-foreground",
+                isPending && "border-muted bg-background text-muted-foreground",
               )}
               aria-current={isCurrent ? "step" : undefined}
             >

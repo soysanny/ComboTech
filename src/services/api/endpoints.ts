@@ -33,9 +33,6 @@ export const ENDPOINTS = {
   banners: {
     list: "/banners",
   },
-  homepage: {
-    brandSections: "/homepage/brand-sections",
-  },
   admin: {
     stats: "/admin/stats",
     products: "/admin/products",
@@ -49,7 +46,6 @@ export const ENDPOINTS = {
     coupons: "/admin/coupons",
     coupon: (id: string) => `/admin/coupons/${id}`,
     banners: "/admin/banners",
-    homepageBrandSections: "/admin/homepage-brand-sections",
     logs: "/admin/logs",
   },
 } as const;

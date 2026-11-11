@@ -83,7 +83,6 @@ export interface ProductFilters {
   search?: string;
   category?: ProductCategorySlug;
   brands?: string[];
-  series?: string[];
   /** Restrict to variants sharing the same base model. */
   modelKey?: string;
   minPrice?: number;

@@ -16,10 +16,6 @@ import type {
   Customer,
 } from "../types";
 import type { ContactMessage } from "@/features/contact/types";
-import type {
-  HomepageBrandSection,
-  HomepageBrandSectionsAdminData,
-} from "@/features/homepage/types";
 
 interface PaymentRow {
   id: string;
@@ -40,7 +36,16 @@ export const adminService = {
   // Products
   getProducts: (page = 1, pageSize = 10, search?: string) =>
     apiClient.get<PaginatedResponse<Product>>(ENDPOINTS.admin.products, {
-      params: { page, pageSize, search },
+      page,
+      pageSize,
+      search,
+    }),
+  /** The admin product table renders the whole catalog in one scrollable view. */
+  getAllProducts: (search?: string) =>
+    apiClient.get<PaginatedResponse<Product>>(ENDPOINTS.admin.products, {
+      page: 1,
+      pageSize: 10_000,
+      search,
     }),
   createProduct: (input: CreateProductInput) =>
     apiClient.post<{ data: Product }>(ENDPOINTS.admin.products, input),
@@ -57,19 +62,26 @@ export const adminService = {
   // Categories
   getCategories: (page = 1, pageSize = 10) =>
     apiClient.get<PaginatedResponse<Category>>(ENDPOINTS.admin.categories, {
-      params: { page, pageSize },
+      page,
+      pageSize,
     }),
   createCategory: (input: Omit<Category, "id">) =>
     apiClient.post<{ data: Category }>(ENDPOINTS.admin.categories, input),
   updateCategory: (id: string, input: Partial<Category>) =>
-    apiClient.put<{ data: Category }>(`${ENDPOINTS.admin.categories}/${id}`, input),
+    apiClient.put<{ data: Category }>(
+      `${ENDPOINTS.admin.categories}/${id}`,
+      input,
+    ),
   deleteCategory: (id: string) =>
-    apiClient.delete<{ success: boolean }>(`${ENDPOINTS.admin.categories}/${id}`),
+    apiClient.delete<{ success: boolean }>(
+      `${ENDPOINTS.admin.categories}/${id}`,
+    ),
 
   // Customers
   getCustomers: (page = 1, pageSize = 10) =>
     apiClient.get<PaginatedResponse<Customer>>(ENDPOINTS.admin.customers, {
-      params: { page, pageSize },
+      page,
+      pageSize,
     }),
   setCustomerBlocked: (id: string, blocked: boolean) =>
     apiClient.patch<{ data: Customer }>(ENDPOINTS.admin.customer(id), {
@@ -79,7 +91,10 @@ export const adminService = {
   // Orders
   getOrders: (page = 1, pageSize = 10, status?: string, search?: string) =>
     apiClient.get<PaginatedResponse<Order>>(ENDPOINTS.admin.orders, {
-      params: { page, pageSize, status, search },
+      page,
+      pageSize,
+      status,
+      search,
     }),
   updateOrderStatus: (id: string, status: string) =>
     apiClient.patch<{ data: Order }>(`${ENDPOINTS.admin.orders}/${id}/status`, {
@@ -89,13 +104,15 @@ export const adminService = {
   // Payments
   getPayments: (page = 1, pageSize = 10) =>
     apiClient.get<PaginatedResponse<PaymentRow>>(ENDPOINTS.admin.payments, {
-      params: { page, pageSize },
+      page,
+      pageSize,
     }),
 
   // Coupons
   getCoupons: (page = 1, pageSize = 10) =>
     apiClient.get<PaginatedResponse<Coupon>>(ENDPOINTS.admin.coupons, {
-      params: { page, pageSize },
+      page,
+      pageSize,
     }),
   createCoupon: (input: CreateCouponInput) =>
     apiClient.post<{ data: Coupon }>(ENDPOINTS.admin.coupons, input),
@@ -107,7 +124,8 @@ export const adminService = {
   // Banners
   getBanners: (page = 1, pageSize = 10) =>
     apiClient.get<PaginatedResponse<Banner>>(ENDPOINTS.admin.banners, {
-      params: { page, pageSize },
+      page,
+      pageSize,
     }),
   createBanner: (input: Omit<Banner, "id">) =>
     apiClient.post<{ data: Banner }>(ENDPOINTS.admin.banners, input),
@@ -116,23 +134,11 @@ export const adminService = {
   deleteBanner: (id: string) =>
     apiClient.delete<{ success: boolean }>(`${ENDPOINTS.admin.banners}/${id}`),
 
-  // Homepage brand sections
-  getHomepageBrandSections: () =>
-    apiClient.get<HomepageBrandSectionsAdminData>(
-      ENDPOINTS.admin.homepageBrandSections,
-    ),
-  saveHomepageBrandSections: (sections: HomepageBrandSection[]) =>
-    apiClient
-      .put<{ data: HomepageBrandSection[] }>(
-        ENDPOINTS.admin.homepageBrandSections,
-        { sections },
-      )
-      .then((res) => res.data),
-
   // Logs
   getLogs: (page = 1, pageSize = 10) =>
     apiClient.get<PaginatedResponse<ActivityLog>>(ENDPOINTS.admin.logs, {
-      params: { page, pageSize },
+      page,
+      pageSize,
     }),
 
   // Contact messages

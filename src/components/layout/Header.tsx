@@ -5,12 +5,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, Sun, Moon, Computer, Phone } from "lucide-react";
 import { useState } from "react";
 import { ROUTES } from "@/constants/routes";
-import {
-  SITE,
-  CATEGORY_NAV,
-  BRAND_NAV,
-  brandNavHref,
-} from "@/constants/site";
+import { SITE, CATEGORY_NAV, BRAND_NAV, brandNavHref } from "@/constants/site";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -32,7 +27,7 @@ function Logo() {
       className="group inline-flex shrink-0 items-center gap-2.5"
       aria-label="Go to homepage"
     >
-      <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[linear-gradient(140deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] text-sm font-bold text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[linear-gradient(140deg,oklch(0.72_0.15_245),oklch(0.62_0.14_285))] text-sm font-bold text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
         <Computer className="size-5" strokeWidth={2.5} />
       </span>
       <span className="hidden flex-col leading-none sm:flex">
@@ -60,8 +55,8 @@ function ThemeToggle() {
       aria-label={`Switch theme, currently ${mode}`}
       title="Toggle theme"
     >
-      <Sun className="size-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute size-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <Sun className="size-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+      <Moon className="absolute size-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
     </Button>
   );
 }
@@ -69,20 +64,20 @@ function ThemeToggle() {
 /** Category navigation row — mirrors CC Computer's storefront menu. */
 function CategoryNav() {
   return (
-    <div className="border-border/60 bg-muted/30 border-t">
+    <div className="border-t border-[var(--surface-border)] bg-[var(--subtle-bg)]">
       <div className="mx-auto flex w-full max-w-7xl items-center gap-1 overflow-x-auto px-4 py-1.5 sm:px-6 lg:px-8">
         {CATEGORY_NAV.map((category) => (
           <Link
             key={category.slug}
             href={`${ROUTES.products}?category=${category.slug}`}
-            className="text-muted-foreground hover:bg-background hover:text-foreground shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-wide whitespace-nowrap uppercase transition-colors"
+            className="text-muted-foreground hover:text-foreground shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-wide whitespace-nowrap uppercase transition-colors hover:bg-[var(--hover-bg)]"
           >
             {category.label}
           </Link>
         ))}
         <Link
           href={ROUTES.contact}
-          className="text-primary hover:bg-background shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-wide whitespace-nowrap uppercase transition-colors"
+          className="text-primary shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-wide whitespace-nowrap uppercase transition-colors hover:bg-[var(--hover-bg)]"
         >
           Contact Us
         </Link>
@@ -96,7 +91,7 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-background/85 supports-[backdrop-filter]:backdrop-blur-xl sticky top-0 z-40 border-b border-white/40 shadow-[0_1px_2px_-1px_rgba(0,0,0,0.04)] dark:border-white/5">
+    <header className="sticky top-0 z-40 border-b border-[var(--surface-border)] bg-[var(--nav-bg)] shadow-[0_10px_40px_-30px_rgba(15,23,42,0.25)] supports-[backdrop-filter]:backdrop-blur-2xl">
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Logo />
 
@@ -116,8 +111,8 @@ export function Header() {
                 className={cn(
                   "relative rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200",
                   isActive
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                    ? "active-pill border border-[var(--surface-border)] text-white shadow-[0_8px_24px_-18px_rgba(96,165,250,0.8)]"
+                    : "text-muted-foreground hover:text-foreground hover:bg-[var(--hover-bg)]",
                 )}
               >
                 {item.label}
@@ -160,7 +155,7 @@ export function Header() {
       <div
         id="mobile-nav"
         className={cn(
-          "border-border/70 overflow-hidden border-t bg-background/95 transition-all duration-300 ease-in-out xl:hidden",
+          "overflow-hidden border-t border-[var(--surface-border)] bg-[var(--surface-strong-bg)] backdrop-blur-2xl transition-all duration-300 ease-in-out xl:hidden",
           isMenuOpen ? "max-h-[36rem] opacity-100" : "max-h-0 opacity-0",
         )}
       >
@@ -178,8 +173,8 @@ export function Header() {
               className={cn(
                 "rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                 pathname === item.href
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  ? "active-pill border border-[var(--surface-border)] text-white"
+                  : "text-muted-foreground hover:text-foreground hover:bg-[var(--hover-bg)]",
               )}
             >
               {item.label}
@@ -196,7 +191,7 @@ export function Header() {
                   key={category.slug}
                   href={`${ROUTES.products}?category=${category.slug}`}
                   onClick={() => setIsMenuOpen(false)}
-                  className="bg-muted text-muted-foreground hover:text-foreground rounded-full px-3 py-1 text-xs font-medium transition-colors"
+                  className="text-muted-foreground hover:text-foreground rounded-full border border-[var(--surface-border)] bg-[var(--subtle-bg)] px-3 py-1 text-xs font-medium transition-colors"
                 >
                   {category.label}
                 </Link>
@@ -214,7 +209,7 @@ export function Header() {
                   key={brand.label}
                   href={brandNavHref(brand)}
                   onClick={() => setIsMenuOpen(false)}
-                  className="bg-muted text-muted-foreground hover:text-foreground rounded-full px-3 py-1 text-xs font-semibold uppercase transition-colors"
+                  className="text-muted-foreground hover:text-foreground rounded-full border border-[var(--surface-border)] bg-[var(--subtle-bg)] px-3 py-1 text-xs font-semibold uppercase transition-colors"
                 >
                   {brand.label}
                 </Link>

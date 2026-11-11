@@ -10,15 +10,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-[0_1px_2px_-1px_rgba(0,0,0,0.08)] hover:bg-primary/90 hover:shadow-[0_8px_20px_-8px_color-mix(in_oklch,var(--primary)_55%,transparent)] active:bg-primary/95",
+          "bg-[linear-gradient(120deg,oklch(0.75_0.15_245),oklch(0.68_0.14_210))] text-slate-950 shadow-[0_10px_28px_-16px_rgba(56,189,248,0.75)] hover:shadow-[0_14px_34px_-14px_rgba(56,189,248,0.9)] hover:brightness-110 active:brightness-95",
         outline:
-          "border-border bg-background/50 shadow-sm hover:bg-muted hover:text-foreground hover:border-ring/40 aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+          "text-foreground hover:text-foreground border border-[var(--surface-border)] bg-[var(--surface-bg)] shadow-[0_10px_30px_-24px_rgba(0,0,0,0.9)] backdrop-blur-md hover:border-[var(--surface-border-hover)] hover:bg-[var(--hover-bg)] aria-expanded:bg-[var(--hover-bg)]",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm aria-expanded:bg-secondary aria-expanded:text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_6%)] hover:shadow-sm",
+          "text-foreground border border-[var(--surface-border)] bg-[var(--hover-bg)] shadow-sm backdrop-blur-md hover:bg-[var(--surface-bg-hover)] hover:shadow-sm aria-expanded:bg-[var(--hover-bg)]",
         ghost:
-          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+          "text-muted-foreground hover:text-foreground aria-expanded:text-foreground hover:bg-[var(--hover-bg)] aria-expanded:bg-[var(--hover-bg)]",
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 hover:text-destructive focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+          "border border-rose-400/20 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 hover:text-rose-200 focus-visible:border-rose-400/40 focus-visible:ring-rose-400/20",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

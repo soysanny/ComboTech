@@ -14,14 +14,14 @@ export function Footer() {
   const moreLinks = CATEGORY_NAV.slice(6);
 
   return (
-    <footer className="border-border/80 bg-muted/40 border-t">
+    <footer className="border-t border-[var(--surface-border)] bg-[var(--subtle-bg)] backdrop-blur-xl">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.6fr_1fr_1fr_1.6fr] lg:px-8">
         <div className="space-y-4">
           <Link
             href={ROUTES.home}
             className="group inline-flex items-center gap-2.5"
           >
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[linear-gradient(140deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] text-sm font-bold text-white shadow-md">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[linear-gradient(140deg,oklch(0.72_0.15_245),oklch(0.62_0.14_285))] text-sm font-bold text-white shadow-md">
               <Computer className="size-5" strokeWidth={2.5} />
             </span>
             <span className="flex flex-col leading-none">
@@ -46,7 +46,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 aria-label={social.label}
                 title={social.label}
-                className="text-muted-foreground hover:bg-muted hover:text-foreground inline-flex size-8 items-center justify-center rounded-lg transition-colors"
+                className="text-muted-foreground hover:text-foreground inline-flex size-8 items-center justify-center rounded-lg transition-colors hover:bg-[var(--hover-bg)]"
               >
                 <SocialIcon name={social.key} className="size-4" />
               </a>
@@ -62,7 +62,7 @@ export function Footer() {
                 <span
                   key={method.label}
                   title={method.title}
-                  className="border-border bg-background inline-flex h-9 min-w-14 items-center justify-center rounded-full border px-3 text-[11px] font-bold tracking-wide shadow-sm"
+                  className="inline-flex h-9 min-w-14 items-center justify-center rounded-full border border-[var(--surface-border)] bg-[var(--surface-bg)] px-3 text-[11px] font-bold tracking-wide shadow-sm backdrop-blur-md"
                 >
                   {method.label}
                 </span>
@@ -129,7 +129,6 @@ export function Footer() {
               {SITE.email}
             </a>
           </div>
-
         </div>
       </div>
 

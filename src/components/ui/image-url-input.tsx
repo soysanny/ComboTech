@@ -22,7 +22,9 @@ function ImageUrlInput({
   const [previewFailed, setPreviewFailed] = React.useState(false);
 
   const showPreview = value.length > 0;
-  const hasValidUrl = /^https?:\/\/.+\.(png|jpg|jpeg|gif|webp|svg)/i.test(value);
+  const hasValidUrl = /^https?:\/\/.+\.(png|jpg|jpeg|gif|webp|svg)/i.test(
+    value,
+  );
 
   React.useEffect(() => {
     setPreviewFailed(false);

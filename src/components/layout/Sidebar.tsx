@@ -12,7 +12,6 @@ import {
   MessageSquare,
   Ticket,
   ImageIcon,
-  LayoutGrid,
   ScrollText,
   LogOut,
   Menu,
@@ -40,7 +39,6 @@ const adminItems: SidebarItem[] = [
   { label: "Payments", href: ROUTES.adminPayments, icon: CreditCard },
   { label: "Coupons", href: ROUTES.adminCoupons, icon: Ticket },
   { label: "Banners", href: ROUTES.adminBanners, icon: ImageIcon },
-  { label: "Homepage", href: ROUTES.adminHomepage, icon: LayoutGrid },
   { label: "Logs", href: ROUTES.adminLogs, icon: ScrollText },
 ];
 
@@ -53,7 +51,7 @@ function SidebarContent({ items }: { items: SidebarItem[] }) {
     <div className="flex h-full flex-col">
       <div className="flex h-16 items-center gap-2.5 border-b px-4">
         <Link href={ROUTES.home} className="inline-flex items-center gap-2.5">
-          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[linear-gradient(140deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] text-sm font-bold text-white shadow-md">
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[linear-gradient(140deg,oklch(0.72_0.15_245),oklch(0.62_0.14_285))] text-sm font-bold text-white shadow-md">
             <Computer className="size-5" strokeWidth={2.5} />
           </span>
           <span className="font-heading text-base font-bold tracking-tight">
@@ -74,8 +72,8 @@ function SidebarContent({ items }: { items: SidebarItem[] }) {
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-primary text-primary-foreground shadow-sm"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                      ? "active-pill border border-[var(--surface-border)] text-white shadow-[0_8px_24px_-18px_rgba(96,165,250,0.8)]"
+                      : "text-muted-foreground hover:text-foreground hover:bg-[var(--hover-bg)]",
                   )}
                 >
                   <Icon className="size-4" />
@@ -90,7 +88,7 @@ function SidebarContent({ items }: { items: SidebarItem[] }) {
       <div className="border-t p-3">
         <Button
           variant="ghost"
-          className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground"
+          className="text-muted-foreground hover:text-foreground w-full justify-start gap-3"
           onClick={() => {
             void logout().finally(() => router.push(ROUTES.home));
           }}
@@ -109,14 +107,14 @@ export function Sidebar() {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="bg-sidebar text-sidebar-foreground border-border hidden w-64 shrink-0 flex-col border-r lg:flex">
+      <aside className="text-sidebar-foreground hidden w-64 shrink-0 flex-col border-r border-[var(--surface-border)] bg-[var(--sidebar-bg)] backdrop-blur-2xl lg:flex">
         <SidebarContent items={adminItems} />
       </aside>
 
       {/* Mobile header */}
-      <div className="bg-background/80 supports-[backdrop-filter]:backdrop-blur-xl fixed top-0 right-0 left-0 z-40 flex h-16 items-center justify-between border-b px-4 lg:hidden">
+      <div className="fixed top-0 right-0 left-0 z-40 flex h-16 items-center justify-between border-b border-[var(--surface-border)] bg-[var(--nav-bg)] px-4 backdrop-blur-2xl lg:hidden">
         <Link href={ROUTES.home} className="inline-flex items-center gap-2.5">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[linear-gradient(140deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] text-xs font-bold text-white">
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[linear-gradient(140deg,oklch(0.72_0.15_245),oklch(0.62_0.14_285))] text-xs font-bold text-white">
             <Computer className="size-4" strokeWidth={2.5} />
           </span>
           <span className="font-heading text-sm font-bold">Admin</span>

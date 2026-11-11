@@ -2,16 +2,14 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { Computer } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
-import { ParticlesBg } from "@/components/ui/particles-bg";
 
 /** Staff auth shell — centered card layout for the staff login page. */
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <div className="relative flex min-h-dvh flex-col items-center justify-center px-4 py-12 sm:px-6">
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-0 left-1/4 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
-        <ParticlesBg className="opacity-60" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="bg-primary/10 absolute top-0 left-1/4 h-96 w-96 rounded-full blur-3xl" />
+        <div className="bg-accent/10 absolute right-1/4 bottom-0 h-80 w-80 rounded-full blur-3xl" />
       </div>
 
       <Link
@@ -26,9 +24,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         </span>
       </Link>
 
-      <div className="w-full max-w-md animate-scale-in">
-        {children}
-      </div>
+      <div className="animate-scale-in w-full max-w-md">{children}</div>
 
       <p className="text-muted-foreground mt-8 text-center text-xs">
         © {new Date().getFullYear()} CAMBOTECH. All rights reserved.

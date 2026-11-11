@@ -66,7 +66,9 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
   };
 
   const showSuggestions =
-    open && debouncedQuery.trim().length > 0 && (isLoading || suggestions.length > 0);
+    open &&
+    debouncedQuery.trim().length > 0 &&
+    (isLoading || suggestions.length > 0);
 
   return (
     <form
@@ -78,7 +80,7 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
       <Input
         type="search"
         placeholder="Search products, brands, categories..."
-        className={`border-transparent bg-muted/60 pl-9 shadow-none transition-all focus:bg-background focus:shadow-sm ${
+        className={`input-glass pl-10 transition-all ${
           mobile ? "h-10" : "h-9"
         }`}
         value={query}
@@ -101,7 +103,7 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
       )}
 
       {showSuggestions && (
-        <div className="bg-card ring-foreground/5 absolute top-full right-0 left-0 z-50 mt-2 rounded-xl border p-2 shadow-lg ring-1">
+        <div className="surface-glass-strong absolute top-full right-0 left-0 z-50 mt-2 rounded-2xl p-2">
           {isLoading ? (
             <div className="space-y-2 p-2">
               <Skeleton className="h-10 w-full" />
@@ -114,7 +116,7 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
                   <button
                     type="button"
                     onClick={() => handleSelect(product)}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
+                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-[var(--hover-bg)]"
                   >
                     <div className="bg-muted relative size-10 shrink-0 overflow-hidden rounded-md">
                       {product.thumbnail ? (
@@ -143,7 +145,7 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  className="text-primary w-full rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors hover:bg-muted"
+                  className="text-primary w-full rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors hover:bg-[var(--hover-bg)]"
                 >
                   Search for &quot;{debouncedQuery}&quot;
                 </button>

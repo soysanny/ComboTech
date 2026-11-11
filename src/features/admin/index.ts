@@ -26,8 +26,6 @@ export {
   useCreateBanner,
   useUpdateBanner,
   useDeleteBanner,
-  useAdminHomepageBrandSections,
-  useSaveHomepageBrandSections,
   useAdminLogs,
   useAdminMessages,
 } from "./hooks/useAdmin";
@@ -35,4 +33,3 @@ export { ProductForm } from "./components/ProductForm";
 export { CategoryForm } from "./components/CategoryForm";
 export { CouponForm } from "./components/CouponForm";
 export { BannerForm } from "./components/BannerForm";
-export { AdminHomepageContent } from "./components/AdminHomepageContent";

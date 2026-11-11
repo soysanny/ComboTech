@@ -76,7 +76,7 @@ export function ComparisonTable({ productIds }: ComparisonTableProps) {
                 >
                   <Link
                     href={ROUTES.productDetail(product.id)}
-                    className="font-semibold hover:text-primary"
+                    className="hover:text-primary font-semibold"
                   >
                     {product.name}
                   </Link>
@@ -100,11 +100,15 @@ export function ComparisonTable({ productIds }: ComparisonTableProps) {
                   <span className="font-semibold">
                     {formatCurrency(product.price, product.currency)}
                   </span>
-                  {product.originalPrice && product.originalPrice > product.price && (
-                    <span className="text-muted-foreground ml-2 line-through">
-                      {formatCurrency(product.originalPrice, product.currency)}
-                    </span>
-                  )}
+                  {product.originalPrice &&
+                    product.originalPrice > product.price && (
+                      <span className="text-muted-foreground ml-2 line-through">
+                        {formatCurrency(
+                          product.originalPrice,
+                          product.currency,
+                        )}
+                      </span>
+                    )}
                 </td>
               ))}
             </tr>

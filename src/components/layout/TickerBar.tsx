@@ -3,7 +3,7 @@ import { SITE } from "@/constants/site";
 /** Scrolling announcement bar (CC Computer style marquee). */
 export function TickerBar() {
   return (
-    <div className="pause-on-hover overflow-hidden bg-[linear-gradient(90deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] text-white">
+    <div className="pause-on-hover overflow-hidden bg-[linear-gradient(90deg,oklch(0.45_0.14_250),oklch(0.5_0.14_285),oklch(0.45_0.12_210))] text-white">
       <div className="animate-marquee flex w-max items-center">
         {[0, 1].map((copy) => (
           <span
