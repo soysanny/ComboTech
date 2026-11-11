@@ -75,13 +75,19 @@ function extractToken(request?: Request): string | null {
 }
 
 export async function getAuth(request?: Request): Promise<{ userId: string; role: UserRole } | null> {
-  let token = extractToken(request);
-  if (!token) {
-    const cookieStore = await cookies();
-    token = cookieStore.get("token")?.value ?? null;
+  // Prefer the bearer token, but fall back to the httpOnly cookie when the
+  // header token is stale/invalid. This prevents a persisted client-side token
+  // (e.g. after a secret rotation) from overriding a still-valid cookie.
+  const headerToken = extractToken(request);
+  if (headerToken) {
+    const fromHeader = verifyToken(headerToken);
+    if (fromHeader) return fromHeader;
   }
-  if (!token) return null;
-  return verifyToken(token);
+
+  const cookieStore = await cookies();
+  const cookieToken = cookieStore.get("token")?.value ?? null;
+  if (!cookieToken) return null;
+  return verifyToken(cookieToken);
 }
 
 export function unauthorized() {

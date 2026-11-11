@@ -12,6 +12,16 @@ import type {
 
 export const dynamic = "force-dynamic";
 
+function uniqueByName(products: Product[]): Product[] {
+  const seen = new Set<string>();
+  return products.filter((product) => {
+    const key = product.name.trim().toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function selectProducts(
   section: HomepageBrandSection,
   products: Product[],
@@ -20,22 +30,30 @@ function selectProducts(
     (product) => product.brand.toLowerCase() === section.brand.toLowerCase(),
   );
 
-  let selected: Product[];
-  if (section.selectionMode === "manual" && section.productIds.length > 0) {
-    const byId = new Map(brandProducts.map((product) => [product.id, product]));
-    selected = section.productIds
-      .map((id) => byId.get(id))
-      .filter((product): product is Product => Boolean(product));
-  } else {
-    selected = [...brandProducts].sort(
+  const byPopularity = uniqueByName(
+    [...brandProducts].sort(
       (a, b) =>
         b.soldCount - a.soldCount ||
         b.rating - a.rating ||
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    ),
+  );
+
+  if (section.selectionMode === "manual" && section.productIds.length > 0) {
+    const byId = new Map(brandProducts.map((product) => [product.id, product]));
+    const manual = uniqueByName(
+      section.productIds
+        .map((id) => byId.get(id))
+        .filter((product): product is Product => Boolean(product)),
     );
+    const selectedIds = new Set(manual.map((product) => product.id));
+    const fillers = byPopularity.filter(
+      (product) => !selectedIds.has(product.id),
+    );
+    return [...manual, ...fillers].slice(0, section.productLimit);
   }
 
-  return selected.slice(0, section.productLimit);
+  return byPopularity.slice(0, section.productLimit);
 }
 
 export async function GET() {

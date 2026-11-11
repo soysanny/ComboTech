@@ -17,8 +17,8 @@ export interface BrandNavProps {
 }
 
 /**
- * CC Computer style brand / series navigation bar. Selecting a brand filters the
- * catalog and reveals that brand's product lines (Vivobook, Legion, TUF...).
+ * Compact brand / series filter bar. Brands scroll horizontally on small
+ * screens; series only appear once a brand is selected.
  */
 export function BrandNav({
   filters,
@@ -31,20 +31,17 @@ export function BrandNav({
   const activeSeries = filters.series ?? EMPTY;
 
   const visibleSeries = useMemo(() => {
-    const source =
-      activeBrands.length > 0
-        ? activeBrands
-        : Object.keys(seriesByBrand);
+    if (activeBrands.length === 0) return [];
     const set = new Set<string>();
-    source.forEach((brand) =>
-      (seriesByBrand[brand] ?? []).forEach((s) => set.add(s)),
+    activeBrands.forEach((brand) =>
+      (seriesByBrand[brand] ?? []).forEach((series) => set.add(series)),
     );
     return Array.from(set).sort();
   }, [activeBrands, seriesByBrand]);
 
   const toggleBrand = (brand: string) => {
     const next = activeBrands.includes(brand)
-      ? activeBrands.filter((b) => b !== brand)
+      ? activeBrands.filter((value) => value !== brand)
       : [...activeBrands, brand];
     onChange({
       ...filters,
@@ -55,7 +52,7 @@ export function BrandNav({
 
   const toggleSeries = (series: string) => {
     const next = activeSeries.includes(series)
-      ? activeSeries.filter((s) => s !== series)
+      ? activeSeries.filter((value) => value !== series)
       : [...activeSeries, series];
     onChange({ ...filters, series: next.length > 0 ? next : undefined });
   };
@@ -65,12 +62,12 @@ export function BrandNav({
   return (
     <div
       className={cn(
-        "bg-card ring-foreground/5 space-y-3 rounded-2xl p-4 shadow-sm ring-1",
+        "bg-card space-y-2.5 rounded-xl border p-3 shadow-sm",
         className,
       )}
     >
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="text-muted-foreground mr-1 text-xs font-semibold tracking-wide uppercase">
+      <div className="no-scrollbar -mx-1 flex items-center gap-2 overflow-x-auto px-1">
+        <span className="text-muted-foreground shrink-0 text-[11px] font-semibold tracking-wide uppercase">
           Brands
         </span>
         <button
@@ -78,8 +75,9 @@ export function BrandNav({
           onClick={() =>
             onChange({ ...filters, brands: undefined, series: undefined })
           }
+          aria-pressed={activeBrands.length === 0}
           className={cn(
-            "rounded-full px-3 py-1 text-xs font-semibold transition-colors",
+            "min-h-9 shrink-0 rounded-full px-3 text-xs font-semibold whitespace-nowrap transition-colors",
             activeBrands.length === 0
               ? "bg-primary text-primary-foreground"
               : "bg-muted text-muted-foreground hover:text-foreground",
@@ -94,8 +92,9 @@ export function BrandNav({
               key={brand}
               type="button"
               onClick={() => toggleBrand(brand)}
+              aria-pressed={active}
               className={cn(
-                "rounded-full px-3 py-1 text-xs font-semibold uppercase transition-colors",
+                "min-h-9 shrink-0 rounded-full px-3 text-xs font-semibold whitespace-nowrap uppercase transition-colors",
                 active
                   ? "bg-primary text-primary-foreground"
                   : "bg-muted text-muted-foreground hover:text-foreground",
@@ -108,8 +107,8 @@ export function BrandNav({
       </div>
 
       {visibleSeries.length > 0 && (
-        <div className="border-border/60 flex flex-wrap items-center gap-2 border-t pt-3">
-          <span className="text-muted-foreground mr-1 text-xs font-semibold tracking-wide uppercase">
+        <div className="no-scrollbar border-border/60 -mx-1 flex items-center gap-2 overflow-x-auto border-t px-1 pt-2.5">
+          <span className="text-muted-foreground shrink-0 text-[11px] font-semibold tracking-wide uppercase">
             Series
           </span>
           {visibleSeries.map((series) => {
@@ -119,8 +118,9 @@ export function BrandNav({
                 key={series}
                 type="button"
                 onClick={() => toggleSeries(series)}
+                aria-pressed={active}
                 className={cn(
-                  "rounded-full border px-2.5 py-0.5 text-xs transition-colors",
+                  "min-h-8 shrink-0 rounded-full border px-2.5 text-[11px] whitespace-nowrap transition-colors",
                   active
                     ? "border-primary bg-primary/10 text-primary font-semibold"
                     : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground",

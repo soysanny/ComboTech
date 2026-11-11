@@ -1,18 +1,32 @@
+import Link from "next/link";
+import { MapPin, Phone } from "lucide-react";
 import { SITE } from "@/constants/site";
+import { ROUTES } from "@/constants/routes";
 
-/** Scrolling announcement bar (CC Computer style marquee). */
+/** Slim static announcement bar — one short, useful message. */
 export function TickerBar() {
   return (
-    <div className="pause-on-hover overflow-hidden bg-[linear-gradient(90deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] text-white">
-      <div className="animate-marquee flex w-max items-center">
-        {[0, 1].map((copy) => (
-          <span
-            key={copy}
-            className="px-8 py-2 text-xs font-medium tracking-wide whitespace-nowrap"
+    <div className="bg-foreground text-background">
+      <div className="mx-auto flex h-8 w-full max-w-[1440px] items-center justify-between gap-4 px-4 text-[11px] font-medium sm:px-6 lg:px-8">
+        <p className="flex min-w-0 items-center gap-1.5 truncate">
+          <MapPin className="size-3 shrink-0 opacity-70" />
+          <span className="truncate">{SITE.tagline}</span>
+        </p>
+        <div className="flex shrink-0 items-center gap-4">
+          <Link
+            href={ROUTES.contact}
+            className="hidden text-background/80 transition-colors hover:text-background sm:inline"
           >
-            {SITE.ticker}
-          </span>
-        ))}
+            Contact
+          </Link>
+          <a
+            href={SITE.phoneHref}
+            className="flex items-center gap-1.5 transition-colors hover:text-background/80"
+          >
+            <Phone className="size-3" />
+            {SITE.phoneDisplay}
+          </a>
+        </div>
       </div>
     </div>
   );

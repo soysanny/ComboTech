@@ -2,8 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sun, Moon, Computer, Phone } from "lucide-react";
 import { useState } from "react";
+import {
+  ChevronDown,
+  Computer,
+  LayoutGrid,
+  Menu,
+  Moon,
+  Phone,
+  Sun,
+} from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import {
   SITE,
@@ -15,7 +23,26 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { toggleTheme } from "@/redux/slices/themeSlice";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { SearchBox } from "./SearchBox";
+import {
+  CATEGORY_ICONS,
+  CategoryLink,
+  categoryHref,
+} from "./CategoryLinks";
 import type { RootState } from "@/redux/store";
 
 const navItems = [
@@ -30,17 +57,17 @@ function Logo() {
     <Link
       href={ROUTES.home}
       className="group inline-flex shrink-0 items-center gap-2.5"
-      aria-label="Go to homepage"
+      aria-label="CamboTech home"
     >
-      <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[linear-gradient(140deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] text-sm font-bold text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
-        <Computer className="size-5" strokeWidth={2.5} />
+      <span className="bg-primary text-primary-foreground inline-flex size-9 items-center justify-center rounded-lg shadow-sm transition-transform duration-200 group-hover:scale-105">
+        <Computer className="size-5" strokeWidth={2.4} />
       </span>
       <span className="hidden flex-col leading-none sm:flex">
-        <span className="font-brand text-base font-semibold tracking-tight">
+        <span className="font-brand text-[15px] font-semibold tracking-tight">
           CamboTech
         </span>
-        <span className="text-muted-foreground text-[10px] font-medium tracking-wide">
-          {SITE.tagline}
+        <span className="text-muted-foreground mt-0.5 text-[10px] font-medium tracking-wide">
+          Laptop &amp; PC Store
         </span>
       </span>
     </Link>
@@ -56,6 +83,7 @@ function ThemeToggle() {
       type="button"
       variant="ghost"
       size="icon-sm"
+      className="hidden sm:inline-flex"
       onClick={() => dispatch(toggleTheme())}
       aria-label={`Switch theme, currently ${mode}`}
       title="Toggle theme"
@@ -66,43 +94,67 @@ function ThemeToggle() {
   );
 }
 
-/** Category navigation row — mirrors CC Computer's storefront menu. */
-function CategoryNav() {
+function AllCategoriesMenu() {
   return (
-    <div className="border-border/60 bg-muted/30 border-t">
-      <div className="mx-auto flex w-full max-w-7xl items-center gap-1 overflow-x-auto px-4 py-1.5 sm:px-6 lg:px-8">
-        {CATEGORY_NAV.map((category) => (
-          <Link
-            key={category.slug}
-            href={`${ROUTES.products}?category=${category.slug}`}
-            className="text-muted-foreground hover:bg-background hover:text-foreground shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-wide whitespace-nowrap uppercase transition-colors"
-          >
-            {category.label}
-          </Link>
-        ))}
-        <Link
-          href={ROUTES.contact}
-          className="text-primary hover:bg-background shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold tracking-wide whitespace-nowrap uppercase transition-colors"
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          className="hidden shrink-0 gap-2 lg:inline-flex"
         >
-          Contact Us
-        </Link>
-      </div>
-    </div>
+          <LayoutGrid className="size-4" />
+          All Categories
+          <ChevronDown className="size-3.5 opacity-60" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align="start"
+        className="w-60 p-2"
+        aria-label="Product categories"
+      >
+        <DropdownMenuLabel className="px-2 py-1.5">
+          Shop by category
+        </DropdownMenuLabel>
+        {CATEGORY_NAV.map((category) => {
+          const Icon = CATEGORY_ICONS[category.slug];
+          return (
+            <DropdownMenuItem key={category.slug} asChild>
+              <Link
+                href={categoryHref(category.slug)}
+                className="gap-2.5 py-2 text-sm"
+              >
+                <Icon className="text-muted-foreground size-4" />
+                {category.label}
+              </Link>
+            </DropdownMenuItem>
+          );
+        })}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href={ROUTES.products} className="py-2 text-sm font-semibold">
+            View all products
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
 export function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <header className="bg-background/85 supports-[backdrop-filter]:backdrop-blur-xl sticky top-0 z-40 border-b border-white/40 shadow-[0_1px_2px_-1px_rgba(0,0,0,0.04)] dark:border-white/5">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/85 sticky top-0 z-40 border-b shadow-[0_1px_2px_-1px_rgba(0,0,0,0.04)] backdrop-blur">
+      <div className="mx-auto flex h-16 w-full max-w-[1440px] items-center gap-2 px-4 sm:gap-3 sm:px-6 lg:px-8">
         <Logo />
+        <AllCategoriesMenu />
 
-        <SearchBox className="hidden max-w-md flex-1 md:block" />
+        <SearchBox className="min-w-0 flex-1 lg:max-w-2xl" />
 
-        <nav className="hidden items-center gap-1 xl:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Primary">
           {navItems.map((item) => {
             const isActive =
               item.href === ROUTES.home
@@ -114,9 +166,9 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200",
+                  "rounded-md px-3 py-2 text-sm font-medium transition-colors",
                   isActive
-                    ? "bg-primary text-primary-foreground shadow-sm"
+                    ? "text-primary bg-primary/5"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
@@ -126,113 +178,114 @@ export function Header() {
           })}
         </nav>
 
-        <div className="flex items-center gap-1">
-          <a
-            href={SITE.phoneHref}
-            className="text-muted-foreground hover:text-foreground hidden items-center gap-1.5 rounded-lg px-2 text-sm font-semibold transition-colors lg:flex"
+        <div className="flex shrink-0 items-center gap-1">
+          <Button
+            asChild
+            size="sm"
+            className="hidden lg:inline-flex"
           >
-            <Phone className="size-3.5" />
-            {SITE.phoneDisplay}
-          </a>
+            <Link href={ROUTES.contact}>
+              <Phone className="size-3.5" />
+              Contact to order
+            </Link>
+          </Button>
           <ThemeToggle />
 
           <Button
             type="button"
             variant="ghost"
             size="icon-sm"
-            className="xl:hidden"
-            onClick={() => setIsMenuOpen((open) => !open)}
+            className="lg:hidden"
+            onClick={() => setIsMenuOpen(true)}
             aria-expanded={isMenuOpen}
-            aria-controls="mobile-nav"
-            aria-label="Toggle navigation menu"
+            aria-label="Open menu and categories"
           >
-            {isMenuOpen ? (
-              <X className="size-5" />
-            ) : (
-              <Menu className="size-5" />
-            )}
+            <Menu className="size-5" />
           </Button>
         </div>
       </div>
 
-      <CategoryNav />
-
-      <div
-        id="mobile-nav"
-        className={cn(
-          "border-border/70 overflow-hidden border-t bg-background/95 transition-all duration-300 ease-in-out xl:hidden",
-          isMenuOpen ? "max-h-[36rem] opacity-100" : "max-h-0 opacity-0",
-        )}
-      >
-        <nav
-          className="mx-auto grid max-w-7xl gap-1 px-4 py-3 sm:px-6"
-          aria-label="Mobile primary"
+      <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+        <SheetContent
+          side="left"
+          className="w-[88vw] overflow-y-auto p-0 sm:max-w-sm"
         >
-          <SearchBox mobile className="mb-2 md:hidden" />
+          <SheetHeader className="border-b px-4 py-4">
+            <SheetTitle>Menu</SheetTitle>
+          </SheetHeader>
 
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setIsMenuOpen(false)}
-              className={cn(
-                "rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                pathname === item.href
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground",
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+          <div className="space-y-5 px-4 py-4">
+            <SearchBox mobile />
 
-          <div className="border-border/60 mt-2 border-t pt-3">
-            <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wide uppercase">
-              Shop by category
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {CATEGORY_NAV.map((category) => (
+            <nav className="grid gap-0.5" aria-label="Mobile primary">
+              {navItems.map((item) => (
                 <Link
-                  key={category.slug}
-                  href={`${ROUTES.products}?category=${category.slug}`}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="bg-muted text-muted-foreground hover:text-foreground rounded-full px-3 py-1 text-xs font-medium transition-colors"
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMenu}
+                  className={cn(
+                    "rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                    pathname === item.href
+                      ? "bg-primary text-primary-foreground"
+                      : "text-foreground hover:bg-muted",
+                  )}
                 >
-                  {category.label}
+                  {item.label}
                 </Link>
               ))}
-            </div>
-          </div>
+            </nav>
 
-          <div className="border-border/60 mt-3 border-t pt-3">
-            <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wide uppercase">
-              Brands
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {BRAND_NAV.map((brand) => (
-                <Link
-                  key={brand.label}
-                  href={brandNavHref(brand)}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="bg-muted text-muted-foreground hover:text-foreground rounded-full px-3 py-1 text-xs font-semibold uppercase transition-colors"
-                >
-                  {brand.label}
+            <div>
+              <p className="text-muted-foreground mb-2 px-1 text-xs font-semibold tracking-wide uppercase">
+                Shop by category
+              </p>
+              <div className="grid gap-0.5">
+                {CATEGORY_NAV.map((category) => (
+                  <CategoryLink
+                    key={category.slug}
+                    category={category}
+                    onNavigate={closeMenu}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-muted-foreground mb-2 px-1 text-xs font-semibold tracking-wide uppercase">
+                Brands
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {BRAND_NAV.map((brand) => (
+                  <Link
+                    key={brand.label}
+                    href={brandNavHref(brand)}
+                    onClick={closeMenu}
+                    className="bg-muted text-muted-foreground hover:text-foreground rounded-md px-2.5 py-1.5 text-[11px] font-semibold tracking-wide uppercase transition-colors"
+                  >
+                    {brand.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t pt-4">
+              <Button asChild className="w-full">
+                <Link href={ROUTES.contact} onClick={closeMenu}>
+                  <Phone className="size-4" />
+                  Contact to order
                 </Link>
-              ))}
+              </Button>
+              <a
+                href={SITE.phoneHref}
+                className="text-muted-foreground hover:text-foreground mt-3 flex items-center justify-center gap-1.5 text-sm font-semibold transition-colors"
+              >
+                <Phone className="size-4" />
+                {SITE.phoneDisplay}
+              </a>
             </div>
           </div>
-
-          <div className="mt-3 flex items-center gap-2">
-            <a
-              href={SITE.phoneHref}
-              className="text-muted-foreground flex items-center gap-1.5 text-sm font-semibold"
-            >
-              <Phone className="size-4" />
-              {SITE.phoneDisplay}
-            </a>
-          </div>
-        </nav>
-      </div>
+        </SheetContent>
+      </Sheet>
     </header>
   );
 }

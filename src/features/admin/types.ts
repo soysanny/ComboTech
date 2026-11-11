@@ -60,6 +60,8 @@ export interface Banner {
   type: BannerType;
   active: boolean;
   order: number;
+  /** Promotional homepage carousel the banner belongs to (1 or 2). */
+  row?: 1 | 2;
 }
 
 export type ActivityLogType =

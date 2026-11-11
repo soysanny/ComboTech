@@ -9,20 +9,28 @@ import { BrandProductSection } from "./BrandProductSection";
 function BrandSectionSkeleton() {
   return (
     <section>
-      <div className="mb-6 flex items-center gap-3">
-        <div className="bg-muted size-10 animate-pulse rounded-xl" />
-        <div className="space-y-2">
-          <div className="bg-muted h-6 w-28 animate-pulse rounded" />
-          <div className="bg-muted h-3 w-40 animate-pulse rounded" />
+      <div className="mb-4 flex items-center gap-2.5">
+        <div className="bg-muted size-9 animate-pulse rounded-lg" />
+        <div className="space-y-1.5">
+          <div className="bg-muted h-4 w-24 animate-pulse rounded" />
+          <div className="bg-muted h-2.5 w-32 animate-pulse rounded" />
         </div>
       </div>
-      <ProductGridSkeleton count={4} />
+      <ProductGridSkeleton count={4} columns="compact4" />
     </section>
   );
 }
 
 /** Renders the admin-configured brand-based product sections. */
-export function HomepageBrandSections() {
+export function HomepageBrandSections({
+  excludeIds,
+  excludeNames,
+  limit,
+}: {
+  excludeIds?: Set<string>;
+  excludeNames?: Set<string>;
+  limit?: number;
+}) {
   const { data, isLoading, isError, refetch } = useHomepageBrandSections();
 
   if (isLoading) {
@@ -36,7 +44,7 @@ export function HomepageBrandSections() {
 
   if (isError) {
     return (
-      <section className="border-border/60 bg-muted/30 rounded-2xl border p-8 text-center">
+      <section className="bg-muted/30 rounded-xl border border-dashed p-6 text-center">
         <p className="text-muted-foreground text-sm">
           Could not load brand product sections.
         </p>
@@ -46,18 +54,35 @@ export function HomepageBrandSections() {
           className="mt-3"
           onClick={() => refetch()}
         >
-          <RefreshCw className="mr-2 size-4" />
+          <RefreshCw className="size-4" />
           Retry
         </Button>
       </section>
     );
   }
 
-  if (!data || data.length === 0) return null;
+  const sections = (data ?? [])
+    .map((section) => {
+      const seenNames = new Set<string>();
+      const products = section.products
+        .filter((product) => {
+          if (excludeIds?.has(product.id)) return false;
+          const nameKey = product.name.trim().toLowerCase();
+          if (excludeNames?.has(nameKey) || seenNames.has(nameKey)) return false;
+          seenNames.add(nameKey);
+          return true;
+        })
+        .slice(0, Math.min(section.productLimit, 4));
+      return { ...section, products };
+    })
+    .filter((section) => section.products.length >= 3)
+    .slice(0, limit ?? undefined);
+
+  if (sections.length === 0) return null;
 
   return (
     <>
-      {data.map((section) => (
+      {sections.map((section) => (
         <BrandProductSection key={section.id} section={section} />
       ))}
     </>

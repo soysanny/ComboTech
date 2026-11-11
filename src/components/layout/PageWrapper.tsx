@@ -21,7 +21,7 @@ export function PageWrapper({
     <div
       className={cn(
         "w-full px-4 py-6 sm:px-6 lg:px-8",
-        contained && "mx-auto max-w-7xl",
+        contained && "mx-auto max-w-[1440px]",
         animate && "animate-fade-in",
         className,
       )}

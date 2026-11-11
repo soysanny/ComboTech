@@ -11,7 +11,6 @@ import {
   Star,
   Heart,
   Globe,
-  Sparkles,
   ArrowRight,
   Cpu,
   Monitor,
@@ -22,70 +21,34 @@ import {
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { SectionShell } from "@/components/shared/SectionShell";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ParticlesBg } from "@/components/ui/particles-bg";
 import { ROUTES } from "@/constants/routes";
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-[linear-gradient(135deg,oklch(0.22_0.04_260),oklch(0.32_0.08_250))] px-6 py-16 text-white shadow-2xl sm:px-12 sm:py-20 lg:py-24">
-      <ParticlesBg theme="dark" background={false} />
-      <div className="relative z-10 max-w-3xl">
-        <Badge className="mb-5 border-white/20 bg-white/10 text-white backdrop-blur-sm">
-          <Sparkles className="mr-1.5 size-3.5" />
-          Since 2020
-        </Badge>
-        <h1 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-          About CAMBOTECH
-        </h1>
-        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/80">
-          Your trusted online destination for premium computers, laptops, gaming
-          PCs, and accessories. We combine quality products with fair pricing and
-          exceptional service to power Cambodia&apos;s tech community.
+    <section className="bg-card flex flex-col gap-5 rounded-xl border p-5 shadow-sm sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+      <div className="max-w-2xl">
+        <p className="text-primary text-[11px] font-semibold tracking-[0.16em] uppercase">
+          About CamboTech
         </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Button
-            asChild
-            size="lg"
-            className="bg-white text-slate-900 hover:bg-white/90"
-          >
-            <Link href={ROUTES.products}>
-              Explore products
-              <ArrowRight className="ml-2 size-4" />
-            </Link>
-          </Button>
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white"
-          >
-            <Link href={ROUTES.home}>Learn more</Link>
-          </Button>
-        </div>
+        <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
+          Technology, chosen with care.
+        </h1>
+        <p className="text-muted-foreground mt-2 text-sm leading-relaxed sm:text-base">
+          Your trusted destination for computers, laptops, PC components and
+          accessories in Phnom Penh. We combine genuine products with fair
+          pricing and practical local support.
+        </p>
       </div>
-
-      <div className="pointer-events-none absolute inset-0 opacity-40">
-        <div className="absolute top-0 right-0 h-96 w-96 translate-x-1/3 -translate-y-1/3 rounded-full bg-primary/30 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-80 w-80 -translate-x-1/3 translate-y-1/3 rounded-full bg-accent/30 blur-3xl" />
-      </div>
-
-      <div className="absolute right-8 bottom-8 hidden lg:block">
-        <div className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-md">
-          <div className="flex -space-x-3">
-            {[...Array(4)].map((_, i) => (
-              <div
-                key={i}
-                className="size-10 rounded-full border-2 border-white/30 bg-gradient-to-br from-primary/60 to-accent/60"
-                style={{ zIndex: 4 - i }}
-              />
-            ))}
-          </div>
-          <div>
-            <p className="text-sm font-semibold">Trusted by 10,000+</p>
-            <p className="text-xs text-white/70">Happy customers</p>
-          </div>
-        </div>
+      <div className="flex flex-wrap gap-2">
+        <Button asChild>
+          <Link href={ROUTES.products}>
+            Explore products
+            <ArrowRight className="size-4" />
+          </Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href={ROUTES.contact}>Talk to our team</Link>
+        </Button>
       </div>
     </section>
   );
@@ -106,7 +69,7 @@ function Stats() {
         return (
           <div
             key={stat.label}
-            className="group flex flex-col items-center gap-3 rounded-2xl border border-transparent bg-white/60 p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-md dark:bg-white/5 dark:hover:bg-white/10"
+            className="group bg-card flex flex-col items-center gap-3 rounded-xl border p-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
           >
             <div className="bg-primary/10 text-primary inline-flex size-12 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110">
               <Icon className="size-6" />
@@ -186,18 +149,18 @@ function OurStory() {
 
 function Mission() {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-[linear-gradient(135deg,oklch(0.50_0.18_250),oklch(0.55_0.20_190))] px-6 py-14 text-white shadow-xl sm:px-12 sm:py-20">
+    <section className="bg-foreground text-background relative overflow-hidden rounded-xl px-6 py-10 shadow-sm sm:px-10">
       <div className="relative z-10 mx-auto max-w-3xl text-center">
-        <Target className="mx-auto mb-6 size-12 text-white/80" />
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <Target className="mx-auto mb-4 size-9 opacity-70" />
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
           Our Mission
         </h2>
-        <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/90">
+        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed opacity-80 sm:text-base">
           To provide the best computing experience with quality products and
           outstanding customer support — empowering every individual and
           business in Cambodia to reach their full potential through technology.
         </p>
-        <div className="mt-10 grid gap-5 sm:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {[
             {
               icon: Star,
@@ -219,21 +182,17 @@ function Mission() {
             return (
               <div
                 key={item.title}
-                className="rounded-2xl border border-white/15 bg-white/10 p-6 text-left backdrop-blur-sm"
+                className="border-background/15 bg-background/10 rounded-xl border p-5 text-left"
               >
-                <Icon className="mb-3 size-7" />
+                <Icon className="mb-3 size-6" />
                 <h3 className="font-semibold">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/75">
+                <p className="mt-2 text-sm leading-relaxed opacity-75">
                   {item.desc}
                 </p>
               </div>
             );
           })}
         </div>
-      </div>
-      <div className="pointer-events-none absolute inset-0 opacity-30">
-        <div className="absolute top-0 right-0 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-white/20 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-72 w-72 -translate-x-1/3 translate-y-1/3 rounded-full bg-black/15 blur-3xl" />
       </div>
     </section>
   );
@@ -290,7 +249,7 @@ function WhyChooseUs() {
           return (
             <div
               key={item.title}
-              className="group rounded-2xl border border-transparent bg-white/60 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-md dark:bg-white/5 dark:hover:bg-white/10"
+              className="group bg-card rounded-xl border p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className="bg-primary/10 text-primary mb-4 inline-flex size-12 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110">
                 <Icon className="size-6" />
@@ -309,38 +268,28 @@ function WhyChooseUs() {
 
 function CTABanner() {
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-[linear-gradient(135deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] px-6 py-12 text-white shadow-xl sm:px-12 sm:py-16">
-      <div className="relative z-10 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Ready to upgrade your setup?
-          </h2>
-          <p className="mt-2 max-w-lg text-white/85">
-            Join thousands of satisfied customers who trust CAMBOTECH for their
-            tech needs. Browse our catalog today.
-          </p>
-        </div>
-        <Button
-          asChild
-          size="lg"
-          className="bg-white text-foreground hover:bg-white/90"
-        >
-          <Link href={ROUTES.products}>
-            Shop now
-            <ArrowRight className="ml-2 size-4" />
-          </Link>
-        </Button>
+    <section className="bg-card flex flex-col items-start justify-between gap-4 rounded-xl border px-5 py-5 sm:flex-row sm:items-center">
+      <div>
+        <h2 className="text-base font-semibold tracking-tight sm:text-lg">
+          Ready to upgrade your setup?
+        </h2>
+        <p className="text-muted-foreground mt-0.5 max-w-lg text-sm">
+          Browse our full catalog of computers, components, and accessories.
+        </p>
       </div>
-      <div className="pointer-events-none absolute inset-0 opacity-30">
-        <div className="absolute top-0 right-0 h-80 w-80 translate-x-1/3 -translate-y-1/3 rounded-full bg-white/20 blur-3xl" />
-      </div>
+      <Button asChild size="sm">
+        <Link href={ROUTES.products}>
+          Shop now
+          <ArrowRight className="size-4" />
+        </Link>
+      </Button>
     </section>
   );
 }
 
 export function AboutPageContent() {
   return (
-    <PageWrapper className="space-y-14 py-8">
+    <PageWrapper className="space-y-6 py-4 sm:py-6">
       <Hero />
       <Stats />
       <OurStory />

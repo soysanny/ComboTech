@@ -23,6 +23,8 @@ export interface BannerFormData {
   type: "homepage" | "promotion";
   order: number;
   active: boolean;
+  /** Which promotional carousel the banner appears in (only for promotions). */
+  row?: 1 | 2;
 }
 
 const bannerSchema = z.object({
@@ -32,6 +34,7 @@ const bannerSchema = z.object({
   type: z.enum(["homepage", "promotion"]),
   order: z.coerce.number().int().nonnegative(),
   active: z.boolean().default(true),
+  row: z.union([z.literal(1), z.literal(2)]).optional(),
 });
 
 export interface BannerFormProps {
@@ -58,6 +61,7 @@ export function BannerForm({ initialValue, onSubmit, loading }: BannerFormProps)
           type: initialValue.type,
           order: initialValue.order,
           active: initialValue.active,
+          row: initialValue.row ?? 1,
         }
       : {
           title: "",
@@ -66,11 +70,13 @@ export function BannerForm({ initialValue, onSubmit, loading }: BannerFormProps)
           type: "homepage",
           order: 1,
           active: true,
+          row: 1,
         },
   });
 
   const type = useWatch({ control, name: "type" });
   const active = useWatch({ control, name: "active" });
+  const row = useWatch({ control, name: "row" });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -111,6 +117,27 @@ export function BannerForm({ initialValue, onSubmit, loading }: BannerFormProps)
           {errors.order && <p className="text-destructive text-xs">{errors.order.message}</p>}
         </div>
       </div>
+
+      {type === "promotion" && (
+        <div className="space-y-2">
+          <Label>Promotional carousel</Label>
+          <Select
+            value={String(row ?? 1)}
+            onValueChange={(value) => setValue("row", Number(value) as 1 | 2)}
+          >
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1">Row 1 (top carousel)</SelectItem>
+              <SelectItem value="2">Row 2 (bottom carousel)</SelectItem>
+            </SelectContent>
+          </Select>
+          <p className="text-muted-foreground text-xs">
+            Promotions appear on the homepage beneath the main banner.
+          </p>
+        </div>
+      )}
 
       <div className="flex items-center gap-3 py-2">
         <Switch

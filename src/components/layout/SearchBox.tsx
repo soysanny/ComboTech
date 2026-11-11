@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -77,9 +78,10 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
       <Search className="text-muted-foreground/70 absolute top-1/2 left-3 size-4 -translate-y-1/2" />
       <Input
         type="search"
-        placeholder="Search products, brands, categories..."
-        className={`border-transparent bg-muted/60 pl-9 shadow-none transition-all focus:bg-background focus:shadow-sm ${
-          mobile ? "h-10" : "h-9"
+        name="search"
+        placeholder="Search laptops, components, accessories…"
+        className={`bg-muted/50 focus:bg-background border-transparent pl-9 transition-all focus:shadow-sm ${
+          mobile ? "h-10 pr-3" : "h-10 pr-3 sm:pr-24"
         }`}
         value={query}
         onChange={(event) => {
@@ -87,14 +89,14 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
           setOpen(true);
         }}
         onFocus={() => setOpen(true)}
-        aria-label="Search products"
+        aria-label="Search laptops, components and accessories"
         autoComplete="off"
       />
       {!mobile && (
         <Button
           type="submit"
           size="sm"
-          className="absolute top-1/2 right-1.5 -translate-y-1/2"
+          className="absolute top-1/2 right-1.5 hidden -translate-y-1/2 sm:inline-flex"
         >
           Search
         </Button>
@@ -117,12 +119,14 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
                     className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
                   >
                     <div className="bg-muted relative size-10 shrink-0 overflow-hidden rounded-md">
-                      {product.thumbnail ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                      {product.thumbnail &&
+                      !product.thumbnail.endsWith("/placeholder.svg") ? (
+                        <Image
                           src={product.thumbnail}
-                          alt={product.name}
-                          className="h-full w-full object-cover"
+                          alt=""
+                          fill
+                          sizes="40px"
+                          className="object-contain p-0.5"
                         />
                       ) : (
                         <span className="flex h-full items-center justify-center text-xs font-bold">

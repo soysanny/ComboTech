@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
 import { useBanners } from "@/features/banners";
+import { isDisplayableImageUrl } from "@/features/homepage/lib/imageUrl";
 import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +24,7 @@ const STORAGE_KEY = "cambotech-promo-dismissed";
  */
 export function PromoPopup() {
   const [open, setOpen] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
   const { data } = useBanners("promotion");
 
   useEffect(() => {
@@ -39,7 +41,8 @@ export function PromoPopup() {
     }
   };
 
-  const banner = data?.[0];
+  const banner =
+    data?.find((item) => isDisplayableImageUrl(item.imageUrl)) ?? data?.[0];
   const bannerHref =
     banner?.linkUrl && banner.linkUrl.startsWith("/")
       ? banner.linkUrl
@@ -49,21 +52,22 @@ export function PromoPopup() {
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="overflow-hidden p-0 sm:max-w-md">
         <div className="relative">
-          {banner?.imageUrl ? (
+          {banner?.imageUrl && !imageFailed ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={banner.imageUrl}
               alt={banner.title}
               className="max-h-72 w-full object-cover"
+              onError={() => setImageFailed(true)}
             />
           ) : (
-            <div className="flex flex-col items-center gap-3 bg-[linear-gradient(135deg,oklch(0.55_0.18_250),oklch(0.65_0.16_190))] px-6 py-10 text-center text-white">
-              <Sparkles className="size-10" />
-              <p className="text-3xl font-extrabold tracking-tight">
-                Save up to 30%
+            <div className="bg-foreground text-background flex flex-col items-center gap-2 px-6 py-10 text-center">
+              <Sparkles className="size-8 opacity-70" />
+              <p className="text-2xl font-bold tracking-tight">
+                CamboTech promotions
               </p>
-              <p className="text-sm text-white/85">
-                Special launch deals on laptops, desktops, and accessories.
+              <p className="text-sm opacity-75">
+                Browse our latest laptops, desktops, components and accessories.
               </p>
             </div>
           )}
@@ -71,11 +75,12 @@ export function PromoPopup() {
 
         <DialogHeader className="px-6 pb-2">
           <DialogTitle className="text-lg">
-            {banner?.title ?? "Special promotion"}
+            {banner?.title ?? "CamboTech promotions"}
           </DialogTitle>
           <DialogDescription>
-            Limited-time offers on selected computers and gear. Grab them before
-            they are gone.
+            {banner
+              ? "See the latest offer on selected computers and gear."
+              : "Browse our latest laptops, desktops, components and accessories."}
           </DialogDescription>
         </DialogHeader>
 

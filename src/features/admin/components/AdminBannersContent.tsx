@@ -52,6 +52,16 @@ export function AdminBannersContent() {
   const columns: DataTableColumn<Banner>[] = [
     { key: "title", header: "Title", render: (row) => row.title },
     { key: "type", header: "Type", render: (row) => <Badge variant="outline">{row.type}</Badge> },
+    {
+      key: "row",
+      header: "Carousel",
+      render: (row) =>
+        row.type === "promotion" ? (
+          <Badge variant="secondary">Row {row.row ?? 1}</Badge>
+        ) : (
+          <span className="text-muted-foreground">—</span>
+        ),
+    },
     { key: "order", header: "Order", render: (row) => row.order },
     {
       key: "active",
