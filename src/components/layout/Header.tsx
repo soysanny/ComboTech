@@ -68,30 +68,41 @@ function CategoryNavItems({
   activeCategory?: string | null;
 }) {
   return (
-    <div className="border-t border-[var(--surface-border)] bg-[var(--subtle-bg)]">
-      <div className="mx-auto flex w-full max-w-7xl [scrollbar-width:none] items-center gap-1 overflow-x-auto overscroll-x-contain px-4 py-2 sm:px-6 lg:px-8 [&::-webkit-scrollbar]:hidden">
-        {CATEGORY_NAV.map((category) => {
-          const isActive = activeCategory === category.slug;
+    <div className="border-b border-[var(--surface-border)] bg-[var(--surface-strong-bg)]">
+      <div className="mx-auto flex h-[66px] w-full max-w-7xl items-center gap-2 px-4 sm:px-6 lg:px-8">
+        <nav
+          aria-label="Product categories"
+          className="flex min-w-0 flex-1 [scrollbar-width:none] items-center gap-1 overflow-x-auto overscroll-x-contain py-2 [&::-webkit-scrollbar]:hidden"
+        >
+          {CATEGORY_NAV.map((category) => {
+            const isActive = activeCategory === category.slug;
 
-          return (
-            <Link
-              key={category.slug}
-              href={`${ROUTES.products}?category=${category.slug}`}
-              aria-current={isActive ? "page" : undefined}
-              className={cn(
-                "shrink-0 rounded-lg border px-3.5 py-2 text-[13px] font-medium tracking-normal whitespace-nowrap transition-colors duration-200",
-                isActive
-                  ? "text-foreground border-[var(--surface-border)] bg-[var(--hover-bg)]"
-                  : "text-foreground/70 hover:text-foreground border-transparent hover:bg-[var(--hover-bg)]",
-              )}
-            >
-              {category.label}
-            </Link>
-          );
-        })}
+            return (
+              <Link
+                key={category.slug}
+                href={`${ROUTES.products}?category=${category.slug}`}
+                aria-current={isActive ? "page" : undefined}
+                className={cn(
+                  "font-brand focus-visible:ring-ring/60 focus-visible:ring-offset-background relative inline-flex h-11 shrink-0 items-center rounded-[10px] px-3.5 text-[15px] font-medium tracking-normal whitespace-nowrap transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4 sm:text-base lg:h-12",
+                  isActive
+                    ? "bg-primary/10 text-primary after:bg-primary after:absolute after:inset-x-3.5 after:bottom-1 after:h-0.5 after:rounded-full after:content-['']"
+                    : "hover:bg-primary/[0.08] hover:text-primary dark:text-foreground/75 dark:hover:text-primary text-slate-700",
+                )}
+              >
+                {category.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <span
+          className="h-6 w-px shrink-0 bg-[var(--surface-border)]"
+          aria-hidden
+        />
+
         <Link
           href={ROUTES.contact}
-          className="text-primary hover:text-primary/90 shrink-0 rounded-lg border border-transparent px-3.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-colors duration-200 hover:bg-[var(--hover-bg)]"
+          className="font-brand text-primary hover:bg-primary/10 focus-visible:ring-ring/60 focus-visible:ring-offset-background inline-flex h-11 shrink-0 items-center rounded-[10px] px-3 text-[15px] font-semibold whitespace-nowrap transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4 sm:text-base lg:h-12"
         >
           Contact Us
         </Link>
@@ -114,6 +125,7 @@ function CategoryNavFallback() {
 export function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isCatalogPage = pathname === ROUTES.products;
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--surface-border)] bg-[var(--nav-bg)] shadow-[0_18px_50px_-38px_rgba(0,0,0,0.8)] supports-[backdrop-filter]:backdrop-blur-2xl">
@@ -180,9 +192,11 @@ export function Header() {
         </div>
       </div>
 
-      <Suspense fallback={<CategoryNavFallback />}>
-        <CategoryNav />
-      </Suspense>
+      {!isCatalogPage && (
+        <Suspense fallback={<CategoryNavFallback />}>
+          <CategoryNav />
+        </Suspense>
+      )}
 
       <div
         id="mobile-nav"
