@@ -20,6 +20,20 @@ const navItems = [
   { label: "Contact", href: ROUTES.contact },
 ];
 
+/** Shared interaction styling for the primary navigation and category bar. */
+const primaryNavActiveClasses =
+  "border-primary/25 bg-primary/10 text-foreground after:via-primary/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] after:absolute after:inset-x-3.5 after:bottom-1 after:h-px after:rounded-full after:bg-gradient-to-r after:from-transparent after:to-transparent after:content-['']";
+const primaryNavInactiveClasses =
+  "text-foreground/70 hover:text-foreground border-transparent hover:bg-[var(--hover-bg)]";
+
+function primaryNavItemClasses(isActive: boolean, className?: string) {
+  return cn(
+    "relative rounded-lg border font-medium transition-colors duration-200",
+    isActive ? primaryNavActiveClasses : primaryNavInactiveClasses,
+    className,
+  );
+}
+
 function Logo() {
   return (
     <Link
@@ -67,6 +81,9 @@ function CategoryNavItems({
 }: {
   activeCategory?: string | null;
 }) {
+  const pathname = usePathname();
+  const isContactActive = pathname === ROUTES.contact;
+
   return (
     <div className="border-b border-[var(--surface-border)] bg-[var(--surface-strong-bg)]">
       <div className="mx-auto flex h-[66px] w-full max-w-7xl items-center gap-2 px-4 sm:px-6 lg:px-8">
@@ -82,11 +99,9 @@ function CategoryNavItems({
                 key={category.slug}
                 href={`${ROUTES.products}?category=${category.slug}`}
                 aria-current={isActive ? "page" : undefined}
-                className={cn(
-                  "font-[family-name:var(--font-geist-sans)] focus-visible:ring-ring/60 focus-visible:ring-offset-background relative inline-flex h-11 shrink-0 items-center rounded-[10px] px-3.5 text-[15px] font-medium tracking-normal whitespace-nowrap transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4 sm:text-base lg:h-12",
-                  isActive
-                    ? "bg-primary/10 text-primary after:bg-primary after:absolute after:inset-x-3.5 after:bottom-1 after:h-0.5 after:rounded-full after:content-['']"
-                    : "hover:bg-primary/[0.08] hover:text-primary dark:text-foreground/75 dark:hover:text-primary text-slate-700",
+                className={primaryNavItemClasses(
+                  isActive,
+                  "focus-visible:ring-ring/60 focus-visible:ring-offset-background inline-flex h-11 shrink-0 items-center px-3.5 text-[15px] tracking-normal whitespace-nowrap focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4 sm:text-base lg:h-12",
                 )}
               >
                 {category.label}
@@ -102,7 +117,11 @@ function CategoryNavItems({
 
         <Link
           href={ROUTES.contact}
-          className="font-[family-name:var(--font-geist-sans)] text-primary hover:bg-primary/10 focus-visible:ring-ring/60 focus-visible:ring-offset-background inline-flex h-11 shrink-0 items-center rounded-[10px] px-3 text-[15px] font-semibold whitespace-nowrap transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4 sm:text-base lg:h-12"
+          aria-current={isContactActive ? "page" : undefined}
+          className={primaryNavItemClasses(
+            isContactActive,
+            "focus-visible:ring-ring/60 focus-visible:ring-offset-background inline-flex h-11 shrink-0 items-center px-3 text-[15px] tracking-normal whitespace-nowrap focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4 sm:text-base lg:h-12",
+          )}
         >
           Contact Us
         </Link>
@@ -146,11 +165,9 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 aria-current={isActive ? "page" : undefined}
-                className={cn(
-                  "relative rounded-lg border px-3.5 py-2.5 text-[15px] font-medium transition-colors duration-200",
-                  isActive
-                    ? "border-primary/25 bg-primary/10 text-foreground after:via-primary/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] after:absolute after:inset-x-3.5 after:bottom-1 after:h-px after:rounded-full after:bg-gradient-to-r after:from-transparent after:to-transparent after:content-['']"
-                    : "text-foreground/70 hover:text-foreground border-transparent hover:bg-[var(--hover-bg)]",
+                className={primaryNavItemClasses(
+                  isActive,
+                  "px-3.5 py-2.5 text-[15px]",
                 )}
               >
                 {item.label}

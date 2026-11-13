@@ -1,0 +1,2249 @@
+[
+  {
+    "id": "prod-1785643665903",
+    "name": "dell latitude 7420",
+    "brand": "DELL",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-1784952535527",
+    "name": "Lenovo thin pad",
+    "brand": "LENOVO",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-1783444473473",
+    "name": "Lenovo LOQ 15",
+    "brand": "LENOVO",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-1001",
+    "name": "Make book pro",
+    "brand": "APPLE",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-1002",
+    "name": "Asus ZenBook Creator Laptop",
+    "brand": "ASUS",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-1003",
+    "name": "Asus Rog strix Scar 18 Gaming Laptop",
+    "brand": "ASUS",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-1004",
+    "name": "MSI Thin 15 Gaming Laptop",
+    "brand": "MSI",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-1005",
+    "name": "Mechanical Keyboard",
+    "brand": "APPLE",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-1006",
+    "name": "Pulse 4K Webcam",
+    "brand": "DJI",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-1007",
+    "name": "Nova 27\" 165Hz Gaming Monitor",
+    "brand": "Nova",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-1008",
+    "name": "Forge 850W Gold PSU",
+    "brand": "Forge",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0026",
+    "name": "MSI MODERN 14 F13MG-638XKH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0030",
+    "name": "MSI MODERN 14 F13MG-638XKH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0034",
+    "name": "MSI MODERN 14 F13MG-638XKH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0038",
+    "name": "MSI MODERN 14 F13MG-638XKH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0042",
+    "name": "MSI MODERN 14 F1MG-817KH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0046",
+    "name": "MSI MODERN 14 F1MG-817KH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0050",
+    "name": "MSI MODERN 14 F1MG-817KH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0054",
+    "name": "MSI MODERN 14 F1MG-817KH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0058",
+    "name": "MSI MODERN 15 F1MG-1073KH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0062",
+    "name": "MSI MODERN 15 F1MG-1073KH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0066",
+    "name": "MSI MODERN 15 F1MG-1073KH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0070",
+    "name": "MSI MODERN 15 F1MG-1073KH",
+    "brand": "MSI",
+    "series": "Modern",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0073",
+    "name": "LENOVO IDEAPAD SLIM 3 15IRH10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0074",
+    "name": "Cyborg 15 Black Edition A13VE-2448KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0077",
+    "name": "LENOVO IDEAPAD SLIM 3 15IRH10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0078",
+    "name": "Cyborg 15 Black Edition A13VE-2448KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0081",
+    "name": "LENOVO IDEAPAD SLIM 3 15IRH10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0082",
+    "name": "Cyborg 15 Black Edition A13VE-2448KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0085",
+    "name": "LENOVO IDEAPAD SLIM 3 15IRH10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0086",
+    "name": "Cyborg 15 Black Edition A13VE-2448KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0087",
+    "name": "MacBook Air 13-inch M5 2026 $1,949",
+    "brand": "APPLE",
+    "series": "MacBook",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0089",
+    "name": "LENOVO IDEAPAD SLIM 3 15ARP10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0090",
+    "name": "Cyborg 15 Edition A13VEO 2601KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0093",
+    "name": "LENOVO IDEAPAD SLIM 3 15ARP10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0094",
+    "name": "Cyborg 15 Edition A13VEO 2601KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0097",
+    "name": "LENOVO IDEAPAD SLIM 3 15ARP10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0098",
+    "name": "Cyborg 15 Edition A13VEO 2601KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0101",
+    "name": "LENOVO IDEAPAD SLIM 3 15ARP10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0102",
+    "name": "MSI Cyborg 15 C13WEO 443KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0105",
+    "name": "LENOVO IDEAPAD SLIM 3 14IWC11",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0106",
+    "name": "MSI Cyborg 15 C13WEO 443KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0109",
+    "name": "LENOVO IDEAPAD SLIM 3 14IWC11",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0110",
+    "name": "MSI Cyborg 15 C13WEO 443KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0113",
+    "name": "LENOVO IDEAPAD SLIM 3 14IWC11",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0114",
+    "name": "MSI Cyborg 15 C13WEO 443KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0117",
+    "name": "LENOVO IDEAPAD SLIM 3 14IWC11",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0118",
+    "name": "MSI Cyborg 15 Max C13WF 035KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0121",
+    "name": "LENOVO IDEAPAD SLIM 5 16IMH10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0122",
+    "name": "MSI Cyborg 15 Max C13WF 035KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0125",
+    "name": "LENOVO IDEAPAD SLIM 5 16IMH10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0126",
+    "name": "MSI Cyborg 15 Max C13WF 035KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0129",
+    "name": "LENOVO IDEAPAD SLIM 5 16IMH10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0130",
+    "name": "MSI Cyborg 15 Max C13WF 035KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0133",
+    "name": "LENOVO IDEAPAD SLIM 5 16IMH10",
+    "brand": "LENOVO",
+    "series": "IdeaPad",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0134",
+    "name": "MSI Cyborg 15 B13WEKG 872KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0138",
+    "name": "MSI Cyborg 15 B13WEKG 872KH",
+    "brand": "MSI",
+    "series": "Cyborg",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0165",
+    "name": "Monitor Acer Nitro VG240Y",
+    "brand": "ACER",
+    "series": "Nitro",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0168",
+    "name": "LIAN LI : GA II LCD SL-INF 360 Black",
+    "brand": "COOLING",
+    "reasons": [
+      "brand \"COOLING\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0171",
+    "name": "PNY RTX 5060Ti 16GB GDDR7 Epic-XRGB OC Trip Fan",
+    "brand": "GPU PARTNER",
+    "reasons": [
+      "brand \"GPU PARTNER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0174",
+    "name": "Mix Brand Ram Clearance Stock",
+    "brand": "MEMORY",
+    "reasons": [
+      "brand \"MEMORY\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0177",
+    "name": "F120 RGB Core Triple Pack Black",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0178",
+    "name": "CPU Intel Core Ultra 9 285K",
+    "brand": "PROCESSOR",
+    "reasons": [
+      "brand \"PROCESSOR\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0179",
+    "name": "SAMSUNG LS24D300GAEXXT",
+    "brand": "SAMSUNG",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0183",
+    "name": "LIAN LI : GA II LCD SL-INF 360 White",
+    "brand": "COOLING",
+    "reasons": [
+      "brand \"COOLING\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0186",
+    "name": "PNY RTX 5060Ti 16GB GDDR7 Epic-XRGB OC Trip Fan",
+    "brand": "GPU PARTNER",
+    "reasons": [
+      "brand \"GPU PARTNER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0189",
+    "name": "RAM Laptop DDR4-3200MHz",
+    "brand": "MEMORY",
+    "reasons": [
+      "brand \"MEMORY\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0190",
+    "name": "PRIME B860-PLUS WIFI",
+    "brand": "MSI",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0192",
+    "name": "HydroShift II OLED Curved 360TL",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0193",
+    "name": "CPU Intel Core Ultra 7 270K Plus",
+    "brand": "PROCESSOR",
+    "reasons": [
+      "brand \"PROCESSOR\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0194",
+    "name": "SAMSUNG LS24F320GAEXXT",
+    "brand": "SAMSUNG",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0198",
+    "name": "LIAN LI HydroShift II LCD-C 360TL BLACK",
+    "brand": "COOLING",
+    "reasons": [
+      "brand \"COOLING\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0201",
+    "name": "PNY GeForce RTX™ 5070 Triple Fan 12GB",
+    "brand": "GPU PARTNER",
+    "reasons": [
+      "brand \"GPU PARTNER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0204",
+    "name": "Mix Brand Ram Clearance Stock",
+    "brand": "MEMORY",
+    "reasons": [
+      "brand \"MEMORY\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0205",
+    "name": "PRIME B860-PLUS WIFI-CSM",
+    "brand": "MSI",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0207",
+    "name": "CAM COOLER : LCDSQ-240",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0208",
+    "name": "CPU Intel® Core™ Ultra 7 265K",
+    "brand": "PROCESSOR",
+    "reasons": [
+      "brand \"PROCESSOR\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0209",
+    "name": "SAMSUNG LS27D300GAEXXT",
+    "brand": "SAMSUNG",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0212",
+    "name": "LIAN LI HydroShift II LCD-C 360TL White",
+    "brand": "COOLING",
+    "reasons": [
+      "brand \"COOLING\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0215",
+    "name": "PNY GeForce RTX™ 5070 Triple Fan OC 12GB GDDR7",
+    "brand": "GPU PARTNER",
+    "reasons": [
+      "brand \"GPU PARTNER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0218",
+    "name": "G.Skill Trident Z ROYAL RGB DDR4",
+    "brand": "MEMORY",
+    "reasons": [
+      "brand \"MEMORY\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0219",
+    "name": "X870 MAX GAMING WIFI7",
+    "brand": "MSI",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0221",
+    "name": "CAM COOLER : LCDSQ-360",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0222",
+    "name": "CPU Intel® Core™ Ultra 7 265KF",
+    "brand": "PROCESSOR",
+    "reasons": [
+      "brand \"PROCESSOR\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0223",
+    "name": "SAMSUNG LS24DG302EEXXT",
+    "brand": "SAMSUNG",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0226",
+    "name": "LIAN LI HydroShift LCD 360 White 360MM AIO (Not Including FAN)",
+    "brand": "COOLING",
+    "reasons": [
+      "brand \"COOLING\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0229",
+    "name": "PNY GeForce RTX™ 5080 Triple Fan 16GB GDDR7AI-powered DLSS 4",
+    "brand": "GPU PARTNER",
+    "reasons": [
+      "brand \"GPU PARTNER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0231",
+    "name": "Lenovo C27-40",
+    "brand": "LENOVO",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0232",
+    "name": "G.Skill Trident Z ROYAL RGB DDR4",
+    "brand": "MEMORY",
+    "reasons": [
+      "brand \"MEMORY\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0235",
+    "name": "CAM COOLER FLCD-240 Liquid Cooler",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0236",
+    "name": "CPU Intel® Core™ Ultra 5 245K",
+    "brand": "PROCESSOR",
+    "reasons": [
+      "brand \"PROCESSOR\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0237",
+    "name": "SAMSUNG LS27DG302EEXXT",
+    "brand": "SAMSUNG",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0240",
+    "name": "LIAN LI : Hydroshift LCD 360TL White",
+    "brand": "COOLING",
+    "reasons": [
+      "brand \"COOLING\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0243",
+    "name": "PNY GeForce RTX™ 5080 Triple Fan 16GB GDDR7AI-powered DLSS 4",
+    "brand": "GPU PARTNER",
+    "reasons": [
+      "brand \"GPU PARTNER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0245",
+    "name": "LOQ 27Q-10 Monitor",
+    "brand": "LENOVO",
+    "series": "LOQ",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0246",
+    "name": "Ram Desktop G.Skill Trident Z",
+    "brand": "MEMORY",
+    "reasons": [
+      "brand \"MEMORY\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0249",
+    "name": "CAM COOLER FLCD-240 Liquid Cooler",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0250",
+    "name": "CPU Intel® Core™ Ultra 5 245KF",
+    "brand": "PROCESSOR",
+    "reasons": [
+      "brand \"PROCESSOR\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0251",
+    "name": "SAMSUNG LS27DG502EEXXT",
+    "brand": "SAMSUNG",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0254",
+    "name": "LIAN LI : GA II Trinity 240 SL-Inf Black",
+    "brand": "COOLING",
+    "reasons": [
+      "brand \"COOLING\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0258",
+    "name": "HP ELITEONE 800 G4 ALL-IN-ONE",
+    "brand": "HP",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0264",
+    "name": "HP ELITEONE 800 G4 ALL-IN-ONE",
+    "brand": "HP",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0270",
+    "name": "HP ELITEONE 800 G4 ALL-IN-ONE",
+    "brand": "HP",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0276",
+    "name": "HP ELITEONE 800 G4 ALL-IN-ONE",
+    "brand": "HP",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0281",
+    "name": "HP ELITEONE 840 G9 ALL-IN-ONE",
+    "brand": "HP",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0286",
+    "name": "HP ELITEONE 840 G9 ALL-IN-ONE",
+    "brand": "HP",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0291",
+    "name": "HP ELITEONE 840 G9 ALL-IN-ONE",
+    "brand": "HP",
+    "reasons": [
+      "RAM spec mixes base and upgrade values; verify configuration"
+    ]
+  },
+  {
+    "id": "prod-cc-0299",
+    "name": "Core Desk HPW-DK01",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0305",
+    "name": "Core Desk HPW-DK01",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0311",
+    "name": "Active HPW-DP03",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0317",
+    "name": "Active HPW-DP03",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0318",
+    "name": "Razer-DeathAdder-V3.png",
+    "brand": "RAZER",
+    "reasons": [
+      "product name looks like an image filename"
+    ]
+  },
+  {
+    "id": "prod-cc-0322",
+    "name": "Monitor Stand | DS01",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0326",
+    "name": "Monitor Stand | DS01",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0330",
+    "name": "Core Desk HPW-TT02",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0333",
+    "name": "Core Desk HPW-TT02",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0336",
+    "name": "Cleaning bottle-Hyper Cleaning",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0339",
+    "name": "MK270r Wireless Keyboard and Mouse Combo",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0342",
+    "name": "G316 X 75 Gaming Keyboard",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0345",
+    "name": "G316 X 75 Gaming Keyboard",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0348",
+    "name": "G733 Ultra-Lightweight",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0351",
+    "name": "G733 Ultra-Lightweight",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0354",
+    "name": "USB-C Wired In-ear Headphones",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0357",
+    "name": "USB-C Wired In-ear Headphones",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0359",
+    "name": "USB-C Wired In-ear Headphones",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0361",
+    "name": "USB-C Wired In-ear Headphones",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0385",
+    "name": "Flash Drive PNY PRO Elite USB 3.0",
+    "brand": "GPU PARTNER",
+    "reasons": [
+      "brand \"GPU PARTNER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0387",
+    "name": "Lexar JUMPDRIVE S80 USB 3.2",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0388",
+    "name": "SanDisk Ultra SD",
+    "brand": "STORAGE",
+    "reasons": [
+      "brand \"STORAGE\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0389",
+    "name": "Flash Drive PNY Turbo Attaché 4 USB 3.0",
+    "brand": "GPU PARTNER",
+    "reasons": [
+      "brand \"GPU PARTNER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0391",
+    "name": "Lexar JUMPDRIVE V400 USB 3.2",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0392",
+    "name": "SanDisk Extreme SD 4K",
+    "brand": "STORAGE",
+    "reasons": [
+      "brand \"STORAGE\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0393",
+    "name": "Flash Drive PNY Turbo Attaché 4 USB 3.0",
+    "brand": "GPU PARTNER",
+    "reasons": [
+      "brand \"GPU PARTNER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0395",
+    "name": "Lexar JumpDrive S47 USB 3.2",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0396",
+    "name": "SanDisk Extreme Pro SD 4K",
+    "brand": "STORAGE",
+    "reasons": [
+      "brand \"STORAGE\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0398",
+    "name": "Lexar JumpDrive Fingerprint F35",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0399",
+    "name": "SanDisk Extreme Pro SD 4K",
+    "brand": "STORAGE",
+    "reasons": [
+      "brand \"STORAGE\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0401",
+    "name": "Lexar JumpDrive S57 USB 3.0",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0402",
+    "name": "SanDisk microSDHC™/UHS-I card",
+    "brand": "STORAGE",
+    "reasons": [
+      "brand \"STORAGE\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0403",
+    "name": "Lexar JumpDrive S57 USB 3.0",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0404",
+    "name": "SanDisk Extreme microSD 4K",
+    "brand": "STORAGE",
+    "reasons": [
+      "brand \"STORAGE\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0405",
+    "name": "Lexar Professional 633x SDXC UHS-I",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0406",
+    "name": "SanDisk Extreme Pro microSD",
+    "brand": "STORAGE",
+    "reasons": [
+      "brand \"STORAGE\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0407",
+    "name": "Lexar Professional 633x SDXC UHS-I",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0408",
+    "name": "SanDisk Extreme Pro microSD",
+    "brand": "STORAGE",
+    "reasons": [
+      "brand \"STORAGE\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0409",
+    "name": "ADATA Premier MicroSDHC/SDXC UHS-I Class 10 V10 A1",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0410",
+    "name": "ADATA Premier MicroSDHC/SDXC UHS-I Class 10 V30S",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0411",
+    "name": "ADATA Premier MicroSDHC/SDXC UHS-I Class 10 V10 A1",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0412",
+    "name": "ADATA Premier MicroSDHC/SDXC UHS-I Class 10 V30S",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0413",
+    "name": "ADATA C008 Capless Sliding USB 2.0 Flash Drive",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0414",
+    "name": "ADATA C906 Compact USB 2.0 Flash Drive",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0415",
+    "name": "ADATA UV128 USB 3.2 Flash Drive",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0416",
+    "name": "ADATA UV150 USB 3.2 Flash Drive",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0417",
+    "name": "ADATA UE700 USB 3.2 Flash Drive",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0418",
+    "name": "ADATA SC610 USB 3.2 Flash Drive",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0419",
+    "name": "ADATA UE700 USB 3.2 Flash Drive",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0420",
+    "name": "ADATA SC610 USB 3.2 Flash Drive",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0421",
+    "name": "Archer T3U Nano",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0422",
+    "name": "RE505X AX1500 Wi-Fi 6 Range Extender",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0423",
+    "name": "Archer T600U Nano",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0424",
+    "name": "RE505X AX1500 Wi-Fi 6 Range Extender",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0425",
+    "name": "Archer T600U Plus",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0426",
+    "name": "EAP653 AX3000",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0427",
+    "name": "TL-WN823N",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0428",
+    "name": "EAP610 AX1800 Wireless Dual Band",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0429",
+    "name": "Tp-Link TL-WN725N",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0430",
+    "name": "EAP660 HD AX3600",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0431",
+    "name": "TP-link Archer T3U",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0432",
+    "name": "EAP110 N300 Wireless N",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0433",
+    "name": "Tp-Link Archer T2U Nano",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0434",
+    "name": "EAP110-Outdoor N300 Wireless N",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0435",
+    "name": "Tp-Link Archer T2U Plus AC600",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0436",
+    "name": "EAP225 AC1200 Wireless MU-MIMO",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0437",
+    "name": "TP-Link Archer T3U Plus",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0438",
+    "name": "EAP320 AC1200 Wireless Dual Band",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0439",
+    "name": "TL-WA855RE 300Mbps Wi-Fi Range Extender, Wall Plugged",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0440",
+    "name": "EAP650 AX3000 WiFi 6",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0441",
+    "name": "TL-WA855RE 300Mbps Wi-Fi Range Extender, Wall Plugged",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0442",
+    "name": "EAP650 | AX3000 WiFi 6 Access Point",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0443",
+    "name": "EAP223 TP-Link AC1350",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0444",
+    "name": "EAP115 300Mbps Wireless N",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0445",
+    "name": "Archer AX10 AX1500 Wi-Fi 6 Router",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0446",
+    "name": "EAP115 300Mbps Wireless N",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0447",
+    "name": "Archer AX23 AX1800 Dual Band Gigabit Wi-Fi 6",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0448",
+    "name": "MikroTik RB951Ui-2nD",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0449",
+    "name": "Archer AX73 AX5400 Dual-Band Gigabit Wi-Fi 6",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0450",
+    "name": "MikroTik RB951Ui-2HnD",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0451",
+    "name": "Archer AX72 AX5400 Dual-Band Gigabit Wi-Fi 6",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0452",
+    "name": "MikroTik RB952Ui-5ac2nD-TC",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0453",
+    "name": "TP-Link Archer MR600 4G+ Cat6 AC1200 Wireless Dual Band",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0454",
+    "name": "MikroTik L41G-2axD",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0455",
+    "name": "Tp-Link Archer MR400 AC1200 Wireless Dual Band 4G LTE Router",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0456",
+    "name": "MikroTik RB750Gr3",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0457",
+    "name": "TP-Link TL-MR6400 300Mbps Wireless N 4G LTE Router",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0458",
+    "name": "MikroTik RB750Gr3",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0459",
+    "name": "Tp-Link M7000 4G LTE Mobile Wi-Fi",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0460",
+    "name": "MikroTik L009UiGS-2HaxD-IN",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0461",
+    "name": "Tp-Link M7350 4G LTE Mobile Wi-Fi",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0462",
+    "name": "MikroTik RB4011iGS+5HacQ2HnD-IN",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0463",
+    "name": "Tp-Link M7000 4G LTE Mobile Wi-Fi",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0464",
+    "name": "MikroTik RB1100Dx4",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0465",
+    "name": "Tp-Link M7350 4G LTE Mobile Wi-Fi",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0466",
+    "name": "MikroTik CCR2004-16G-2S+",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0467",
+    "name": "TP-Link LS1008 8-Port 10/100Mbps Desktop Switch",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0468",
+    "name": "MikroTik CCR2116-12G-4S+",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0469",
+    "name": "TP-Link LS1005G 5-Port 10/100/1000Mbps",
+    "brand": "NETWORK",
+    "reasons": [
+      "brand \"NETWORK\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0470",
+    "name": "MikroTik CCR2216-1G-12XS-2XQ",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0472",
+    "name": "Z313 Speaker with Subwoofer",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0473",
+    "name": "Z313 Speaker with Subwoofer",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0474",
+    "name": "JBL Go 4 | Portable Bluetooth Speaker",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0475",
+    "name": "JBL Go 5 | Portable Bluetooth Speaker",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0476",
+    "name": "JBL Clip 4 | Portable Bluetooth Speaker",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0477",
+    "name": "JBL Clip 5 | Portable Bluetooth Speaker",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0478",
+    "name": "JBL Charge 6 | Bluetooth Speaker",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0479",
+    "name": "JBL Flip 7 | Bluetooth Speaker",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0515",
+    "name": "UGREEN Headset Adapter (Iphone,Ipad,Ipod)",
+    "brand": "APPLE",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0518",
+    "name": "Office 2024 Home & Business",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0519",
+    "name": "UGREEN USB-C Female to Micro USB Male Adapter",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0522",
+    "name": "Office 2024 Home & Business",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0523",
+    "name": "UGREEN USB 3.0 A Male To USB-C 3.1 (Aluminum Case)",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0525",
+    "name": "HDMI To DVI Cable 1.5M",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0526",
+    "name": "UGREEN USB-A To 3.5mm External Stereo",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0528",
+    "name": "Network Cable Cat6",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0529",
+    "name": "UGREEN USB-C to DP Adapter 4K/2K 60Hz",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0530",
+    "name": "Cat 6 STP RJ45 Ethernet Extension Cable",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0531",
+    "name": "UGREEN HDMI Female to Female Adapter",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0532",
+    "name": "Unitek Usb-A-Male to Usb-A-Female Extension over RJ45 Adapter",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0533",
+    "name": "UGREEN Mini HDMI Male to HDMI Female Adapter",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0534",
+    "name": "Fantech Notebook Stand NS10",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0535",
+    "name": "UGREEN DVI 24Pin+1 Male to HDMI Female Adapter",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0536",
+    "name": "FANTECH NC30 COOLER",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0537",
+    "name": "UGREEN RJ45 Coupler Female To Female",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0538",
+    "name": "Fantech Stand NS11",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0539",
+    "name": "UGREEN USBC To USB 3.0 Female",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0540",
+    "name": "Fantech Stand NS12",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0541",
+    "name": "UGREEN USB-C Male To USB 3.0 Female Cable",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0542",
+    "name": "Laptop Cooler S18",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer",
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0543",
+    "name": "UGREEN Display Port to VGA Adapter Support 1080 60Hz",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0544",
+    "name": "Laptop CoolingPad S700 RGB",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0545",
+    "name": "UGREEN Display Port to HDMI Adapter Support 1080 60Hz",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0546",
+    "name": "Laptop Coolingpad Q3",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0547",
+    "name": "UGREEN USB-C Female to USB-A Male Set 2 Pack",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0548",
+    "name": "FANTECH NC22 COOLER LAPTOP COOLING PAD",
+    "brand": "OTHER",
+    "reasons": [
+      "brand \"OTHER\" is a component type, not a manufacturer"
+    ]
+  },
+  {
+    "id": "prod-cc-0549",
+    "name": "UGREEN USB To Gigabit Ethernet Adapter",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0550",
+    "name": "UGREEN USB-C To 3.5MM Cable 10Cm (AV161)",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0551",
+    "name": "UGREEN USB-C To HDMI Adapter Support 4K 60hz",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0552",
+    "name": "UGREEN 4-Port USB 3.0 Hub With USB-C PD 5Gbps Super Speed",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0553",
+    "name": "UGREEN 4-Port USB-C 3.2 Gen2 Hub High Speed 10Gbps",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0554",
+    "name": "UGREEN 60554 USB3.0 to 3×USB3.0 +RJ45 1000Mbps",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0555",
+    "name": "UGREEN USB-C 9in1 Multifunction Adapter Support 4K 60hz",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0556",
+    "name": "UGREEN 4-Port USB 3.0 Hub 5Gbps Super Speed",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0557",
+    "name": "UGREEN USB A to 4 x USB 3.0 Hub Speed up to 5Gbps",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0558",
+    "name": "UGREEN 9-in-1 USB-C Dual HDMI Hub",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0559",
+    "name": "UGREEN 6 in 1 USB-C Multifunction Adapter Dual HDMI 8K 30Hz",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0560",
+    "name": "UGREEN Revodok Pro 13 in 1 Triple Display USB-C Hub",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0561",
+    "name": "UGREEN 7-Port USB 3.0 Hub USB-C Speed up to 5Gbps",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0562",
+    "name": "UGREEN 30W Type-C USB Dual Port Car Charger",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0563",
+    "name": "UGREEN 130W 3 Port Car Charger with 100W Cable",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0564",
+    "name": "Ugreen CM430 signal splitter 2x DP (input) to 1x DP (output) 4K / 1080p",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0565",
+    "name": "UGREEN 1-to-2 Gigabit Ethernet Splitter, 1000Mbps",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0566",
+    "name": "UGREEN Steam Deck Dock 9 in 1 USB C Docking Station",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0567",
+    "name": "UGREEN Revodok NVMe USB C Docking Station 10 in 1",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0568",
+    "name": "UGREEN 14 IN 1 USB-C Docking Station Triple Display",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0569",
+    "name": "UGREEN USB-C Multifunction Docking Station Pro 12 in 1",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0570",
+    "name": "UGREEN 11-in-1 USB-C Docking Station 65487 For Macmini M4 Chip",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0571",
+    "name": "UGREEN 10-in-1 Thunderbolt 5 Docking Station 85883US For Macmini M4 Chip",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0587",
+    "name": "UGREEN Mini DP to DP Cable 1.5m",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0588",
+    "name": "UGREEN Mini HDMI To HDMI Cable 1.5M",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0589",
+    "name": "UGREEN DisplayPort to HDMI Cable 2m Support 4K 30Hz",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0590",
+    "name": "UGREEN USB-C HDMI Cable 4K 60z",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0591",
+    "name": "UGREEN USB-C DisplayPort 8K 60z",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0592",
+    "name": "UGREEN USB-A 2.0 To USB M/M Cable 3M",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  },
+  {
+    "id": "prod-cc-0593",
+    "name": "UGREEN USB-A to Mini-B 5Pin 1.5m",
+    "brand": "UGREEN",
+    "reasons": [
+      "missing SKU / product code"
+    ]
+  }
+]

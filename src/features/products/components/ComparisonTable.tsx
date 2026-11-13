@@ -124,14 +124,6 @@ export function ComparisonTable({ productIds }: ComparisonTableProps) {
                 </td>
               ))}
             </tr>
-            <tr>
-              <td className="bg-muted/30 p-4 font-medium">Rating</td>
-              {products.map((product) => (
-                <td key={product.id} className="p-4">
-                  {product.rating.toFixed(1)} ({product.reviewCount} reviews)
-                </td>
-              ))}
-            </tr>
             {specLabels.map(({ key, label }) => {
               const hasValue = products.some(
                 (product) => product.specs[key] !== undefined,

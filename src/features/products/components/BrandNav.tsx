@@ -27,21 +27,13 @@ export function BrandNav({
   const isAllSelected =
     activeBrands.length === 0 &&
     !filters.category &&
-    !filters.cpu?.length &&
-    !filters.gpu?.length &&
-    !filters.ram?.length &&
-    !filters.storage?.length &&
-    !filters.screenSize?.length &&
-    !filters.ssd &&
-    !filters.hdd &&
-    filters.minPrice === undefined &&
-    filters.maxPrice === undefined &&
-    !filters.inStockOnly;
+    !filters.series?.length &&
+    !filters.modelKey;
 
   const showAllProducts = () =>
     onChange({
-      search: filters.search,
-      sort: filters.sort,
+      ...filters,
+      brands: undefined,
     });
 
   const toggleBrand = (brand: string) => {

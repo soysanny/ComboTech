@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCollection, saveCollection } from "@/lib/db";
 import { getAuth, unauthorized } from "@/lib/auth";
+import { withCatalogIdentity } from "@/features/products/lib/catalogMeta";
 import type { CreateProductInput, Product } from "@/features/products/types";
 
 function slugify(name: string): string {
@@ -45,16 +46,16 @@ export async function POST(request: Request) {
       return;
     }
 
-    created.push({
-      ...input,
-      id: `prod-${Date.now()}-${index}`,
-      slug: slugify(input.name),
-      rating: 0,
-      reviewCount: 0,
-      soldCount: 0,
-      createdAt: now,
-      updatedAt: now,
-    } as Product);
+    created.push(
+      withCatalogIdentity<Product>({
+        ...input,
+        id: `prod-${Date.now()}-${index}`,
+        slug: slugify(input.name),
+        soldCount: 0,
+        createdAt: now,
+        updatedAt: now,
+      } as Product),
+    );
   });
 
   if (created.length > 0) {

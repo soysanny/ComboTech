@@ -1,0 +1,152 @@
+{
+  "generatedAt": "2026-11-13T16:47:06.275Z",
+  "summary": {
+    "products": 605,
+    "usableImages": 585,
+    "needsUpload": 20,
+    "brokenReferences": 0
+  },
+  "needsUpload": [
+    {
+      "id": "prod-1002",
+      "name": "Asus ZenBook Creator Laptop",
+      "brand": "ASUS",
+      "category": "laptops",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-1003",
+      "name": "Asus Rog strix Scar 18 Gaming Laptop",
+      "brand": "ASUS",
+      "category": "laptops",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-1004",
+      "name": "MSI Thin 15 Gaming Laptop",
+      "brand": "MSI",
+      "category": "laptops",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0185",
+      "name": "Gigabyte B860M EAGLE WIFI6",
+      "brand": "GIGABYTE",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0190",
+      "name": "PRIME B860-PLUS WIFI",
+      "brand": "MSI",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0194",
+      "name": "SAMSUNG LS24F320GAEXXT",
+      "brand": "SAMSUNG",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0200",
+      "name": "Gigabyte B860I AORUS PRO ICE",
+      "brand": "GIGABYTE",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0205",
+      "name": "PRIME B860-PLUS WIFI-CSM",
+      "brand": "MSI",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0209",
+      "name": "SAMSUNG LS27D300GAEXXT",
+      "brand": "SAMSUNG",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0214",
+      "name": "Gigabyte Z890 UD WIFI 6E",
+      "brand": "GIGABYTE",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0219",
+      "name": "X870 MAX GAMING WIFI7",
+      "brand": "MSI",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0223",
+      "name": "SAMSUNG LS24DG302EEXXT",
+      "brand": "SAMSUNG",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0228",
+      "name": "Gigabyte Z890I AORUS ULTRA",
+      "brand": "GIGABYTE",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0231",
+      "name": "Lenovo C27-40",
+      "brand": "LENOVO",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0233",
+      "name": "MSI B760M BOMBER WIFI",
+      "brand": "MSI",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0237",
+      "name": "SAMSUNG LS27DG302EEXXT",
+      "brand": "SAMSUNG",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0242",
+      "name": "Gigabyte Z890 GAMING X AX",
+      "brand": "GIGABYTE",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0245",
+      "name": "LOQ 27Q-10 Monitor",
+      "brand": "LENOVO",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0247",
+      "name": "MSI PRO B760M-A WIFI DDR4",
+      "brand": "MSI",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    },
+    {
+      "id": "prod-cc-0251",
+      "name": "SAMSUNG LS27DG502EEXXT",
+      "brand": "SAMSUNG",
+      "category": "pc-components",
+      "currentThumbnail": "/images/products/placeholder.svg"
+    }
+  ],
+  "brokenReferences": []
+}

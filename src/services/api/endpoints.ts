@@ -22,11 +22,6 @@ export const ENDPOINTS = {
     list: "/categories",
     detail: (id: string) => `/categories/${id}`,
   },
-  reviews: {
-    list: (productId: string) => `/products/${productId}/reviews`,
-    create: (productId: string) => `/products/${productId}/reviews`,
-    detail: (id: string) => `/reviews/${id}`,
-  },
   contact: {
     submit: "/contact",
   },

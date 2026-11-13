@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCollection, saveCollection, paginate } from "@/lib/db";
 import { getAuth, unauthorized } from "@/lib/auth";
+import { withCatalogIdentity } from "@/features/products/lib/catalogMeta";
 import type { Product, CreateProductInput } from "@/features/products/types";
 
 function slugify(name: string): string {
@@ -36,16 +37,14 @@ export async function POST(request: Request) {
 
   const body = (await request.json()) as CreateProductInput;
   const now = new Date().toISOString();
-  const newProduct: Product = {
+  const newProduct: Product = withCatalogIdentity<Product>({
     ...body,
     id: `prod-${Date.now()}`,
     slug: slugify(body.name),
-    rating: 0,
-    reviewCount: 0,
     soldCount: 0,
     createdAt: now,
     updatedAt: now,
-  };
+  });
 
   const products = await getCollection<Product>("products");
   products.unshift(newProduct);

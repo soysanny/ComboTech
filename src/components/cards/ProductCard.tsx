@@ -2,13 +2,20 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Eye, Heart, Phone, Scale } from "lucide-react";
+import { Eye, Phone, Scale } from "lucide-react";
 import type { Product } from "@/features/products/types";
-import { StarRating } from "@/features/review";
 import { ROUTES } from "@/constants/routes";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { getProductImageSrc } from "@/features/products/lib/productImages";
 import { cn } from "@/lib/utils";
 
 export interface ProductCardProps {
@@ -16,6 +23,8 @@ export interface ProductCardProps {
   isComparing?: boolean;
   onToggleCompare?: (id: string) => void;
 }
+
+type ImageStatus = "loading" | "loaded" | "error";
 
 /** One-line CPU / RAM / storage summary for the card. */
 function buildSpecLine(product: Product): string {
@@ -28,199 +37,344 @@ function buildSpecLine(product: Product): string {
     .join(" · ");
 }
 
+interface Pricing {
+  price: number;
+  originalPrice?: number;
+  hasDiscount: boolean;
+  discountPercent: number;
+  showDiscountBadge: boolean;
+}
+
+function getPricing(product: Product): Pricing {
+  const price = Number.isFinite(product.price) ? product.price : 0;
+  const originalPrice =
+    typeof product.originalPrice === "number" &&
+    Number.isFinite(product.originalPrice)
+      ? product.originalPrice
+      : undefined;
+  const hasDiscount = originalPrice !== undefined && originalPrice > price;
+  const discountPercent = hasDiscount
+    ? Math.round(((originalPrice - price) / originalPrice) * 100)
+    : 0;
+
+  return {
+    price,
+    originalPrice,
+    hasDiscount,
+    discountPercent,
+    showDiscountBadge: hasDiscount && discountPercent >= 1,
+  };
+}
+
+function ProductImage({
+  src,
+  alt,
+  productName,
+}: {
+  src: string | null;
+  alt: string;
+  productName: string;
+}) {
+  const [status, setStatus] = useState<ImageStatus>(src ? "loading" : "error");
+
+  return (
+    <div className="relative flex h-full w-full items-center justify-center">
+      {status === "loading" && (
+        <span
+          aria-hidden
+          className="absolute inset-0 animate-pulse rounded-xl bg-[var(--hover-bg)]"
+        />
+      )}
+
+      {src && status !== "error" && (
+        // Product images are arbitrary remote/local URLs, so a plain img keeps
+        // them working without host allow-list changes.
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={src}
+          alt={alt}
+          className={cn(
+            "h-full w-full object-contain transition-opacity duration-300",
+            status === "loaded" ? "opacity-100" : "opacity-0",
+          )}
+          onLoad={() => setStatus("loaded")}
+          onError={() => setStatus("error")}
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+        />
+      )}
+
+      {status === "error" && (
+        <div
+          role="img"
+          aria-label={`${productName} image coming soon`}
+          className="surface-inset flex h-full w-full flex-col items-center justify-center gap-2 rounded-xl px-4 text-center"
+        >
+          <span className="bg-[var(--surface-bg)] text-muted-foreground inline-flex size-12 items-center justify-center rounded-full border border-[var(--surface-border)] text-lg font-bold">
+            {productName.charAt(0).toUpperCase()}
+          </span>
+          <span className="text-muted-foreground text-[11px] font-medium">
+            Image coming soon
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PriceBlock({
+  product,
+  pricing,
+  size = "card",
+}: {
+  product: Product;
+  pricing: Pricing;
+  size?: "card" | "dialog";
+}) {
+  return (
+    <div
+      className={cn(
+        "flex flex-wrap items-baseline gap-x-2 gap-y-0.5",
+        size === "card" ? "min-h-7 pt-3" : "",
+      )}
+    >
+      <span
+        className={cn(
+          "font-bold tracking-tight whitespace-nowrap",
+          size === "card" ? "text-lg sm:text-xl" : "text-2xl",
+        )}
+      >
+        {formatCurrency(pricing.price, product.currency)}
+      </span>
+      {pricing.hasDiscount && (
+        <span
+          className={cn(
+            "text-muted-foreground line-through whitespace-nowrap",
+            size === "card" ? "text-xs sm:text-sm" : "text-base",
+          )}
+        >
+          {formatCurrency(pricing.originalPrice!, product.currency)}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function QuickViewDialog({
+  product,
+  onClose,
+}: {
+  product: Product;
+  onClose: () => void;
+}) {
+  const imageSrc = getProductImageSrc(product);
+  const pricing = getPricing(product);
+  const specLine = buildSpecLine(product);
+  const productHref = ROUTES.productDetail(product.id);
+
+  return (
+    <Dialog open onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-bold tracking-tight">
+            {product.name}
+          </DialogTitle>
+          <DialogDescription>
+            {product.brand}
+            {product.series ? ` · ${product.series}` : ""}
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div className="surface-inset relative aspect-square overflow-hidden rounded-xl p-4">
+            <ProductImage
+              key={imageSrc ?? "fallback"}
+              src={imageSrc}
+              alt={product.name}
+              productName={product.name}
+            />
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <PriceBlock product={product} pricing={pricing} size="dialog" />
+
+            {specLine && (
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {specLine}
+              </p>
+            )}
+
+            <p className="text-muted-foreground line-clamp-5 text-sm leading-relaxed">
+              {product.description}
+            </p>
+
+            <div className="mt-auto flex flex-col gap-2">
+              <Button asChild>
+                <Link href={productHref}>View full details</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link href={ROUTES.contact}>
+                  <Phone className="mr-1.5 size-4" />
+                  Contact to order
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 /** Storefront product card in the M.Video layout: image, price, short specs. */
 export function ProductCard({
   product,
   isComparing,
   onToggleCompare,
 }: ProductCardProps) {
-  const [imageFailed, setImageFailed] = useState(false);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
-  const [isWishlisted, setIsWishlisted] = useState(false);
 
-  const hasDiscount =
-    typeof product.originalPrice === "number" &&
-    product.originalPrice > product.price;
-  const discountPercent = hasDiscount
-    ? Math.round(
-        ((product.originalPrice! - product.price) / product.originalPrice!) *
-          100,
-      )
-    : 0;
-
+  const pricing = getPricing(product);
   const isOutOfStock = product.stock <= 0;
   const specLine = buildSpecLine(product);
+  const imageSrc = getProductImageSrc(product);
   const productHref = ROUTES.productDetail(product.id);
-
-  const toggleWishlist = () => setIsWishlisted((saved) => !saved);
-
-  const productImage =
-    product.thumbnail && !imageFailed ? (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={product.thumbnail}
-        alt={product.name}
-        className="h-full w-full object-contain transition-transform duration-500 group-hover/card:scale-[1.04]"
-        onError={() => setImageFailed(true)}
-        loading="lazy"
-        decoding="async"
-      />
-    ) : (
-      <span className="text-muted-foreground flex h-full w-full items-center justify-center text-5xl font-bold">
-        {product.name.charAt(0)}
-      </span>
-    );
+  const brandLine = `${product.brand}${product.series ? ` · ${product.series}` : ""}`;
 
   const cardDetails = (
     <>
-      <p className="text-muted-foreground text-[11px] font-medium tracking-wide uppercase">
-        {product.brand}
-        {product.series ? ` · ${product.series}` : ""}
+      <p
+        className="text-muted-foreground line-clamp-1 min-h-4 text-[11px] font-medium tracking-wide uppercase"
+        title={brandLine}
+      >
+        {brandLine}
       </p>
 
-      <h3 className="line-clamp-2 min-h-[2.5rem] text-sm leading-snug font-semibold">
+      <h3
+        className="line-clamp-2 min-h-[2.5rem] text-sm leading-snug font-semibold break-words"
+        title={product.name}
+      >
         {product.name}
       </h3>
 
-      {product.reviewCount > 0 && (
-        <div className="flex items-center gap-1.5">
-          <StarRating value={product.rating} size={12} />
-          <span className="text-muted-foreground text-xs">
-            ({product.reviewCount})
-          </span>
-        </div>
-      )}
-
       {specLine && (
-        <p className="text-muted-foreground line-clamp-2 text-xs leading-relaxed">
+        <p className="text-muted-foreground line-clamp-1 text-xs leading-relaxed">
           {specLine}
         </p>
       )}
 
-      <div className="mt-auto flex flex-wrap items-baseline gap-x-2 gap-y-0.5 pt-1.5">
-        <span className="text-lg font-bold tracking-tight sm:text-xl">
-          {formatCurrency(product.price, product.currency)}
-        </span>
-        {hasDiscount && (
-          <span className="text-muted-foreground text-xs line-through sm:text-sm">
-            {formatCurrency(product.originalPrice!, product.currency)}
-          </span>
-        )}
+      <div className="mt-auto">
+        <PriceBlock product={product} pricing={pricing} />
       </div>
     </>
   );
 
   return (
-    <article className="group/card text-card-foreground hover:border-primary/35 surface-glass surface-hover relative flex h-full flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_30px_80px_-36px_rgba(37,99,235,0.28)]">
-      <div className="surface-inset relative aspect-square w-full overflow-hidden">
-        <Link
-          href={productHref}
-          className="absolute inset-0 block p-3 sm:p-4"
-          aria-label={product.name}
-        >
-          {productImage}
-        </Link>
-
-        <div className="pointer-events-none absolute top-2.5 left-2.5 z-10 flex max-w-[70%] flex-col items-start gap-1">
-          {hasDiscount && (
-            <Badge className="h-6 rounded-md bg-rose-600 px-1.5 text-xs font-bold text-white shadow-sm">
-              -{discountPercent}%
-            </Badge>
-          )}
-          {!hasDiscount && product.badge && (
-            <Badge
-              variant={/vip/i.test(product.badge) ? "default" : "secondary"}
-              className="h-5 px-1.5 text-[10px] font-bold uppercase"
-            >
-              {product.badge}
-            </Badge>
-          )}
-          {isOutOfStock && (
-            <Badge variant="secondary" className="h-5 px-1.5 text-[10px]">
-              Out of stock
-            </Badge>
-          )}
-        </div>
-
-        <button
-          type="button"
-          onClick={toggleWishlist}
-          aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-          aria-pressed={isWishlisted}
-          className="text-muted-foreground absolute top-2.5 right-2.5 z-20 inline-flex size-8 items-center justify-center rounded-full border border-[var(--surface-border)] bg-[var(--surface-bg)] shadow-sm backdrop-blur-md transition-colors hover:bg-[var(--surface-bg-hover)] hover:text-rose-500 dark:hover:text-rose-400"
-        >
-          <Heart
-            className={cn(
-              "size-4",
-              isWishlisted && "fill-rose-500 text-rose-500",
-            )}
-          />
-        </button>
-
-        <div className="absolute inset-x-3 bottom-3 z-20 flex translate-y-2 items-center justify-center gap-2 opacity-0 transition-all duration-300 group-hover/card:translate-y-0 group-hover/card:opacity-100">
-          <Button
-            type="button"
-            variant="secondary"
-            size="icon-sm"
-            className="shadow-lg"
-            aria-label="Quick view"
-            aria-pressed={isQuickViewOpen}
-            onClick={() => setIsQuickViewOpen((open) => !open)}
+    <>
+      <article className="group/card text-card-foreground surface-glass surface-hover hover:border-primary/35 relative flex h-full flex-col overflow-hidden rounded-2xl transition-[border-color,background-color,box-shadow] duration-200 hover:shadow-[0_24px_60px_-40px_rgba(37,99,235,0.35)]">
+        <div className="surface-inset relative aspect-square w-full overflow-hidden">
+          <Link
+            href={productHref}
+            className="absolute inset-0 flex items-center justify-center p-3 sm:p-4"
+            aria-label={`View ${product.name}`}
           >
-            <Eye className="size-4" />
-          </Button>
-          {onToggleCompare && (
+            <ProductImage
+              key={imageSrc ?? "fallback"}
+              src={imageSrc}
+              alt={product.name}
+              productName={product.name}
+            />
+          </Link>
+
+          <div className="pointer-events-none absolute top-2.5 left-2.5 z-10 flex max-w-[70%] flex-col items-start gap-1">
+            {pricing.showDiscountBadge && (
+              <Badge className="h-6 rounded-md bg-rose-600 px-1.5 text-xs font-bold text-white shadow-sm">
+                -{pricing.discountPercent}%
+              </Badge>
+            )}
+            {!pricing.showDiscountBadge && product.badge && (
+              <Badge
+                variant={/vip/i.test(product.badge) ? "default" : "secondary"}
+                className="h-5 px-1.5 text-[10px] font-bold uppercase"
+              >
+                {product.badge}
+              </Badge>
+            )}
+            {isOutOfStock && (
+              <Badge variant="secondary" className="h-5 px-1.5 text-[10px]">
+                Out of stock
+              </Badge>
+            )}
+          </div>
+
+          <div
+            className={cn(
+              "absolute inset-x-3 bottom-3 z-20 flex items-center justify-center gap-2 transition-all duration-200",
+              "pointer-events-none translate-y-1 opacity-0",
+              "group-hover/card:pointer-events-auto group-hover/card:translate-y-0 group-hover/card:opacity-100",
+              "group-focus-within/card:pointer-events-auto group-focus-within/card:translate-y-0 group-focus-within/card:opacity-100",
+              "[@media(hover:none)]:pointer-events-auto [@media(hover:none)]:translate-y-0 [@media(hover:none)]:opacity-100",
+            )}
+          >
             <Button
               type="button"
-              variant={isComparing ? "default" : "secondary"}
+              variant="secondary"
               size="icon-sm"
               className="shadow-lg"
-              aria-label={
-                isComparing ? "Remove from comparison" : "Add to comparison"
-              }
-              aria-pressed={isComparing}
-              onClick={() => onToggleCompare(product.id)}
+              aria-label={`Quick view: ${product.name}`}
+              aria-pressed={isQuickViewOpen}
+              onClick={() => setIsQuickViewOpen(true)}
             >
-              <Scale className="size-4" />
+              <Eye className="size-4" />
             </Button>
-          )}
-        </div>
-      </div>
-
-      <div className="flex flex-1 flex-col p-3 sm:p-4">
-        <Link href={productHref} className="flex flex-1 flex-col gap-1.5">
-          {cardDetails}
-        </Link>
-      </div>
-
-      <div className="px-3 pb-3 sm:px-4 sm:pb-4">
-        <Button
-          asChild
-          variant={isOutOfStock ? "secondary" : "default"}
-          size="sm"
-          className="w-full"
-        >
-          <Link href={ROUTES.contact}>
-            <Phone className="mr-1.5 size-3.5" />
-            {isOutOfStock ? "Ask about restock" : "Contact to order"}
-          </Link>
-        </Button>
-
-        <div
-          className={cn(
-            "grid transition-all duration-300",
-            isQuickViewOpen
-              ? "mt-3 grid-rows-[1fr] opacity-100"
-              : "grid-rows-[0fr] opacity-0",
-          )}
-        >
-          <div className="overflow-hidden">
-            <p className="text-muted-foreground text-xs leading-relaxed">
-              {product.description}
-            </p>
+            {onToggleCompare && (
+              <Button
+                type="button"
+                variant={isComparing ? "default" : "secondary"}
+                size="icon-sm"
+                className="shadow-lg"
+                aria-label={
+                  isComparing
+                    ? `Remove ${product.name} from comparison`
+                    : `Add ${product.name} to comparison`
+                }
+                aria-pressed={isComparing}
+                onClick={() => onToggleCompare(product.id)}
+              >
+                <Scale className="size-4" />
+              </Button>
+            )}
           </div>
         </div>
-      </div>
-    </article>
+
+        <div className="flex flex-1 flex-col p-3 sm:p-4">
+          <Link href={productHref} className="flex flex-1 flex-col gap-1.5">
+            {cardDetails}
+          </Link>
+        </div>
+
+        <div className="px-3 pb-3 sm:px-4 sm:pb-4">
+          <Button
+            asChild
+            variant={isOutOfStock ? "secondary" : "default"}
+            size="sm"
+            className="w-full"
+          >
+            <Link href={ROUTES.contact}>
+              <Phone className="mr-1.5 size-3.5" />
+              {isOutOfStock ? "Ask about restock" : "Contact to order"}
+            </Link>
+          </Button>
+        </div>
+      </article>
+
+      {isQuickViewOpen && (
+        <QuickViewDialog
+          product={product}
+          onClose={() => setIsQuickViewOpen(false)}
+        />
+      )}
+    </>
   );
 }

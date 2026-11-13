@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { isPlaceholderImage } from "../lib/productImages";
 import { cn } from "@/lib/utils";
 
 export interface ProductGalleryProps {
@@ -13,7 +14,7 @@ export function ProductGallery({ images, alt }: ProductGalleryProps) {
   const [selected, setSelected] = useState(0);
   const [failed, setFailed] = useState<Set<number>>(new Set());
 
-  const safeImages = images.length > 0 ? images : [];
+  const safeImages = images.filter((image) => !isPlaceholderImage(image));
 
   return (
     <div className="space-y-4">
@@ -27,8 +28,17 @@ export function ProductGallery({ images, alt }: ProductGalleryProps) {
             onError={() => setFailed((prev) => new Set(prev).add(selected))}
           />
         ) : (
-          <div className="text-muted-foreground flex h-full items-center justify-center text-6xl font-bold">
-            {alt.charAt(0)}
+          <div
+            role="img"
+            aria-label={`${alt} image coming soon`}
+            className="surface-inset flex h-full flex-col items-center justify-center gap-3 rounded-2xl p-6 text-center"
+          >
+            <span className="bg-[var(--surface-bg)] text-muted-foreground inline-flex size-16 items-center justify-center rounded-full border border-[var(--surface-border)] text-2xl font-bold">
+              {alt.charAt(0).toUpperCase()}
+            </span>
+            <span className="text-muted-foreground text-sm font-medium">
+              Image coming soon
+            </span>
           </div>
         )}
       </div>

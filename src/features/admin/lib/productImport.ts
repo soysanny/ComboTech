@@ -1,3 +1,4 @@
+import { withCatalogIdentity } from "@/features/products/lib/catalogMeta";
 import type {
   CreateProductInput,
   ProductCategorySlug,
@@ -205,7 +206,7 @@ function toProductInput(
     pick(flat, "originalprice", "oldprice", "msrp"),
   );
 
-  return {
+  return withCatalogIdentity<CreateProductInput>({
     name,
     brand,
     series: asString(pick(flat, "series")) || undefined,
@@ -233,7 +234,7 @@ function toProductInput(
     isBestSeller: asBoolean(
       pick(flat, "isbestseller", "bestseller", "bestselling"),
     ),
-  };
+  });
 }
 
 /** Parse a CSV or JSON bulk-import text into validated product payloads. */

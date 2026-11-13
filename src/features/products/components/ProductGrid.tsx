@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/shared/Skeleton";
 import type { Product } from "../types";
 
 const GRID_CLASSES =
-  "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6";
+  "grid grid-cols-2 items-stretch gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6";
 
 const SECTION_CLASSES = "surface-glass rounded-3xl p-3 sm:p-4";
 

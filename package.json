@@ -16,7 +16,8 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:push": "prisma db push",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "test": "node --import tsx --test tests/productQuery.test.ts tests/catalogState.test.ts tests/no-wishlist.test.ts tests/no-ratings-reviews.test.ts tests/product-images.test.ts"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -58,6 +59,7 @@
     "prisma": "^6.19.3",
     "shadcn": "^4.13.0",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   },
   "prisma": {

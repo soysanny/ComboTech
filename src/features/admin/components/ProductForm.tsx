@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm, useWatch, type Resolver } from "react-hook-form";
+import { Controller, useForm, useWatch, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -8,10 +8,25 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  CATEGORY_DEFINITIONS,
+  SELECTABLE_BRANDS,
+  isPlaceholderBrand,
+  resolveBrand,
+  seriesOptionsForBrand,
+} from "@/features/products/lib/catalogMeta";
 import type { Product, CreateProductInput, ProductSpecs } from "@/features/products/types";
 
 export interface ProductFormData {
   name: string;
+  modelKey?: string;
   brand: string;
   series?: string;
   category: string;
@@ -45,6 +60,7 @@ export interface ProductFormData {
 
 const productSchema = z.object({
   name: z.string().min(2, "Name is required"),
+  modelKey: z.string().optional(),
   brand: z.string().min(1, "Brand is required"),
   series: z.string().optional(),
   category: z.string().min(1, "Category is required"),
@@ -95,7 +111,8 @@ export function ProductForm({ initialValue, onSubmit, loading }: ProductFormProp
     defaultValues: initialValue
       ? {
           name: initialValue.name,
-          brand: initialValue.brand,
+          modelKey: initialValue.modelKey ?? "",
+          brand: resolveBrand(initialValue.brand).name,
           series: initialValue.series ?? "",
           category: initialValue.category,
           description: initialValue.description,
@@ -127,6 +144,7 @@ export function ProductForm({ initialValue, onSubmit, loading }: ProductFormProp
         }
       : {
           name: "",
+          modelKey: "",
           brand: "",
           series: "",
           category: "",
@@ -174,7 +192,7 @@ export function ProductForm({ initialValue, onSubmit, loading }: ProductFormProp
     if (formData.weight) specs.weight = formData.weight;
     if (formData.color) specs.color = formData.color;
 
-    const modelKey = formData.name
+    const fallbackModelKey = formData.name
       .toLowerCase()
       .trim()
       .replace(/[^\w\s-]/g, "")
@@ -182,9 +200,9 @@ export function ProductForm({ initialValue, onSubmit, loading }: ProductFormProp
 
     const payload: CreateProductInput = {
       name: formData.name,
-      brand: formData.brand,
+      modelKey: formData.modelKey?.trim() || fallbackModelKey,
+      brand: resolveBrand(formData.brand).name,
       series: formData.series?.trim() || undefined,
-      modelKey,
       category: formData.category as CreateProductInput["category"],
       description: formData.description,
       price: formData.price,
@@ -210,6 +228,19 @@ export function ProductForm({ initialValue, onSubmit, loading }: ProductFormProp
   const featured = useWatch({ control, name: "isFeatured" });
   const newArrival = useWatch({ control, name: "isNewArrival" });
   const bestSeller = useWatch({ control, name: "isBestSeller" });
+  const brandValue = useWatch({ control, name: "brand" }) ?? "";
+  const seriesValue = useWatch({ control, name: "series" }) ?? "";
+
+  const currentBrand = resolveBrand(brandValue).name;
+  const brandOptions =
+    brandValue && !SELECTABLE_BRANDS.includes(currentBrand)
+      ? [currentBrand, ...SELECTABLE_BRANDS]
+      : SELECTABLE_BRANDS;
+  const seriesOptions = seriesOptionsForBrand(brandValue);
+  const seriesChoices =
+    seriesValue && !seriesOptions.includes(seriesValue)
+      ? [seriesValue, ...seriesOptions]
+      : seriesOptions;
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
@@ -220,28 +251,113 @@ export function ProductForm({ initialValue, onSubmit, loading }: ProductFormProp
           {errors.name && <p className="text-destructive text-xs">{errors.name.message}</p>}
         </div>
         <div className="space-y-2">
-          <Label htmlFor="brand">Brand</Label>
-          <Input id="brand" {...register("brand")} />
-          {errors.brand && <p className="text-destructive text-xs">{errors.brand.message}</p>}
+          <Label htmlFor="modelKey">Model key</Label>
+          <Input
+            id="modelKey"
+            {...register("modelKey")}
+            placeholder="e.g. dell-latitude-7420"
+          />
+          <p className="text-muted-foreground text-xs">
+            Groups configuration variants of the same model.
+          </p>
         </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
+          <Label htmlFor="brand">Brand</Label>
+          <Controller
+            control={control}
+            name="brand"
+            render={({ field }) => (
+              <Select
+                value={field.value || undefined}
+                onValueChange={(value) => {
+                  field.onChange(value);
+                  if (
+                    seriesValue &&
+                    !seriesOptionsForBrand(value).includes(seriesValue)
+                  ) {
+                    setValue("series", "");
+                  }
+                }}
+              >
+                <SelectTrigger id="brand" className="w-full">
+                  <SelectValue placeholder="Select a brand" />
+                </SelectTrigger>
+                <SelectContent>
+                  {brandOptions.map((brand) => (
+                    <SelectItem key={brand} value={brand}>
+                      {brand}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
+          {errors.brand && <p className="text-destructive text-xs">{errors.brand.message}</p>}
+          {brandValue && isPlaceholderBrand(brandValue) && (
+            <p className="text-destructive text-xs">
+              This value is a component type, not a manufacturer. Verify the
+              real brand before saving.
+            </p>
+          )}
+        </div>
+        <div className="space-y-2">
           <Label htmlFor="series">Series / product line</Label>
-          <Input id="series" {...register("series")} placeholder="e.g. Vivobook, Legion, TUF" />
+          <Controller
+            control={control}
+            name="series"
+            render={({ field }) => (
+              <Select
+                value={field.value || "none"}
+                onValueChange={(value) =>
+                  field.onChange(value === "none" ? "" : value)
+                }
+              >
+                <SelectTrigger id="series" className="w-full">
+                  <SelectValue placeholder="No series" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">No series</SelectItem>
+                  {seriesChoices.map((series) => (
+                    <SelectItem key={series} value={series}>
+                      {series}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-3">
+        <div className="space-y-2">
+          <Label htmlFor="category">Category</Label>
+          <Controller
+            control={control}
+            name="category"
+            render={({ field }) => (
+              <Select value={field.value || undefined} onValueChange={field.onChange}>
+                <SelectTrigger id="category" className="w-full">
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {CATEGORY_DEFINITIONS.map((category) => (
+                    <SelectItem key={category.slug} value={category.slug}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
+          {errors.category && <p className="text-destructive text-xs">{errors.category.message}</p>}
         </div>
         <div className="space-y-2">
           <Label htmlFor="productCode">Product code / SKU</Label>
           <Input id="productCode" {...register("productCode")} placeholder="e.g. L001-B1503CVA1" />
-        </div>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="space-y-2">
-          <Label htmlFor="category">Category slug</Label>
-          <Input id="category" {...register("category")} placeholder="e.g. laptops" />
-          {errors.category && <p className="text-destructive text-xs">{errors.category.message}</p>}
         </div>
         <div className="space-y-2">
           <Label htmlFor="warrantyMonths">Warranty (months)</Label>

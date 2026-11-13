@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCollection, saveCollection } from "@/lib/db";
 import { getAuth, unauthorized } from "@/lib/auth";
+import { withCatalogIdentity } from "@/features/products/lib/catalogMeta";
 import type { Product } from "@/features/products/types";
 
 function slugify(name: string): string {
@@ -20,13 +21,13 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     return NextResponse.json({ message: "Product not found", status: 404 }, { status: 404 });
   }
 
-  products[index] = {
+  products[index] = withCatalogIdentity<Product>({
     ...products[index],
     ...body,
     id,
     slug: body.name ? slugify(body.name) : products[index].slug,
     updatedAt: new Date().toISOString(),
-  };
+  });
 
   await saveCollection("products", products);
   return NextResponse.json({ data: products[index] });
