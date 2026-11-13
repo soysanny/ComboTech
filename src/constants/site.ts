@@ -7,26 +7,25 @@ export const SITE = {
   tagline: "Laptop & PC Store, Phnom Penh",
   description:
     "Laptops, desktops, PC parts, storage, and peripherals from ASUS, Dell, Acer, Lenovo, Apple and more — new, used, and built to order.",
-  phoneDisplay: "015 646 581",
-  phoneHref: "tel:015646581",
-  email: "cccomputer168@gmail.com",
+  phoneDisplay: "060 670 968",
+  phoneHref: "tel:060670968",
+  email: "cambotexkh@gmail.com",
   address:
     "No. 88, St. 468 (near Toul Tom Poung Market), Chamkarmon, Phnom Penh",
   ticker:
-    "CAMBOTECH — Premium laptops, desktops, PC parts & accessories | Trusted technology partner, high quality products, after-sales support : 015 646 581",
+    "CAMBOTECH — Premium laptops, desktops, PC parts & accessories | Trusted technology partner, high quality products, after-sales support : 060 670 968",
 } as const;
 
 export interface SocialLink {
-  key: "facebook" | "telegram" | "whatsapp" | "wechat" | "tiktok";
+  key: "facebook" | "telegram" | "whatsapp" | "tiktok";
   label: string;
   href: string;
 }
 
 export const SOCIAL_LINKS: SocialLink[] = [
-  { key: "facebook", label: "Facebook", href: "https://www.facebook.com/cccomputerkh" },
-  { key: "telegram", label: "Telegram", href: "https://t.me/cccomputertrading015646581" },
-  { key: "whatsapp", label: "WhatsApp", href: "https://api.whatsapp.com/send/?phone=85515646581" },
-  { key: "wechat", label: "WeChat", href: "weixin://dl/chat?cc015646581" },
+  { key: "facebook", label: "Facebook", href: "https://www.facebook.com/share/1J9WsCgayN/" },
+  { key: "telegram", label: "Telegram", href: "https://t.me/cambotech_kh" },
+  { key: "whatsapp", label: "Add me as a contact on WhatsApp", href: "https://wa.me/qr/JR5LXK646XYUO1" },
   { key: "tiktok", label: "TikTok", href: "https://www.tiktok.com/@cccomputer" },
 ];
 

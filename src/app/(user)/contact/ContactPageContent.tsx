@@ -11,6 +11,7 @@ import {
   Sparkles,
   ArrowRight,
   CheckCircle2,
+  type LucideIcon,
 } from "lucide-react";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { Badge } from "@/components/ui/badge";
@@ -25,9 +26,18 @@ import {
 } from "@/components/ui/card";
 import { ROUTES } from "@/constants/routes";
 import { SITE } from "@/constants/site";
+import { cn } from "@/lib/utils";
 import { ContactForm } from "@/features/contact";
 
-const contactChannels = [
+interface ContactChannel {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  href?: string;
+  status?: boolean;
+}
+
+const contactChannels: ContactChannel[] = [
   {
     icon: Mail,
     label: "Email",
@@ -44,6 +54,7 @@ const contactChannels = [
     icon: MessageSquare,
     label: "Live chat",
     value: "Available soon",
+    status: true,
   },
   {
     icon: MapPin,
@@ -98,15 +109,29 @@ function ContactInfo() {
         {contactChannels.map((channel) => {
           const Icon = channel.icon;
           const content = (
-            <div className="group surface-glass surface-hover flex h-full items-start gap-3 rounded-2xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-              <div className="bg-primary/10 text-primary inline-flex size-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110">
+            <div
+              className={cn(
+                "surface-glass flex h-full items-start gap-4 rounded-xl p-5 font-[family-name:var(--font-geist-sans)] transition-all duration-300 sm:p-6",
+                channel.href &&
+                  "surface-hover group hover:-translate-y-0.5 hover:shadow-md",
+              )}
+            >
+              <div className="bg-primary/10 text-primary inline-flex size-10 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105">
                 <Icon className="size-5" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
                   {channel.label}
                 </p>
-                <p className="mt-0.5 font-semibold">{channel.value}</p>
+                {channel.status ? (
+                  <span className="border-primary/20 bg-primary/10 text-primary mt-1.5 inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium">
+                    {channel.value}
+                  </span>
+                ) : (
+                  <p className="mt-1 leading-relaxed font-semibold break-words">
+                    {channel.value}
+                  </p>
+                )}
               </div>
             </div>
           );
@@ -114,7 +139,7 @@ function ContactInfo() {
             <a
               key={channel.label}
               href={channel.href}
-              className="focus-visible:ring-ring block h-full rounded-2xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+              className="focus-visible:ring-ring/60 focus-visible:ring-offset-background block h-full rounded-xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             >
               {content}
             </a>

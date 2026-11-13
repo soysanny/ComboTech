@@ -274,34 +274,43 @@ const whyChooseUs = [
 
 function WhyChooseUs() {
   return (
-    <SectionShell spacing="lg">
+    <SectionShell
+      spacing="lg"
+      className="font-[family-name:var(--font-geist-sans)]"
+    >
       <div className="text-center">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Why Choose Us
         </h2>
-        <p className="text-muted-foreground mx-auto mt-3 max-w-2xl">
+        <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-pretty">
           We don&apos;t just sell products — we create experiences built on
           trust, quality, and care.
         </p>
       </div>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {whyChooseUs.map((item) => {
-          const Icon = item.icon;
-          return (
-            <div
-              key={item.title}
-              className="group surface-glass surface-hover rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
-            >
-              <div className="bg-primary/10 text-primary mb-4 inline-flex size-12 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110">
-                <Icon className="size-6" />
+      <div className="relative">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -inset-y-6 rounded-[2rem] bg-[radial-gradient(ellipse_at_50%_0%,rgba(59,130,246,0.06),transparent_70%)]"
+        />
+        <div className="relative grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+          {whyChooseUs.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.title}
+                className="group surface-glass surface-hover flex h-full min-w-0 flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_-25px_rgba(37,99,235,0.5)] sm:p-7"
+              >
+                <div className="bg-primary/10 text-primary inline-flex size-12 shrink-0 items-center justify-center self-start rounded-xl transition-transform duration-300 group-hover:scale-110">
+                  <Icon className="size-6" />
+                </div>
+                <h3 className="mt-5 text-lg font-semibold">{item.title}</h3>
+                <p className="text-muted-foreground mt-2.5 text-sm leading-relaxed break-words text-pretty">
+                  {item.desc}
+                </p>
               </div>
-              <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-                {item.desc}
-              </p>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </SectionShell>
   );

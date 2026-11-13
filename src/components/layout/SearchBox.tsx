@@ -80,7 +80,7 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
       <Input
         type="search"
         placeholder="Search products, brands, categories..."
-        className={`input-glass focus-visible:border-primary/50 focus-visible:ring-primary/20 caret-primary h-11 pl-11 text-[15px] transition-all placeholder:text-[var(--app-muted)] hover:border-[var(--surface-border-hover)] focus-visible:ring-[3px] ${
+        className={`input-glass focus-visible:border-primary/50 focus-visible:ring-primary/20 caret-primary h-11 pl-11 text-[15px] font-[family-name:'Times_New_Roman',Times,serif] transition-all placeholder:text-[var(--app-muted)] hover:border-[var(--surface-border-hover)] focus-visible:ring-[3px] ${
           mobile ? "pr-4" : "pr-24"
         }`}
         value={query}

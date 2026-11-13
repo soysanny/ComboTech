@@ -83,7 +83,7 @@ function CategoryNavItems({
                 href={`${ROUTES.products}?category=${category.slug}`}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "font-brand focus-visible:ring-ring/60 focus-visible:ring-offset-background relative inline-flex h-11 shrink-0 items-center rounded-[10px] px-3.5 text-[15px] font-medium tracking-normal whitespace-nowrap transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4 sm:text-base lg:h-12",
+                  "font-[family-name:var(--font-geist-sans)] focus-visible:ring-ring/60 focus-visible:ring-offset-background relative inline-flex h-11 shrink-0 items-center rounded-[10px] px-3.5 text-[15px] font-medium tracking-normal whitespace-nowrap transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4 sm:text-base lg:h-12",
                   isActive
                     ? "bg-primary/10 text-primary after:bg-primary after:absolute after:inset-x-3.5 after:bottom-1 after:h-0.5 after:rounded-full after:content-['']"
                     : "hover:bg-primary/[0.08] hover:text-primary dark:text-foreground/75 dark:hover:text-primary text-slate-700",
@@ -102,7 +102,7 @@ function CategoryNavItems({
 
         <Link
           href={ROUTES.contact}
-          className="font-brand text-primary hover:bg-primary/10 focus-visible:ring-ring/60 focus-visible:ring-offset-background inline-flex h-11 shrink-0 items-center rounded-[10px] px-3 text-[15px] font-semibold whitespace-nowrap transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4 sm:text-base lg:h-12"
+          className="font-[family-name:var(--font-geist-sans)] text-primary hover:bg-primary/10 focus-visible:ring-ring/60 focus-visible:ring-offset-background inline-flex h-11 shrink-0 items-center rounded-[10px] px-3 text-[15px] font-semibold whitespace-nowrap transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none sm:px-4 sm:text-base lg:h-12"
         >
           Contact Us
         </Link>

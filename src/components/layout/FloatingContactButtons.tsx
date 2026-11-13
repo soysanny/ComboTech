@@ -8,7 +8,6 @@ const BRAND_COLORS: Record<SocialLink["key"], string> = {
   facebook: "bg-[#1877F2]",
   telegram: "bg-[#229ED9]",
   whatsapp: "bg-[#25D366]",
-  wechat: "bg-[#07C160]",
   tiktok: "bg-[#010101]",
 };
 
