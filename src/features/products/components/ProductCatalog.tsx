@@ -9,13 +9,25 @@ import {
   useProducts,
 } from "@/features/products";
 import { BrandNav } from "./BrandNav";
+import { CatalogFilterChips } from "./CatalogFilterChips";
+import { CatalogSearchInput } from "./CatalogSearchInput";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { Skeleton } from "@/components/shared/Skeleton";
 import { PageWrapper } from "@/components/layout/PageWrapper";
-import { SELECTABLE_BRANDS } from "../lib/catalogMeta";
-import { clearSearch, toProductQuery } from "../lib/catalogState";
+import {
+  CATEGORY_BY_SLUG,
+  resolveBrand,
+  SELECTABLE_BRANDS,
+} from "../lib/catalogMeta";
+import {
+  clearAllFilters,
+  clearBrandFilter,
+  clearSearch,
+  toProductQuery,
+} from "../lib/catalogState";
 import { useCatalogState } from "../hooks/useCatalogState";
+import { useProductListScrollRestoration } from "../hooks/useProductListScrollRestoration";
 import type { ProductFilters } from "../types";
 
 function CatalogContent() {
@@ -24,15 +36,36 @@ function CatalogContent() {
   const query = useMemo(() => toProductQuery(state), [state]);
   const { data, isLoading, isError, error, refetch } = useProducts(query);
 
+  useProductListScrollRestoration(!isLoading && Boolean(data));
+
   const brands = SELECTABLE_BRANDS;
-  const hasQuery = Boolean(state.search);
+  const brand = state.brands[0]
+    ? resolveBrand(state.brands[0]).name
+    : undefined;
+  const category = state.category
+    ? CATEGORY_BY_SLUG.get(state.category)?.name
+    : undefined;
+  const hasFilters =
+    Boolean(state.search) ||
+    Boolean(brand) ||
+    Boolean(category) ||
+    state.series.length > 0 ||
+    Boolean(state.modelKey);
   const productCount = data?.total ?? 0;
+
+  const activeCriteria = [
+    state.search ? `search “${state.search}”` : undefined,
+    brand ? `brand ${brand}` : undefined,
+    category ? `category ${category}` : undefined,
+    state.series.length ? `series ${state.series.join(", ")}` : undefined,
+    state.modelKey ? `model ${state.modelKey}` : undefined,
+  ].filter(Boolean);
 
   const handleSelectionChange = (next: ProductFilters) => {
     commit({
       search: next.search,
       sort: next.sort ?? state.sort,
-      category: next.category,
+      category: undefined,
       brands: next.brands ?? [],
       series: next.series ?? [],
       modelKey: next.modelKey,
@@ -60,10 +93,23 @@ function CatalogContent() {
       </div>
 
       <div className="space-y-5">
+        <div className="surface-glass flex flex-col gap-3 rounded-2xl p-4 sm:flex-row sm:items-center">
+          <CatalogSearchInput
+            value={state.search}
+            onSearch={(search) => commit({ search })}
+          />
+        </div>
+
         <BrandNav
           filters={state}
           onChange={handleSelectionChange}
           brands={brands}
+        />
+
+        <CatalogFilterChips
+          state={state}
+          onClear={(patch) => commit(patch)}
+          onClearAll={() => commit(clearAllFilters(state))}
         />
 
         {state.compareIds.length > 0 && (
@@ -97,17 +143,44 @@ function CatalogContent() {
           />
         ) : productCount === 0 ? (
           <EmptyState
-            title="No products match your search and selected brands or categories."
-            description="Try changing your search, brand, or category."
+            title="No products match these filters"
+            description={
+              activeCriteria.length > 0
+                ? `Active criteria: ${activeCriteria.join(" · ")}.`
+                : "Try a different search or brand."
+            }
             action={
-              hasQuery ? (
-                <Button
-                  variant="outline"
-                  onClick={() => commit(clearSearch(state))}
-                >
-                  Clear search
-                </Button>
-              ) : undefined
+              <div className="flex flex-wrap justify-center gap-2">
+                {state.search ? (
+                  <Button
+                    variant="outline"
+                    onClick={() => commit(clearSearch(state))}
+                  >
+                    Clear search
+                  </Button>
+                ) : null}
+                {brand ? (
+                  <Button
+                    variant="outline"
+                    onClick={() => commit(clearBrandFilter(state))}
+                  >
+                    Remove brand filter
+                  </Button>
+                ) : null}
+                {category ? (
+                  <Button
+                    variant="outline"
+                    onClick={() => commit({ category: undefined })}
+                  >
+                    Clear category
+                  </Button>
+                ) : null}
+                {hasFilters ? (
+                  <Button onClick={() => commit(clearAllFilters(state))}>
+                    Clear all filters
+                  </Button>
+                ) : null}
+              </div>
             }
           />
         ) : (

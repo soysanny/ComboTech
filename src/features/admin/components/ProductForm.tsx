@@ -103,7 +103,7 @@ export function ProductForm({ initialValue, onSubmit, loading }: ProductFormProp
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, dirtyFields },
     control,
     setValue,
   } = useForm<ProductFormData>({
@@ -198,6 +198,19 @@ export function ProductForm({ initialValue, onSubmit, loading }: ProductFormProp
       .replace(/[^\w\s-]/g, "")
       .replace(/\s+/g, "-");
 
+    const images = formData.images
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const previousPrimaryImage = initialValue?.images?.[0]?.trim();
+    const thumbnail =
+      initialValue &&
+      images[0] &&
+      images[0] !== previousPrimaryImage &&
+      !dirtyFields.thumbnail
+        ? images[0]
+        : formData.thumbnail;
+
     const payload: CreateProductInput = {
       name: formData.name,
       modelKey: formData.modelKey?.trim() || fallbackModelKey,
@@ -210,8 +223,8 @@ export function ProductForm({ initialValue, onSubmit, loading }: ProductFormProp
       currency: "USD",
       stock: formData.stock,
       warrantyMonths: formData.warrantyMonths,
-      thumbnail: formData.thumbnail,
-      images: formData.images.split(",").map((s) => s.trim()).filter(Boolean),
+      thumbnail,
+      images,
       tags: formData.tags?.split(",").map((s) => s.trim()).filter(Boolean) ?? [],
       productCode: formData.productCode?.trim() || undefined,
       badge: formData.badge?.trim() || undefined,

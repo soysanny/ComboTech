@@ -80,19 +80,30 @@ test("searching a brand and selecting the same brand keeps assigned products", (
   assert.deepEqual(result.data.map((item) => item.id), ["asus"]);
 });
 
-test("search Dell plus ASUS brand returns no unrelated products", () => {
+test("a newer brand-only search replaces a conflicting brand selection", () => {
+  const apple = product({ id: "apple", brand: "APPLE", name: "MacBook Air" });
   const asus = product({ id: "asus", brand: "ASUS", name: "ASUS Vivobook" });
-  const dell = product({ id: "dell", brand: "DELL", name: "Dell Inspiron" });
 
-  const result = queryProducts([asus, dell], {
-    search: "Dell",
+  const result = queryProducts([apple, asus], {
+    search: "Apple",
     brands: ["ASUS"],
   });
 
-  assert.equal(result.total, 0);
+  assert.deepEqual(result.data.map((item) => item.id), ["apple"]);
 });
 
-test("multiple brands use OR inside the brand group", () => {
+test("brand-only phrases match the brand without appearing in the title", () => {
+  const apple = product({ id: "apple", brand: "APPLE", name: "MacBook Air" });
+  const asus = product({ id: "asus", brand: "ASUS", name: "ASUS Vivobook" });
+
+  const result = queryProducts([apple, asus], { search: "Apple brand" });
+
+  assert.deepEqual(result.data.map((item) => item.id), ["apple"]);
+  assert.ok(scoreProductSearch(apple, "Apple brand").score > 0);
+  assert.equal(scoreProductSearch(asus, "Apple brand").score, 0);
+});
+
+test("a legacy multi-brand query keeps only the last brand", () => {
   const asus = product({ id: "asus", brand: "ASUS" });
   const dell = product({ id: "dell", brand: "DELL" });
   const lenovo = product({ id: "lenovo", brand: "LENOVO" });
@@ -101,10 +112,7 @@ test("multiple brands use OR inside the brand group", () => {
     brands: ["ASUS", "DELL"],
   });
 
-  assert.deepEqual(
-    result.data.map((item) => item.id).sort(),
-    ["asus", "dell"],
-  );
+  assert.deepEqual(result.data.map((item) => item.id), ["dell"]);
 });
 
 test("each result has a configuration that matches the RAM filter", () => {

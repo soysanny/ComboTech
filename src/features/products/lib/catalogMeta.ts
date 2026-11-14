@@ -164,6 +164,35 @@ export function resolveBrand(value?: string | null): ResolvedBrand {
 /** Selectable brand names for the storefront and product editor. */
 export const SELECTABLE_BRANDS = CATALOG_BRANDS.map((brand) => brand.name);
 
+const BRAND_SEARCH_NOISE = new Set(["brand", "brands"]);
+
+/**
+ * Detect a search that only names a known brand, such as "Apple",
+ * "apple", or "Apple brand". Brand-only searches act as brand selections
+ * instead of requiring the brand name to appear in the product title.
+ */
+export function parseBrandOnlySearch(
+  value?: string | null,
+): ResolvedBrand | undefined {
+  const normalized = (value ?? "")
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[\u00ae\u2122]/g, "")
+    .replace(/[^a-z0-9\s]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!normalized) return undefined;
+
+  const tokens = normalized
+    .split(" ")
+    .filter((token) => token && !BRAND_SEARCH_NOISE.has(token));
+  if (tokens.length === 0) return undefined;
+
+  const resolved = resolveBrand(tokens.join(" "));
+  return resolved.known ? resolved : undefined;
+}
+
 export function categoryIdFor(slug?: string | null): string | undefined {
   if (!slug) return undefined;
   return CATEGORY_BY_SLUG.get(slug as ProductCategorySlug)?.id;

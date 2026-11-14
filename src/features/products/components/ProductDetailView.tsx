@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Share2, Check, ArrowLeft, Gift, Phone } from "lucide-react";
-import { useProductDetail } from "@/features/products";
+import { useBackToProducts, useProductDetail } from "@/features/products";
 import { ProductGallery } from "./ProductGallery";
 import { ProductGridSkeleton } from "./ProductGrid";
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,8 @@ function SpecRow({
 }
 
 function ProductDetailContent({ product }: { product: Product }) {
+  const handleBackToProducts = useBackToProducts(product.id);
+
   const hasDiscount =
     typeof product.originalPrice === "number" &&
     product.originalPrice > product.price;
@@ -74,11 +76,14 @@ function ProductDetailContent({ product }: { product: Product }) {
 
   return (
     <div className="space-y-10">
-      <Button asChild variant="ghost" size="sm" className="gap-1 pl-0">
-        <Link href={ROUTES.products}>
-          <ArrowLeft className="size-4" />
-          Back to products
-        </Link>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="gap-1 pl-0"
+        onClick={handleBackToProducts}
+      >
+        <ArrowLeft className="size-4" />
+        Back to products
       </Button>
 
       <div className="grid gap-10 lg:grid-cols-2">

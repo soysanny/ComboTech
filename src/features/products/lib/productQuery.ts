@@ -6,10 +6,12 @@ import type {
 } from "../types";
 import {
   CATEGORY_BY_SLUG,
+  parseBrandOnlySearch,
   resolveBrand,
   resolveSeries,
   slugifyCatalogValue,
 } from "./catalogMeta";
+import { normalizeBrandSelection } from "./catalogState";
 
 /**
  * Pure search / filter / sort pipeline for the storefront catalog.
@@ -84,6 +86,15 @@ export function scoreProductSearch(
 ): SearchResult {
   const normalizedQuery = normalizeText(query);
   if (!normalizedQuery) return { score: 0, exact: false };
+
+  // A brand-only phrase such as "Apple brand" is a brand selection, not text
+  // that must literally appear in the title.
+  const brandSearch = parseBrandOnlySearch(query);
+  if (brandSearch) {
+    return resolveBrand(product.brandId ?? product.brand).id === brandSearch.id
+      ? { score: EXACT_MATCH_SCORE, exact: true }
+      : { score: 0, exact: false };
+  }
 
   const tokens = normalizedQuery.split(" ").filter(Boolean);
   const compactQuery = compactText(normalizedQuery);
@@ -383,11 +394,23 @@ export function queryProducts(
   );
   const sort = options.sort ?? "newest";
 
+  // Brand-only searches (for example "Apple" or "Apple brand") are newest and
+  // replace any retained/conflicting brand selection. Brands themselves are
+  // single-select, so a legacy multi-brand query keeps only the last brand.
+  const brandSearch = parseBrandOnlySearch(options.search);
+  const effective: ProductQueryOptions = {
+    ...options,
+    search: brandSearch ? undefined : options.search,
+    brands: brandSearch
+      ? [brandSearch.name]
+      : normalizeBrandSelection(options.brands),
+  };
+
   const matched: MatchedVariant[] = [];
   products.forEach((product) => {
-    if (!matchesVariantFilters(product, options)) return;
-    const search = scoreProductSearch(product, options.search);
-    if (options.search?.trim() && search.score === 0) return;
+    if (!matchesVariantFilters(product, effective)) return;
+    const search = scoreProductSearch(product, effective.search);
+    if (effective.search?.trim() && search.score === 0) return;
     matched.push({
       product,
       score: search.score,

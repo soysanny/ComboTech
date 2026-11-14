@@ -4,8 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   applyCatalogPatch,
+  normalizeCatalogParams,
   parseCatalogState,
-  removeRemovedCatalogParams,
   serializeCatalogState,
   type CatalogPatch,
   type CatalogState,
@@ -32,21 +32,25 @@ export function useCatalogState() {
   }, [state]);
 
   useEffect(() => {
-    if (searchParamsString === lastUrlRef.current) return;
-    const next = parseCatalogState(new URLSearchParams(searchParamsString));
-    lastUrlRef.current = searchParamsString;
-    stateRef.current = next;
-    setState(next);
-  }, [searchParamsString]);
-
-  useEffect(() => {
     const params = new URLSearchParams(searchParamsString);
-    if (!removeRemovedCatalogParams(params)) return;
-    const cleaned = params.toString();
-    lastUrlRef.current = cleaned;
-    router.replace(`${pathname}${cleaned ? `?${cleaned}` : ""}`, {
-      scroll: false,
-    });
+    const next = parseCatalogState(params);
+    const normalized = normalizeCatalogParams(params);
+    const shouldSync = searchParamsString !== lastUrlRef.current;
+    const shouldRewrite = normalized !== searchParamsString;
+
+    if (!shouldSync && !shouldRewrite) return;
+
+    lastUrlRef.current = shouldRewrite ? normalized : searchParamsString;
+    stateRef.current = next;
+
+    // The URL is the external source of truth, so mirror it into UI state.
+    setState(next);
+
+    if (shouldRewrite) {
+      router.replace(`${pathname}${normalized ? `?${normalized}` : ""}`, {
+        scroll: false,
+      });
+    }
   }, [searchParamsString, pathname, router]);
 
   const commit = useCallback(

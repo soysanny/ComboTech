@@ -14,8 +14,8 @@ export interface BrandNavProps {
 }
 
 /**
- * CC Computer style brand navigation bar. Selecting a brand filters the
- * catalog by that brand.
+ * CC Computer style brand navigation bar. Brands are single-select: choosing a
+ * new brand replaces the previous selection, and "All brands" clears it.
  */
 export function BrandNav({
   filters,
@@ -24,11 +24,8 @@ export function BrandNav({
   className,
 }: BrandNavProps) {
   const activeBrands = filters.brands ?? EMPTY;
-  const isAllSelected =
-    activeBrands.length === 0 &&
-    !filters.category &&
-    !filters.series?.length &&
-    !filters.modelKey;
+  const activeBrand = activeBrands[activeBrands.length - 1];
+  const isAllSelected = activeBrands.length === 0;
 
   const showAllProducts = () =>
     onChange({
@@ -36,13 +33,10 @@ export function BrandNav({
       brands: undefined,
     });
 
-  const toggleBrand = (brand: string) => {
-    const next = activeBrands.includes(brand)
-      ? activeBrands.filter((b) => b !== brand)
-      : [...activeBrands, brand];
+  const selectBrand = (brand: string) => {
     onChange({
       ...filters,
-      brands: next.length > 0 ? next : undefined,
+      brands: [brand],
     });
   };
 
@@ -65,15 +59,16 @@ export function BrandNav({
               : "text-muted-foreground hover:text-foreground border border-[var(--surface-border)] bg-[var(--subtle-bg)]",
           )}
         >
-          All
+          All brands
         </button>
         {brands.map((brand) => {
-          const active = activeBrands.includes(brand);
+          const active = activeBrand === brand;
           return (
             <button
               key={brand}
               type="button"
-              onClick={() => toggleBrand(brand)}
+              onClick={() => selectBrand(brand)}
+              aria-pressed={active}
               className={cn(
                 "rounded-full px-3 py-1 text-xs font-semibold uppercase transition-colors",
                 active

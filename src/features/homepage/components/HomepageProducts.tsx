@@ -8,6 +8,7 @@ import {
   ProductGridSkeleton,
   useProducts,
 } from "@/features/products";
+import { useProductListScrollRestoration } from "@/features/products/hooks/useProductListScrollRestoration";
 import type { Product } from "@/features/products/types";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
@@ -70,6 +71,8 @@ export function HomepageProducts() {
   });
 
   const products = useMemo(() => mixProducts(data?.data ?? []), [data]);
+
+  useProductListScrollRestoration(!isLoading && Boolean(data));
 
   if (isLoading) return <ProductSectionSkeleton />;
 

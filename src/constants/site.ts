@@ -25,7 +25,7 @@ export interface SocialLink {
 export const SOCIAL_LINKS: SocialLink[] = [
   { key: "facebook", label: "Facebook", href: "https://www.facebook.com/share/1J9WsCgayN/" },
   { key: "telegram", label: "Telegram", href: "https://t.me/cambotech_kh" },
-  { key: "whatsapp", label: "Add me as a contact on WhatsApp", href: "https://wa.me/qr/JR5LXK646XYUO1" },
+  { key: "whatsapp", label: "WhatsApp: +855 60 670 968", href: "https://wa.me/85560670968" },
   { key: "tiktok", label: "TikTok", href: "https://www.tiktok.com/@cccomputer" },
 ];
 

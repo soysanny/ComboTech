@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { toggleTheme } from "@/redux/slices/themeSlice";
-import { SearchBox } from "./SearchBox";
+import { SearchBox, SearchBoxFallback } from "./SearchBox";
 import type { RootState } from "@/redux/store";
 
 const navItems = [
@@ -151,7 +151,13 @@ export function Header() {
       <div className="mx-auto flex h-[4.5rem] w-full max-w-7xl items-center justify-between gap-4 px-4 sm:gap-5 sm:px-6 lg:gap-6 lg:px-8">
         <Logo />
 
-        <SearchBox className="hidden max-w-lg flex-1 md:block" />
+        <Suspense
+          fallback={
+            <SearchBoxFallback className="hidden max-w-lg flex-1 md:block" />
+          }
+        >
+          <SearchBox className="hidden max-w-lg flex-1 md:block" />
+        </Suspense>
 
         <nav className="hidden items-center gap-1 xl:flex" aria-label="Primary">
           {navItems.map((item) => {
@@ -228,7 +234,11 @@ export function Header() {
           className="mx-auto grid max-w-7xl gap-1.5 px-4 py-4 sm:px-6"
           aria-label="Mobile primary"
         >
-          <SearchBox mobile className="mb-2 md:hidden" />
+          <Suspense
+            fallback={<SearchBoxFallback mobile className="mb-2 md:hidden" />}
+          >
+            <SearchBox mobile className="mb-2 md:hidden" />
+          </Suspense>
 
           {navItems.map((item) => (
             <Link

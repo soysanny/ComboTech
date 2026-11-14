@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { getProductImageSrc } from "@/features/products/lib/productImages";
+import { recordCatalogReturnTarget } from "@/features/products/lib/catalogNavigation";
 import { cn } from "@/lib/utils";
 
 export interface ProductCardProps {
@@ -172,6 +173,7 @@ function QuickViewDialog({
   const pricing = getPricing(product);
   const specLine = buildSpecLine(product);
   const productHref = ROUTES.productDetail(product.id);
+  const rememberReturnPosition = () => recordCatalogReturnTarget(product.id);
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
@@ -211,7 +213,9 @@ function QuickViewDialog({
 
             <div className="mt-auto flex flex-col gap-2">
               <Button asChild>
-                <Link href={productHref}>View full details</Link>
+                <Link href={productHref} onClick={rememberReturnPosition}>
+                  View full details
+                </Link>
               </Button>
               <Button asChild variant="outline">
                 <Link href={ROUTES.contact}>
@@ -241,6 +245,7 @@ export function ProductCard({
   const imageSrc = getProductImageSrc(product);
   const productHref = ROUTES.productDetail(product.id);
   const brandLine = `${product.brand}${product.series ? ` · ${product.series}` : ""}`;
+  const rememberReturnPosition = () => recordCatalogReturnTarget(product.id);
 
   const cardDetails = (
     <>
@@ -276,6 +281,7 @@ export function ProductCard({
         <div className="surface-inset relative aspect-square w-full overflow-hidden">
           <Link
             href={productHref}
+            onClick={rememberReturnPosition}
             className="absolute inset-0 flex items-center justify-center p-3 sm:p-4"
             aria-label={`View ${product.name}`}
           >
@@ -349,7 +355,11 @@ export function ProductCard({
         </div>
 
         <div className="flex flex-1 flex-col p-3 sm:p-4">
-          <Link href={productHref} className="flex flex-1 flex-col gap-1.5">
+          <Link
+            href={productHref}
+            onClick={rememberReturnPosition}
+            className="flex flex-1 flex-col gap-1.5"
+          >
             {cardDetails}
           </Link>
         </div>

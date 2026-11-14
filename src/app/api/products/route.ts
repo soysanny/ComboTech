@@ -6,6 +6,7 @@ import type {
   ProductSortOption,
 } from "@/features/products/types";
 import { queryProducts } from "@/features/products/lib/productQuery";
+import { normalizeBrandSelection } from "@/features/products/lib/catalogState";
 
 function csv(params: URLSearchParams, key: string): string[] {
   const raw = params.get(key);
@@ -42,7 +43,7 @@ export async function GET(request: Request) {
   const result = queryProducts(products, {
     search: searchParams.get("search")?.trim() || undefined,
     category: category ? (category as ProductCategorySlug) : undefined,
-    brands: csv(searchParams, "brands"),
+    brands: normalizeBrandSelection(csv(searchParams, "brands")),
     series: csv(searchParams, "series"),
     modelKey: searchParams.get("modelKey")?.trim() || undefined,
     minPrice: numberParam(searchParams, "minPrice"),

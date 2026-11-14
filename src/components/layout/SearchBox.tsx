@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -16,10 +20,18 @@ export interface SearchBoxProps {
   mobile?: boolean;
 }
 
+interface SearchBoxFormProps extends SearchBoxProps {
+  initialQuery?: string;
+}
+
 /** Search input with autocomplete suggestions. */
-export function SearchBox({ className, mobile }: SearchBoxProps) {
+function SearchBoxForm({
+  className,
+  mobile,
+  initialQuery,
+}: SearchBoxFormProps) {
   const router = useRouter();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery ?? "");
   const [open, setOpen] = useState(false);
   const debouncedQuery = useDebounce(query, 250);
   const containerRef = useRef<HTMLFormElement>(null);
@@ -54,7 +66,6 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
       router.push(
         `${ROUTES.products}?search=${encodeURIComponent(query.trim())}`,
       );
-      setQuery("");
       setOpen(false);
     }
   };
@@ -156,4 +167,29 @@ export function SearchBox({ className, mobile }: SearchBoxProps) {
       )}
     </form>
   );
+}
+
+/**
+ * Header search field. On the catalog page it mirrors the `search` URL
+ * parameter so refreshing or sharing a URL restores the visible query.
+ */
+export function SearchBox({ className, mobile }: SearchBoxProps) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const initialQuery =
+    pathname === ROUTES.products ? (searchParams.get("search") ?? "") : "";
+
+  return (
+    <SearchBoxForm
+      key={initialQuery}
+      className={className}
+      mobile={mobile}
+      initialQuery={initialQuery}
+    />
+  );
+}
+
+/** Non-URL placeholder used while the search params boundary loads. */
+export function SearchBoxFallback(props: SearchBoxProps) {
+  return <SearchBoxForm {...props} />;
 }
